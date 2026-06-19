@@ -297,4 +297,45 @@
                 alertas.push('<li class="alerta-item"><b>ÁREA PROTEGIDA:</b> EIA formal ineludible (Art. 12 Ley 352/94).</li>');
             }
             if (act === 'canteras') {
-                llavesLegales.push('ley
+                llavesLegales.push('leyMinas', 'leyPatrimonio');
+                alertas.push('<li class="alerta-item"><b>REGALÍA MINERA:</b> Calcular pago del 5% del producto bruto (L. 93/14).</li>');
+                alertas.push('<li class="alerta-item"><b>PATRIMONIO:</b> Incluir Protocolo de Hallazgos Arqueológicos.</li>');
+            }
+            if (bosque && region === 'oriental') {
+                llavesLegales.push('deforestacionCero', 'forestal');
+                alertas.push('<li class="alerta-item"><b>DEFORESTACIÓN CERO:</b> Prohibición absoluta de cambio de uso de suelo (Ley 6256/18).</li>');
+            }
+            if (efluentes > 0 || inst === 'EDE') {
+                llavesLegales.push('resEdeEfluentes', 'resEffluentes');
+                alertas.push('<li class="alerta-item"><b>EFLUENTES:</b> Adjuntar matriz de dispersión hídrica (Res. 616/14).</li>');
+            }
+            if (inst === 'EIA') {
+                llavesLegales.push('resAudiencia');
+                alertas.push('<li class="alerta-item"><b>AUDIENCIA PÚBLICA:</b> 3 días hábiles post-evento para objeciones (Res. 640/14).</li>');
+            }
+
+            // Renderizar Alertas
+            document.getElementById('res-alertas').innerHTML = alertas.join('');
+
+            // Renderizar Leyes (Sin duplicados)
+            let divLegal = document.getElementById('res-legal');
+            divLegal.innerHTML = '';
+            [...new Set(llavesLegales)].forEach(key => {
+                let box = document.createElement('div');
+                box.className = 'ley-box';
+                box.innerHTML = `<span class="ley-titulo-texto">⚖️ ${DB_LEYES[key].n}</span><p class="ley-detalle">${DB_LEYES[key].d}</p>`;
+                divLegal.appendChild(box);
+            });
+
+            // Renderizar Índice
+            let listaEst = document.getElementById('res-estructura');
+            listaEst.innerHTML = '';
+            INSTRUMENTOS_TEXTO[inst].forEach(item => {
+                let li = document.createElement('li');
+                li.textContent = item;
+                listaEst.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
