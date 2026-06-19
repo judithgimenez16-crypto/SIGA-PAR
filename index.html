@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIGA-PY Consultor Master v9.5 - Integración Total</title>
+    <title>SIGA-PY Consultor Master v7.0</title>
     <style>
         :root { --color-primario: #1b4332; --color-secundario: #2d6a4f; --color-azul: #2b6cb0; --color-fondo: #f4f7f6; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--color-fondo); color: #2d3748; margin: 0; padding: 20px; }
@@ -20,30 +20,29 @@
 
 <div class="container">
     <aside class="panel-config">
-        <h2>SIGA-PY v9.5</h2>
+        <h2>SIGA-PY v7.0</h2>
         <form id="form-ambiental">
             <div class="seccion-form">
                 <h3>1. Instrumento Técnico</h3>
-                <select id="instrumento" onchange="filtrarActividades()" required>
-                    <option value="">-- Seleccione el Trámite --</option>
+                <select id="instrumento" required>
                     <option value="EIA">Estudio de Impacto Ambiental (EIA)</option>
                     <option value="RIMA">Relatorio de Impacto Ambiental (RIMA)</option>
-                    <option value="EDE">Estudio de Disposición de Efluentes (EDE)</option>
                     <option value="PGA">Plan de Gestión Ambiental (PGA)</option>
                     <option value="AA">Auditoría Ambiental (AA)</option>
-                    <option value="CIERRE">Plan de Cierre / Recomposición</option>
                 </select>
             </div>
 
             <div class="seccion-form">
                 <h3>2. Actividad Regulada</h3>
                 <select id="actividad" required>
-                    <option value="">-- Seleccione primero el instrumento --</option>
+                    <option value="URBANIZACIONES">URBANIZACIONES</option>
+                    <option value="GANADERIA">GANADERIA</option>
+                    <option value="INDUSTRIAS">INDUSTRIAS</option>
                 </select>
             </div>
 
             <div class="seccion-form">
-                <h3>3. Factores Críticos (Checklist)</h3>
+                <h3>3. Factores Críticos</h3>
                 <input type="checkbox" id="tiene-bosque"> <label>Posee Bosque Nativo</label><br>
                 <input type="checkbox" id="deficit-bosque"> <label>Déficit Reserva Legal &lt;25%</label><br>
                 <input type="checkbox" id="afecta-asp"> <label>Afecta Área Protegida</label><br>
@@ -51,70 +50,34 @@
                 <input type="checkbox" id="posee-pcb"> <label>Registra uso de PCB</label>
             </div>
 
-            <button type="button" class="btn-generar" onclick="generarChecklist()">Generar Guía de Expediente Completa</button>
+            <button type="button" class="btn-generar" onclick="generarChecklist()">Generar Guía de Expediente</button>
         </form>
     </aside>
 
     <main class="panel-resultado" id="resultado">
-        <div class="mensaje-vacio">Seleccione instrumento y actividad para generar el expediente lógico detallado con toda la base de leyes cargada.</div>
+        <div class="mensaje-vacio">Configure los parámetros para generar su checklist pericial y marco normativo.</div>
     </main>
 </div>
 
 <script>
-    const mapeo = {
-        'EIA': ['urbanizaciones', 'ganaderia', 'industrias', 'canteras', 'residuos_urbanos', 'obras_viales'],
-        'RIMA': ['urbanizaciones', 'industrias', 'canteras', 'residuos_urbanos'],
-        'EDE': ['industrias', 'estaciones', 'hospitales'],
-        'PGA': ['urbanizaciones', 'ganaderia', 'industrias', 'granjas'],
-        'AA': ['urbanizaciones', 'ganaderia', 'estaciones', 'industrias', 'canteras'],
-        'CIERRE': ['canteras', 'industrias', 'residuos_urbanos', 'combustibles_fosiles']
-    };
-
-    const leyesDB = {
-        'ley6256': {t: 'Ley N.º 6256/18 (Deforestación Cero)', d: 'Veda total en Región Oriental. Pena de 3 a 8 años de cárcel.'},
-        'res344': {t: 'Res. N.º 344/18 (Servicios Ambientales)', d: 'Exige Certificados de Compensación ante déficit de reserva legal.'},
-        'res1402': {t: 'Res. N.º 1402/11 (Gestión de PCBs)', d: 'Protocolo mandatorio para manejo de aceites contaminados.'},
-        'res2155': {t: 'Res. N.º 2155/05 (Pozos Tubulares)', d: 'Exige permiso de perforación y tolerancia de +/-10% en dimensiones.'},
-        'res616': {t: 'Res. N.º 616/14 (EDE)', d: 'Matriz obligatoria de efluentes líquidos.'}
-    };
-
-    function filtrarActividades() {
-        const inst = document.getElementById('instrumento').value;
-        const selectAct = document.getElementById('actividad');
-        selectAct.innerHTML = '<option value="">-- Seleccione Actividad --</option>';
-        if (!inst) return;
-        mapeo[inst].forEach(act => {
-            let opt = document.createElement('option');
-            opt.value = act; opt.textContent = act.toUpperCase();
-            selectAct.appendChild(opt);
-        });
-    }
-
     function generarChecklist() {
         const inst = document.getElementById('instrumento').value;
         const act = document.getElementById('actividad').value;
-        if(!inst || !act) return alert("Por favor complete los campos.");
-
-        let html = `<h2>Expediente Pericial: ${inst} - ${act.toUpperCase()}</h2>`;
-        html += `<h3>📋 Checklist de Requerimientos Obligatorios</h3>`;
-        html += `<div class="alerta-item"><li><b>SIAM:</b> Carga digital obligatoria (Res. 281/19).</li><li><b>Cartografía:</b> Mapas en .shp (Res. 251/18).</li>`;
+        const asp = document.getElementById('afecta-asp').checked;
+        const pcb = document.getElementById('posee-pcb').checked;
         
-        if (document.getElementById('tiene-bosque').checked) html += `<li><b>Forestal:</b> Respetar Ley 422/73 y Ley 6256/18.</li>`;
-        if (document.getElementById('deficit-bosque').checked) {
-            html += `<li><b>Compensación:</b> Adquirir Certificados (Res. 344/18).</li>`;
-            html += `<div class="ley-box"><b>${leyesDB.res344.t}</b>: ${leyesDB.res344.d}</div>`;
-        }
-        if (document.getElementById('posee-pcb').checked) {
-            html += `<li><b>PCB:</b> Plan de manejo para transformadores.</li>`;
-            html += `<div class="ley-box"><b>${leyesDB.res1402.t}</b>: ${leyesDB.res1402.d}</div>`;
-        }
-        if (document.getElementById('tiene-pozo').checked) {
-            html += `<li><b>Recursos Hídricos:</b> Permiso de perforación y certificado de disponibilidad (Res. 2155/05).</li>`;
-            html += `<div class="ley-box"><b>${leyesDB.res2155.t}</b>: ${leyesDB.res2155.d}</div>`;
-        }
-        if (inst === 'CIERRE') html += `<li><b>Recomposición:</b> Incluir fianza ambiental (Ley 3180/07).</li>`;
+        let html = `<h2>Checklist Pericial: ${inst}</h2><ul>`;
+        html += `<div class="alerta-item"><li>Cumplir con carga digital obligatoria (Res. 281/19).</li>`;
+        html += `<li>Adjuntar mapas shapefile (Res. 251/18).</li></div>`;
         
-        html += `</ul><button onclick="window.print()">Imprimir Expediente Completo</button>`;
+        if (asp) html += `<div class="alerta-item"><li><b>Área Protegida:</b> EIA obligatorio (Ley 352/94).</li></div>`;
+        if (pcb) html += `<div class="alerta-item"><li><b>Protocolo PCB:</b> Adjuntar protocolo (Res. 1402/11).</li></div>`;
+        
+        html += `</ul><h3>Marco Normativo Aplicable:</h3>`;
+        html += `<div class="ley-box"><b>Ley 294/93:</b> Marco de Evaluación de Impacto Ambiental.</div>`;
+        html += `<div class="ley-box"><b>Decreto 453/13:</b> Reglamentación base del EIA.</div>`;
+        
+        html += `<button onclick="window.print()">Imprimir Guía de Expediente</button>`;
         document.getElementById('resultado').innerHTML = html;
     }
 </script>
