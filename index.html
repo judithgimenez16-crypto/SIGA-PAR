@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master - Versión Definitiva</title>
+    <title>SIGA-PY Consultor Master - Flujo Inteligente</title>
     <style>
         :root {
             --color-primario: #1b4332;
@@ -17,12 +17,11 @@
             --color-gris-borde: #e2e8f0;
         }
 
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--color-fondo); color: var(--color-texto); margin: 0; padding: 0; line-height: 1.5; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--color-fondo); color: var(--color-texto); margin: 0; padding: 0; line-height: 1.5; }
         header { background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%); color: white; padding: 30px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        header h1 { margin: 0; font-size: 2.2rem; font-weight: 700; letter-spacing: 1px; }
-        header p { margin: 8px 0 4px 0; opacity: 0.95; font-size: 1.1rem; }
-        header small { opacity: 0.8; font-size: 0.9rem; font-weight: bold; color: var(--color-acento); }
-
+        header h1 { margin: 0; font-size: 2.2rem; font-weight: 700; }
+        header p { margin: 8px 0 4px 0; font-size: 1.1rem; }
+        
         .container { display: flex; max-width: 1600px; margin: 30px auto; gap: 30px; padding: 0 20px; }
         
         .panel-config { flex: 1; background: var(--color-tarjeta); padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-top: 5px solid var(--color-primario); height: fit-content; }
@@ -39,11 +38,11 @@
         .campo-checkbox { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 0.88rem; background: #fff; padding: 8px 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: 500;}
         .campo-checkbox input { width: 18px; height: 18px; accent-color: var(--color-primario); cursor: pointer; }
         
-        .btn-generar { width: 100%; background-color: var(--color-primario); color: white; border: none; padding: 14px; font-size: 1.1rem; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(27,67,50,0.2); transition: 0.2s; }
+        .btn-generar { width: 100%; background-color: var(--color-primario); color: white; border: none; padding: 14px; font-size: 1.1rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; }
         .btn-generar:hover { background-color: var(--color-secundario); }
 
         .panel-resultado { flex: 1.4; background: var(--color-tarjeta); padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); min-height: 600px; border-top: 5px solid var(--color-azul); }
-        .mensaje-vacio { display: flex; align-items: center; justify-content: center; height: 100%; min-height: 400px; color: #718096; font-style: italic; text-align: center; font-size: 1.1rem; }
+        .mensaje-vacio { display: flex; align-items: center; justify-content: center; height: 100%; min-height: 400px; color: #718096; font-style: italic; text-align: center; }
         .oculto { display: none !important; }
 
         .header-guia { display: flex; justify-content: space-between; align-items: center; background: #f7fafc; padding: 15px 20px; border-radius: 8px; border-bottom: 2px solid var(--color-gris-borde); }
@@ -77,25 +76,23 @@
     <header>
         <h1>SIGA-PY CONSULTOR MASTER</h1>
         <p>Sistema Integral de Gestión Ambiental del Paraguay</p>
-        <small>Cerebro Operativo de Inferencia Legal Absoluta v10.0 • Máxima Cobertura del Marco Regulatorio Nacional</small>
     </header>
 
     <div class="container">
         <aside class="panel-config">
-            <h2>Configurador Estratégico</h2>
+            <h2>Configurador de Expediente</h2>
             <form id="form-ambiental">
                 
                 <div class="seccion-form" style="border-left: 5px solid var(--color-azul);">
                     <h3>1. Requerimiento Técnico-Legal</h3>
                     <div class="campo">
                         <select id="instrumento" onchange="filtrarActividades()" required>
-                            <option value="">-- Seleccione el Trámite --</option>
+                            <option value="">-- Seleccione el Trámite Principal --</option>
                             <option value="EIA">Estudio de Impacto Ambiental Definitivo (EIA)</option>
                             <option value="RIMA">Relatorio de Impacto Ambiental (RIMA)</option>
                             <option value="EDE">Estudio de Disposición de Efluentes (EDE)</option>
                             <option value="PGA">Plan de Gestión Ambiental de Adecuación (PGA)</option>
                             <option value="AA">Auditoría Ambiental de Cumplimiento (AA)</option>
-                            <option value="CIERRE">Plan de Cierre / Recomposición Morfológica</option>
                         </select>
                     </div>
                 </div>
@@ -103,7 +100,7 @@
                 <div class="seccion-form" style="border-left: 5px solid var(--color-acento);">
                     <h3>2. Actividad y Ubicación</h3>
                     <div class="campo">
-                        <label for="actividad">Seleccione la Actividad Regulada Oficial:</label>
+                        <label for="actividad">Actividad Regulada (Se habilita según trámite):</label>
                         <select id="actividad" required>
                             <option value="">-- Seleccione primero el trámite --</option>
                         </select>
@@ -131,17 +128,22 @@
                     <h3>3. Factores de Campo Críticos</h3>
                     <div class="campo-checkbox"><input type="checkbox" id="tiene-bosque"><label>¿Posee cobertura de Bosque Nativo?</label></div>
                     <div class="campo-checkbox" style="background:#fee2e2; border-color:#fca5a5;"><input type="checkbox" id="deficit-bosque"><label><b>¿Déficit de Reserva Legal (&lt;25%)?</b></label></div>
-                    <div class="campo-checkbox"><input type="checkbox" id="tiene-cauce"><label>¿Posee arroyos o cauces hídricos?</label></div>
                     <div class="campo-checkbox" style="background:#fff3cd; border-color:#ffeba2;"><input type="checkbox" id="afecta-asp"><label><b>¿Afecta Área Silvestre Protegida?</b></label></div>
                     <div class="campo-checkbox" style="background:#e0f2fe; border-color:#bae6fd;"><input type="checkbox" id="requiere-pozo"><label><b>¿Contempla Pozo Profundo?</b></label></div>
                     <div class="campo-checkbox" style="background:#f1f5f9; border-color:#cbd5e1;"><input type="checkbox" id="posee-pcb"><label><b>¿Registra transformadores o PCB?</b></label></div>
-                    <div class="campo-checkbox"><input type="checkbox" id="tiene-caldera"><label>¿Utiliza Caldera o Chimenea?</label></div>
+                    <div class="campo-checkbox"><input type="checkbox" id="tiene-cauce"><label>¿Posee arroyos o cauces hídricos?</label></div>
+                    
+                    <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 15px 0;">
+                    
+                    <div class="campo-checkbox" style="background:#fef08a; border-color:#fed7aa;">
+                        <input type="checkbox" id="requiere-cierre">
+                        <label><b>➕ Añadir Módulo: Plan de Cierre y Abandono</b></label>
+                    </div>
                 </div>
 
                 <div class="seccion-form">
                     <h3>4. Datos del Proyecto</h3>
                     <div class="campo"><label>Proponente:</label><input type="text" id="proponente" placeholder="Ej: Industrias S.A."></div>
-                    <div class="campo"><label>Coordenadas UTM:</label><input type="text" id="coordenadas" placeholder="Ej: 21J 543210 E"></div>
                 </div>
 
                 <button type="button" class="btn-generar" onclick="generarGuia()">Generar Guía de Expediente</button>
@@ -150,7 +152,7 @@
 
         <main class="panel-resultado">
             <div id="estado-vacio" class="mensaje-vacio">
-                <p>Configure el instrumento solicitado y el rubro ambiental en el panel izquierdo para extraer las directivas cruzadas del MADES y la estructura de su documento.</p>
+                <p>Configure el instrumento solicitado en el panel izquierdo para desplegar las actividades compatibles y generar la guía de campo.</p>
             </div>
 
             <div id="contenido-guia" class="oculto">
@@ -189,108 +191,83 @@
     </div>
 
     <script>
-        // --- 1. BASE DE DATOS LEGAL COMPLETA ---
-        const DB_LEYES = {
-            ley294: { n: 'Ley N.º 294/93 Evaluación de Impacto Ambiental', d: 'Base matriz. Sanciona con cancelación de DIA la falsedad de datos.' },
-            decretoEIA: { n: 'Decreto N.º 453/13 y 954/13', d: 'Regula categorizaciones, define auditorías como DD.JJ e inspecciones de renovación.' },
-            recursosHidricos: { n: 'Ley N.º 3239/07 Recursos Hídricos', d: 'Mandato estricto de resguardo de fajas marginales de protección de riberas.' },
-            forestal: { n: 'Ley N.º 422/73 Forestal Nacional', d: 'Impone la reserva legal rural forestal del 25% de manera obligatoria.' },
-            deforestacionCero: { n: 'Ley N.º 6256/18 Deforestación Cero', d: 'Veda total en Región Oriental. Establece pena privativa de libertad de 3 a 8 años.' },
-            residuos: { n: 'Decreto N.º 7391/17 Residuos Sólidos', d: 'Prohíbe taxativamente la quema o disposición descontrolada en fosa.' },
-            calidadAire: { n: 'Decreto N.º 1269/19 Calidad del Aire', d: 'Regula límites máximos de opacidad y muestreos isocinéticos en ductos/chimeneas.' },
-            leyMinas: { n: 'Leyes N.º 93/1914 y 698/1924 de Minas', d: 'Exige fianza y el pago de regalía al fisco del 5% del producto bruto extraído.' },
-            resEffluentes: { n: 'Resolución N.º 222/02', d: 'Límites de vertido: DBO5 < 50 mg/L, DQO < 150 mg/L, Grasas < 20 mg/L.' },
-            leyAreasProtegidas: { n: 'Ley N.º 352/94 Áreas Silvestres Protegidas', d: 'Exige de forma ineludible un Estudio de Impacto Ambiental completo (Art. 12).' },
-            resCTCA: { n: 'Resolución N.º 281/19 (SIAM)', d: 'Reglamenta el uso obligatorio de los campos digitales del SIAM.' },
-            resGeomatica: { n: 'Resolución N.º 251/18 (Mapas Geomática)', d: 'Establece formatos obligatorios shapefile (.shp) para validación.' },
-            resAudiencia: { n: 'Resolución N.º 640/14 (Audiencias)', d: 'Fija plazo perentorio de 3 días para objeciones posteriores al evento.' },
-            resPozos: { n: 'Res. 2155/05 y Ley 5431/15 (Agua Subterránea)', d: 'Regula tolerancia mecánica (+-10%) y exige Permiso de Perforación ante el MADES.' },
-            resServiciosAmbientales: { n: 'Resolución N.º 344/18 (Servicios Ambientales)', d: 'Exige adquisición física de Certificados ante déficit de reserva forestal.' },
-            resPGAagricola: { n: 'Res. 244/15 y Ley 4001/14 (Manejo de Fuego)', d: 'Exige Prevención de Incendios Rurales y Licencia Municipal de Quema.' },
-            resEdeEfluentes: { n: 'Resolución N.º 616/14 (EDE)', d: 'Fija las matrices analíticas obligatorias de dispersión hídrica y suelos.' },
-            resPcbtransformadores: { n: 'Resolución N.º 1402/11 (PCB)', d: 'Protocolos estrictos de almacenamiento, etiquetado y contingencia ante derrames.' },
-            leyFitosanitarios: { n: 'Ley N.º 3742/09 (Fitosanitarios)', d: 'Exige barrera viva y franja de seguridad mínima de 100m respecto a poblaciones.' },
-            leyPatrimonio: { n: 'Ley N.º 5621/16 (Patrimonio Cultural)', d: 'Exige Protocolo de Hallazgos Arqueológicos Fortuitos aprobado por la SNC.' }
-        };
-
-        // --- 2. DICCIONARIO DE ACTIVIDADES Y FILTRO ---
-        const actividadesFull = {
-            'urbanizaciones': 'Barrios cerrados, Loteamientos y Urbanizaciones',
-            'planes_ordenamiento': 'Planes de ordenamiento urbano y territorial',
-            'obras_3000': 'Obras en parcelas > 3.000 m²',
+        // --- 1. DEFINICIÓN DE ACTIVIDADES ---
+        const DICCIONARIO_ACTIVIDADES = {
+            'urbanizaciones': 'Loteamientos y Urbanizaciones',
             'estaciones': 'Estaciones de Servicio / Combustibles',
-            'centros_compras': 'Centros de compras (Shoppings) > 5.000 m²',
-            'hospitales': 'Hospital, Sanatorio o Centro Radiológico',
-            'plantas_aguas_servidas': 'Planta de tratamiento de aguas servidas',
-            'cementerios': 'Cementerios, Campus Universitarios o Estadios',
-            'ganaderia': 'Establecimientos Agrícolas o Ganaderos',
-            'reforestaciones': 'Reforestaciones (Monocultivos > 1.000 Ha)',
-            'granjas': 'Granjas de producción intensiva de animales',
-            'humedales': 'Aprovechamiento / Desecación de Humedales',
+            'centros_compras': 'Centros de compras > 5.000 m²',
+            'hospitales': 'Hospitales o Centros Radiológicos',
+            'plantas_aguas': 'Plantas de tratamiento de aguas',
+            'ganaderia': 'Establecimientos Ganaderos/Agrícolas',
+            'granjas': 'Granjas de producción intensiva',
             'industrias': 'Complejos Industriales / Manufactura',
-            'depositos': 'Depósitos / Silos de acopio o químicos',
-            'conductos': 'Conductos de agua, petróleo, gas o efluentes',
-            'obras_hidraulicas': 'Obras hidráulicas / Canales comerciales',
-            'lineas_transmision': 'Usinas y líneas de transmisión eléctrica',
+            'depositos': 'Depósitos / Silos de acopio',
             'canteras': 'Canteras / Explotación de Minas',
-            'combustibles_fosiles': 'Prospección Combustibles Fósiles / Refinerías',
-            'residuos_urbanos': 'Plantas de residuos / Rellenos Sanitarios',
-            'obras_viales': 'Obras viales en general / Puertos',
-            'pistas': 'Pistas de aterrizaje / Helipuertos',
-            'desmontes': 'Desmontes o cambio de uso de suelo > 2 Ha'
+            'combustibles': 'Prospección Combustibles / Refinerías',
+            'residuos': 'Plantas de residuos / Rellenos',
+            'vialidad': 'Obras viales / Puertos'
         };
 
-        const TODAS_LAS_ACTIVIDADES = ['urbanizaciones', 'planes_ordenamiento', 'obras_3000', 'estaciones', 'centros_compras', 'hospitales', 'plantas_aguas_servidas', 'cementerios', 'ganaderia', 'reforestaciones', 'granjas', 'humedales', 'industrias', 'depositos', 'conductos', 'obras_hidraulicas', 'lineas_transmision', 'canteras', 'combustibles_fosiles', 'residuos_urbanos', 'obras_viales', 'pistas', 'desmontes'];
-
-        const actividadesPorInstrumento = {
-            'EIA': TODAS_LAS_ACTIVIDADES,
-            'RIMA': TODAS_LAS_ACTIVIDADES,
-            'EDE': ['industrias', 'estaciones', 'hospitales', 'plantas_aguas_servidas', 'depositos', 'granjas', 'residuos_urbanos'],
-            'PGA': ['urbanizaciones', 'obras_3000', 'estaciones', 'centros_compras', 'hospitales', 'cementerios', 'ganaderia', 'granjas', 'industrias', 'depositos', 'pistas'],
-            'AA': ['urbanizaciones', 'estaciones', 'centros_compras', 'hospitales', 'ganaderia', 'industrias', 'depositos', 'canteras', 'combustibles_fosiles', 'residuos_urbanos', 'obras_viales'],
-            'CIERRE': ['canteras', 'industrias', 'residuos_urbanos', 'combustibles_fosiles', 'depositos']
-        };
-
-        const ESTRUCTURAS = {
-            'EIA': ['1. Datos del Proponente y Consultores', '2. Descripción técnica de magnitudes', '3. Línea de Base (con mapas .shp Res 251/18)', '4. Matriz de Impactos (Positivos/Negativos)', '5. Plan de Gestión Ambiental (PGA)', '6. Relatorio de Impacto Ambiental (RIMA)'],
-            'RIMA': ['1. Resumen analítico en lenguaje sencillo', '2. Justificación de alternativas', '3. Síntesis de línea de base', '4. Matriz simplificada de impactos', '5. Resumen de medidas de mitigación'],
-            'EDE': ['1. Caracterización físico-química del vertido', '2. Memoria de cálculo del sistema de tratamiento', '3. Matriz de dispersión hídrica/suelos', '4. Plan de monitoreo de efluentes (Res 222/02)'],
-            'PGA': ['1. Descripción operativa', '2. Mapeo de focos de emisión', '3. Plan de Gestión de Residuos (Dec 7391/17)', '4. Cronograma de mitigación y monitoreo'],
-            'AA': ['1. Antecedentes (Declaración Jurada)', '2. Metodología de verificación en campo', '3. Matriz de Cumplimiento Legal', '4. Evidencias analíticas (Laboratorios)', '5. PGA reajustado para próximo periodo'],
-            'CIERRE': ['1. Inventario de pasivos ambientales', '2. Plan de desmantelamiento seguro', '3. Ingeniería de recomposición de suelos', '4. Plan de revegetación nativa']
+        // --- 2. FILTRO INTELIGENTE: TRÁMITE -> ACTIVIDAD ---
+        const MAPEO_TRAMITES = {
+            'EIA': ['urbanizaciones', 'estaciones', 'centros_compras', 'hospitales', 'plantas_aguas', 'ganaderia', 'granjas', 'industrias', 'depositos', 'canteras', 'combustibles', 'residuos', 'vialidad'],
+            'RIMA': ['urbanizaciones', 'industrias', 'canteras', 'combustibles', 'residuos', 'vialidad'],
+            'EDE': ['industrias', 'estaciones', 'hospitales', 'plantas_aguas', 'depositos', 'residuos'],
+            'PGA': ['urbanizaciones', 'estaciones', 'centros_compras', 'ganaderia', 'granjas', 'industrias', 'depositos'],
+            'AA': ['urbanizaciones', 'estaciones', 'hospitales', 'ganaderia', 'industrias', 'depositos', 'canteras', 'residuos']
         };
 
         function filtrarActividades() {
             const inst = document.getElementById('instrumento').value;
             const selectAct = document.getElementById('actividad');
             
-            // Limpiar opciones previas
+            // Vaciar las opciones actuales
             selectAct.innerHTML = '<option value="">-- Seleccione Actividad --</option>';
             
             if (!inst) return;
             
-            const actividadesPermitidas = actividadesPorInstrumento[inst] || [];
-            actividadesPermitidas.forEach(function(clave) {
+            // Llenar solo con las actividades permitidas para el instrumento seleccionado
+            const permitidas = MAPEO_TRAMITES[inst];
+            permitidas.forEach(function(clave) {
                 let opt = document.createElement('option');
                 opt.value = clave;
-                opt.textContent = actividadesFull[clave].toUpperCase();
+                opt.textContent = DICCIONARIO_ACTIVIDADES[clave].toUpperCase();
                 selectAct.appendChild(opt);
             });
         }
 
-        // Ejecutar al cargar por si el navegador guardó el valor del instrumento
-        window.onload = function() {
-            document.getElementById('instrumento').value = ""; 
-            filtrarActividades();
+        // --- 3. BASE DE LEYES ---
+        const DB_LEYES = {
+            ley294: { n: 'Ley N.º 294/93 de Evaluación de Impacto Ambiental', d: 'Obliga a obtener DIA previa y sanciona la falsedad de datos.' },
+            decretoEIA: { n: 'Decreto N.º 453/13 y 954/13', d: 'Reglamenta el EIA, el PGA y las Auditorías Ambientales.' },
+            forestal: { n: 'Ley N.º 422/73 Forestal Nacional', d: 'Impone la reserva legal rural forestal del 25% obligatoria.' },
+            deforestacionCero: { n: 'Ley N.º 6256/18 de Deforestación Cero', d: 'Veda total en Región Oriental. Pena de 3 a 8 años.' },
+            leyMinas: { n: 'Ley N.º 93/1914 y 698/1924 de Minas', d: 'Exige fianza y pago de regalía del 5% del producto bruto.' },
+            leyAreasProtegidas: { n: 'Ley N.º 352/94 de Áreas Protegidas', d: 'Obligatoriedad de EIA completo para afectación de ASP.' },
+            resCTCA: { n: 'Resolución N.º 281/19 (SIAM)', d: 'Implementación obligatoria del llenado de campos digitales.' },
+            resGeomatica: { n: 'Resolución N.º 251/18 (Geomática)', d: 'Mapas Temáticos obligatorios en formato shapefile (.shp).' },
+            resPozos: { n: 'Res. 2155/05 y Ley 5431/15', d: 'Regula pozos profundos, exige permiso de perforación y topes mecánicos.' },
+            resServiciosAmbientales: { n: 'Resolución N.º 344/18', d: 'Mecanismo de adquisición de certificados por déficit forestal.' },
+            resPcb: { n: 'Resolución N.º 1402/11 (PCB)', d: 'Protocolos de tratamiento para equipos con aceites contaminados.' },
+            resEfluentes: { n: 'Resoluciones N.º 222/02 y 616/14 (EDE)', d: 'Establece límites de vertido y matrices de dispersión hídrica.' },
+            cierreLey: { n: 'Ley N.º 3180/07', d: 'Mandato estricto de mitigación de cierre y recomposición morfológica.' }
         };
 
-        // --- 3. MOTOR DE INFERENCIA LÓGICA ---
+        const ESTRUCTURAS = {
+            'EIA': ['1. Datos del Proponente y Consultores', '2. Descripción técnica y cronograma', '3. Línea de Base Ambiental (Mapas .shp)', '4. Matriz de Impactos', '5. Plan de Gestión Ambiental (PGA)'],
+            'RIMA': ['1. Resumen analítico', '2. Justificación de alternativas', '3. Síntesis de impactos significativos', '4. Resumen de medidas de mitigación'],
+            'EDE': ['1. Caracterización del vertido', '2. Memoria del sistema de tratamiento', '3. Matriz de dispersión hídrica', '4. Plan de monitoreo'],
+            'PGA': ['1. Descripción operativa', '2. Mapeo de focos de emisión', '3. Cronograma de mitigación', '4. Programa de monitoreo'],
+            'AA': ['1. Antecedentes (Declaración Jurada)', '2. Verificación en campo', '3. Matriz de Cumplimiento Legal', '4. Evidencias analíticas', '5. PGA reajustado']
+        };
+
+        // --- 4. MOTOR PRINCIPAL DE GENERACIÓN ---
         function generarGuia() {
             const inst = document.getElementById('instrumento').value;
             const act = document.getElementById('actividad').value;
             
             if (!inst || !act) {
-                alert("Por favor, seleccione el Instrumento y la Actividad.");
+                alert("Por favor, seleccione el Requerimiento Técnico y la Actividad.");
                 return;
             }
 
@@ -298,113 +275,27 @@
             const efluentes = parseFloat(document.getElementById('efluentes').value) || 0;
             const region = document.getElementById('region').value;
             
-            const checks = {
-                bosque: document.getElementById('tiene-bosque').checked,
-                deficit: document.getElementById('deficit-bosque').checked,
-                cauce: document.getElementById('tiene-cauce').checked,
-                asp: document.getElementById('afecta-asp').checked,
-                pozo: document.getElementById('requiere-pozo').checked,
-                pcb: document.getElementById('posee-pcb').checked,
-                caldera: document.getElementById('tiene-caldera').checked
-            };
+            // Estado de checkboxes
+            const c_bosque = document.getElementById('tiene-bosque').checked;
+            const c_deficit = document.getElementById('deficit-bosque').checked;
+            const c_asp = document.getElementById('afecta-asp').checked;
+            const c_pozo = document.getElementById('requiere-pozo').checked;
+            const c_pcb = document.getElementById('posee-pcb').checked;
+            const c_cauce = document.getElementById('tiene-cauce').checked;
+            const c_cierre = document.getElementById('requiere-cierre').checked; // El nuevo módulo
 
             document.getElementById('estado-vacio').classList.add('oculto');
             document.getElementById('contenido-guia').classList.remove('oculto');
 
-            let macroproyecto = (act === 'urbanizaciones' && sup > 10) || (act === 'industrias' && sup > 5) || ['canteras','combustibles_fosiles','residuos_urbanos','obras_viales'].includes(act);
-            let categoria = (macroproyecto || checks.asp || (act === 'ganaderia' && sup > 500 && region === 'oriental')) ? 'Categoría A (Alto Impacto)' : 'Categoría B (Mediano Impacto)';
+            // Determinar Categoría
+            let macroproyecto = (act === 'urbanizaciones' && sup > 10) || ['canteras','combustibles','residuos','vialidad'].includes(act);
+            let categoria = (macroproyecto || c_asp || (act === 'ganaderia' && sup > 500 && region === 'oriental')) ? 'Categoría A (Alto Impacto)' : 'Categoría B';
             
             document.getElementById('res-inst-badge').innerText = `Trámite: ${inst}`;
             document.getElementById('res-categoria').innerText = `Escala: ${categoria}`;
 
-            let leyesSet = new Set(['ley294', 'decretoEIA', 'resCTCA', 'resGeomatica', 'residuos']);
-            let alertas = ['<div class="alerta-item"><b>CONTROL SIAM (Res. 281/19):</b> Llenar el 100% de los campos digitales. El sistema bloquea el expediente si hay celdas vacías.</div>'];
+            // Arrays lógicos
+            let leyesSet = new Set(['ley294', 'decretoEIA', 'resCTCA', 'resGeomatica']);
+            let alertas = ['<div class="alerta-item"><b>CONTROL DIGITAL:</b> Asegurar llenado completo en SIAM. Adjuntar polígonos .shp obligatoriamente.</div>'];
 
-            // Lógica Cruzada
-            if (checks.deficit) {
-                leyesSet.add('resServiciosAmbientales');
-                alertas.push('<div class="alerta-item"><b>COMPENSACIÓN:</b> Déficit forestal menor a 25% exige anexar adquisición de Certificados de Servicios Ambientales.</div>');
-            }
-            if (checks.pcb) {
-                leyesSet.add('resPcbtransformadores');
-                alertas.push('<div class="alerta-item"><b>PELIGRO PCB:</b> Adjuntar protocolo estricto de manejo, muestreo y contingencia de aceites de transformador (Res. 1402/11).</div>');
-            }
-            if (checks.pozo) {
-                leyesSet.add('resPozos');
-                alertas.push('<div class="alerta-item"><b>AGUA SUBTERRÁNEA:</b> Indicar coordenadas UTM, tolerancias de encamisado y tramitar Permiso de Perforación ante MADES.</div>');
-            }
-            if (checks.asp) {
-                leyesSet.add('leyAreasProtegidas');
-                alertas.push('<div class="alerta-item"><b>RESTRICCIÓN ASP:</b> Afectación de reserva exige imperativamente presentación de Estudio de Impacto Ambiental formal.</div>');
-            }
-            if (checks.bosque && region === 'oriental') {
-                leyesSet.add('deforestacionCero');
-                leyesSet.add('forestal');
-                alertas.push('<div class="alerta-item"><b>DEFORESTACIÓN CERO:</b> Conversión penada con 3 a 8 años de cárcel. Prohibición absoluta de cambio de uso de suelo.</div>');
-            }
-            if (act === 'ganaderia' && checks.bosque) {
-                leyesSet.add('resPGAagricola');
-                alertas.push('<div class="alerta-item"><b>INCENDIOS RURALES:</b> Obligatorio incorporar Plan de Prevención y gestionar Licencia Municipal de Quema.</div>');
-            }
-            if (act === 'canteras') {
-                leyesSet.add('leyMinas');
-                leyesSet.add('leyPatrimonio');
-                alertas.push('<div class="alerta-item"><b>MINERÍA Y PATRIMONIO:</b> Calcular canon del 5% del producto bruto y adjuntar Protocolo Arqueológico visado por SNC.</div>');
-            }
-            if (act === 'depositos' || act === 'ganaderia') {
-                leyesSet.add('leyFitosanitarios');
-                alertas.push('<div class="alerta-item"><b>FITOSANITARIOS:</b> Verificar in situ barreras vivas y franjas de 100m de separación con caminos/poblaciones.</div>');
-            }
-            if (checks.cauce || efluentes > 0 || inst === 'EDE') {
-                leyesSet.add('recursosHidricos');
-                leyesSet.add('resEffluentes');
-                if (inst !== 'EDE') leyesSet.add('resEdeEfluentes');
-                alertas.push('<div class="alerta-item"><b>RECURSOS HÍDRICOS:</b> Delimitar fajas marginales. Cumplir topes DBO5 < 50 mg/L y adjuntar matriz de dispersión.</div>');
-            }
-            if (checks.caldera) {
-                leyesSet.add('calidadAire');
-                alertas.push('<div class="alerta-item"><b>EMISIONES FIJAS:</b> Ubicar chimeneas en plano y exigir puertos de muestreo analítico de opacidad/gases.</div>');
-            }
-            if (inst === 'EIA' && macroproyecto) {
-                leyesSet.add('resAudiencia');
-                alertas.push('<div class="alerta-item"><b>AUDIENCIA PÚBLICA:</b> Publicar edictos. Contemplar plazo de 3 días post-evento para objeciones ciudadanas.</div>');
-            }
-
-            // Inyectar HTML Alertas
-            document.getElementById('res-alertas').innerHTML = alertas.join('');
-
-            // Inyectar HTML Leyes
-            let divLegal = document.getElementById('res-legal');
-            divLegal.innerHTML = '';
-            Array.from(leyesSet).forEach(function(key) {
-                let box = document.createElement('div');
-                box.className = 'ley-box';
-                box.innerHTML = `<div class="ley-titulo-texto">⚖️ ${DB_LEYES[key].n}</div><div class="ley-detalle">${DB_LEYES[key].d}</div>`;
-                divLegal.appendChild(box);
-            });
-
-            // Inyectar HTML Estructura Documento
-            let listaEst = document.getElementById('res-estructura');
-            listaEst.innerHTML = '';
-            document.getElementById('res-nombre-doc').innerText = `Índice Obligatorio: ${inst}`;
-            ESTRUCTURAS[inst].forEach(function(item) {
-                let li = document.createElement('li');
-                li.textContent = item;
-                listaEst.appendChild(li);
-            });
-        }
-
-        // Funcionalidad de Exportación a Word
-        document.getElementById('btn-descargar-word').addEventListener('click', function() {
-            let contenido = document.getElementById('contenido-guia').innerText;
-            let blob = new Blob(['\ufeff', contenido], { type: 'application/msword' });
-            let url = URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = 'SIGAPY_Expediente.doc';
-            a.click();
-            URL.revokeObjectURL(url);
-        });
-    </script>
-</body>
-</html>
+            //
