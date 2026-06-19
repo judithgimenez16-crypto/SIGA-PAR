@@ -3,293 +3,466 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master - Copiloto IA v17.0</title>
+    <title>SIGA-PY Consultor Master - Ultimate v18.0</title>
     <style>
         :root {
-            --color-primario: #1b4332;
-            --color-secundario: #2d6a4f;
-            --color-acento: #52b788;
-            --color-fondo: #f1f5f9;
+            --color-primario: #0f2a22;
+            --color-secundario: #1b4332;
+            --color-acento: #2d6a4f;
+            --color-mint: #52b788;
+            --color-light-mint: #d8f3dc;
+            --color-fondo: #f8fafc;
             --color-tarjeta: #ffffff;
             --color-texto: #1e293b;
+            --color-texto-mutado: #64748b;
             --color-alerta: #ea580c;
+            --color-alerta-bg: #fff7ed;
             --color-azul: #0284c7;
+            --color-azul-bg: #f0f9ff;
             --color-gris-borde: #e2e8f0;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.03);
         }
 
-        body { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; background-color: var(--color-fondo); color: var(--color-texto); margin: 0; padding: 0; line-height: 1.6; }
-        
-        header { background: linear-gradient(135deg, #0f2a22 0%, var(--color-primario) 100%); color: white; padding: 25px 20px 15px 20px; text-align: center; box-shadow: var(--shadow-md); position: relative; z-index: 10; }
-        header h1 { margin: 0; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; }
-        header p { margin: 5px 0; color: #a7f3d0; font-size: 1.1rem; }
-        
-        .nav-consulta { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: 20px; padding-bottom: 10px; }
-        .tab-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); }
-        .tab-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--color-fondo); color: var(--color-texto); margin: 0; padding: 0; line-height: 1.6; }
 
-        .container { display: flex; max-width: 1600px; margin: 30px auto; gap: 30px; padding: 0 20px; align-items: flex-start; }
-        
-        .panel-config { flex: 1; background: var(--color-tarjeta); padding: 25px; border-radius: 16px; box-shadow: var(--shadow-lg); border-top: 5px solid var(--color-primario); position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow-y: auto; }
-        .panel-config::-webkit-scrollbar { width: 6px; }
-        .panel-config::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .panel-config h2 { color: var(--color-texto); margin-top: 0; font-size: 1.4rem; border-bottom: 1px solid var(--color-gris-borde); padding-bottom: 15px; margin-bottom: 20px; font-weight: 700; }
-        
-        .seccion-form { background: #f8fafc; padding: 18px; border-radius: 12px; margin-bottom: 18px; border: 1px solid var(--color-gris-borde); transition: border-color 0.3s; }
-        .seccion-form:hover { border-color: #cbd5e1; }
-        .seccion-form h3 { margin-top: 0; font-size: 0.95rem; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-        
-        .campo { margin-bottom: 15px; }
-        .campo label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: #334155; }
-        .campo select, .campo input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; background-color: #ffffff; color: #1e293b; transition: all 0.2s; outline: none; }
-        .campo select:focus, .campo input:focus { border-color: var(--color-azul); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
+        header { background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%); color: white; padding: 20px 30px; box-shadow: var(--shadow-md); }
+        .header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 15px; }
+        .header-top h1 { margin: 0; font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; display: flex; align-items: center; gap: 10px; }
+        .header-top h1 span { color: var(--color-mint); font-size: 1.1rem; font-weight: 600;}
+
+        /* NAVEGACIÓN SUPERIOR (TABS) */
+        .workspace-nav { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+        .workspace-btn { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; white-space: nowrap; transition: all 0.2s ease; }
+        .workspace-btn:hover { background: rgba(255,255,255,0.18); color: #ffffff; }
+        .workspace-btn.activo { background: var(--color-mint); color: var(--color-primario); border-color: var(--color-mint); box-shadow: 0 2px 8px rgba(82,183,136,0.3); }
+
+        .workspace-container { max-width: 1700px; margin: 25px auto; padding: 0 20px; }
+        .workspace-panel { display: none; }
+        .workspace-panel.activo { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+        .layout-grid { display: grid; grid-template-columns: 450px 1fr; gap: 25px; align-items: flex-start; }
+        @media (max-width: 1200px) { .layout-grid { grid-template-columns: 1fr; } }
+
+        /* PANELES Y TARJETAS */
+        .panel { background: var(--color-tarjeta); border-radius: 14px; box-shadow: var(--shadow-md); border: 1px solid var(--color-gris-borde); overflow: hidden; margin-bottom: 25px; }
+        .panel-header { padding: 18px 20px; border-bottom: 1px solid var(--color-gris-borde); background: #fafafa; display: flex; justify-content: space-between; align-items: center; }
+        .panel-header h2 { margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--color-texto); }
+        .panel-body { padding: 20px; }
+
+        /* FORMULARIOS */
+        .card-seccion { background: #f8fafc; border: 1px solid var(--color-gris-borde); border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .card-seccion h3 { margin: 0 0 12px 0; font-size: 0.85rem; text-transform: uppercase; color: var(--color-texto-mutado); font-weight: 700; }
+        .campo { margin-bottom: 12px; }
+        .campo label { display: block; font-size: 0.82rem; font-weight: 600; color: #475569; margin-bottom: 6px; }
+        .campo select, .campo input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; background: #ffffff; color: var(--color-texto); box-sizing: border-box; outline: none; transition: 0.2s; }
+        .campo select:focus, .campo input:focus { border-color: var(--color-azul); box-shadow: 0 0 0 3px rgba(2,132,199,0.1); }
         .campo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        
-        .campo-checkbox { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; background: #fff; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--color-gris-borde); font-weight: 500; color: #334155; transition: all 0.2s; cursor: pointer; }
-        .campo-checkbox:hover { border-color: #cbd5e1; background: #f8fafc; }
-        
-        .switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        input:checked + .slider { background-color: var(--color-acento); }
-        input:checked + .slider:before { transform: translateX(20px); }
 
-        .btn-generar { width: 100%; background: linear-gradient(to right, var(--color-primario), var(--color-secundario)); color: white; border: none; padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: 10px; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px; }
-        .btn-generar:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-        
-        .spinner { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid white; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
+        /* SWITCHES */
+        .toggle-box { display: flex; align-items: center; justify-content: space-between; background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px solid #cbd5e1; margin-bottom: 8px; font-size: 0.85rem; font-weight: 500; }
+        .switch { position: relative; display: inline-block; width: 38px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .2s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .2s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--color-mint); }
+        input:checked + .slider:before { transform: translateX(16px); }
+
+        /* BOTONES */
+        .btn-accion-primario { width: 100%; background: linear-gradient(135deg, var(--color-secundario) 0%, var(--color-acento) 100%); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-sm); display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 1.05rem; }
+        .btn-accion-primario:hover { opacity: 0.95; }
+        .spinner { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid white; width: 18px; height: 18px; animation: spin 1s linear infinite; display: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .panel-resultado { flex: 1.5; background: var(--color-tarjeta); padding: 0; border-radius: 16px; box-shadow: var(--shadow-lg); min-height: 600px; border-top: 5px solid var(--color-azul); overflow: hidden; }
-        .mensaje-vacio { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 500px; color: #94a3b8; font-style: italic; text-align: center; padding: 40px; }
-        .mensaje-vacio span { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
-        .oculto { display: none !important; }
+        /* REPORTE Y PLANTILLAS ACTIVAS */
+        .reporte-header { background: #f8fafc; padding: 20px 25px; border-bottom: 2px solid var(--color-gris-borde); display: flex; justify-content: space-between; align-items: center; }
+        .reporte-header h3 { margin: 0; font-size: 1.3rem; font-weight: 800; }
+        .tag-badge { background: var(--color-secundario); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        
+        .alerta-ingenieria { background: var(--color-azul-bg); border: 1px solid #bae6fd; border-left: 5px solid var(--color-azul); border-radius: 8px; padding: 15px 20px; margin-bottom: 20px; font-size: 0.92rem; color: #0369a1; }
+        .alerta-mades { background: var(--color-alerta-bg); border: 1px solid #ffedd5; border-left: 5px solid var(--color-alerta); border-radius: 8px; padding: 15px 20px; margin-bottom: 20px; font-size: 0.92rem; color: #9a3412; }
+        
+        .ley-tarjeta { background: #ffffff; border: 1px solid var(--color-gris-borde); border-left: 4px solid var(--color-secundario); border-radius: 6px; padding: 12px 15px; margin-bottom: 10px; display: inline-block; width: 100%; box-sizing: border-box;}
+        .ley-tarjeta-cat { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: var(--color-texto-mutado); background: #f1f5f9; padding: 1px 5px; border-radius: 3px; margin-bottom: 4px; display: inline-block;}
+        .ley-tarjeta-titulo { font-weight: 700; font-size: 0.9rem; color: #0f172a; }
 
-        .reporte-cuerpo { background: #ffffff; }
-        .header-guia { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 25px 30px; border-bottom: 1px solid var(--color-gris-borde); }
-        .header-guia h2 { color: #0f172a; margin: 0; font-size: 1.5rem; font-weight: 800; }
-        .reporte-contenido-interno { padding: 30px; }
-        
-        .alerta-requisitos { background-color: #fff7ed; border: 1px solid #ffedd5; border-left: 5px solid var(--color-alerta); padding: 20px 25px; border-radius: 10px; margin-bottom: 25px; box-shadow: var(--shadow-sm); }
-        .alerta-item { margin-bottom: 12px; font-weight: 500; padding-left: 28px; position: relative; font-size: 0.95rem; color: #9a3412; }
-        .alerta-item::before { content: "🎯"; position: absolute; left: 0; }
-        
-        .alerta-ingenieria { background-color: #f0f9ff; border: 1px solid #e0f2fe; border-left: 5px solid var(--color-ingenieria); padding: 18px 25px; border-radius: 10px; margin-bottom: 20px; font-weight: 500; font-size: 0.95rem; color: #075985; box-shadow: var(--shadow-sm); }
-        .alerta-ingenieria h4 { margin: 0 0 10px 0; font-size: 1.1rem; color: #0369a1; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #bae6fd; padding-bottom: 8px; }
-        
-        /* ESTILOS DEL COPILOTO (NUEVO) */
-        .res-cuerpo-informe { background:#ffffff; padding:25px; border-radius:10px; border: 1px solid var(--color-gris-borde); font-family: 'Arial', sans-serif; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+        /* ESTILOS DEL COPILOTO IA */
         .plantilla-step { margin-bottom: 25px; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; page-break-inside: avoid; }
-        .plantilla-step-header { background: #f8fafc; padding: 12px 20px; font-weight: bold; color: var(--color-primario); border-bottom: 1px solid #e2e8f0; font-size: 1.1rem; }
+        .plantilla-step-header { background: #f8fafc; padding: 12px 20px; font-weight: bold; color: var(--color-primario); border-bottom: 1px solid #e2e8f0; font-size: 1.05rem; }
         .plantilla-step-body { padding: 15px 20px; font-size: 0.95rem; color: #334155; background: #ffffff;}
-        .plantilla-step-body ul { padding-left: 20px; margin-top: 5px; margin-bottom: 15px; }
         
-        .area-redaccion { background: #fefce8; border: 1px dashed #eab308; border-radius: 6px; padding: 15px; font-family: 'Times New Roman', Times, serif; font-size: 1.05rem; color: #000; min-height: 80px; outline: none; transition: 0.2s; position: relative; }
+        .area-redaccion { background: #fefce8; border: 1px dashed #eab308; border-radius: 6px; padding: 15px; font-family: 'Times New Roman', Times, serif; font-size: 1.05rem; color: #000; min-height: 80px; outline: none; transition: 0.2s; position: relative; margin-top: 10px;}
         .area-redaccion:empty:before { content: attr(placeholder); color: #a16207; font-style: italic; opacity: 0.7; }
         .area-redaccion:focus { background: #fff; border-color: var(--color-azul); border-style: solid; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
         
-        .btn-copiloto { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 10px; transition: 0.2s; }
+        .btn-copiloto { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: 0.2s; }
         .btn-copiloto:hover { background: #bae6fd; color: #0284c7; transform: translateY(-1px); }
 
-        .acciones-guia { display: flex; gap: 20px; background: #f8fafc; padding: 25px 30px; border-top: 1px solid var(--color-gris-borde); border-radius: 0 0 16px 16px; }
-        .btn-secundario, .btn-accion { width: 100%; padding: 14px; font-size: 1rem; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
-        .btn-secundario { background-color: #edf2f7; color: #2d3748; border: 1px solid #cbd5e0; }
-        .btn-accion { background-color: var(--color-azul); color: white; border: none; box-shadow: 0 4px 6px rgba(43,108,176,0.2); }
-        .btn-accion:hover { background-color: #2c5282; }
+        .reporte-footer { background: #f8fafc; padding: 15px 25px; border-top: 1px solid var(--color-gris-borde); display: flex; gap: 15px; }
+        .btn-footer { background: #ffffff; border: 1px solid #cbd5e1; padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 0.88rem; cursor: pointer; }
+        .btn-footer.primary { background: var(--color-azul); color: white; border-color: var(--color-azul); }
 
-        @media print { header, .panel-config, .acciones-guia, .btn-copiloto { display: none !important; } .panel-resultado { box-shadow: none; border: none; width: 100%; padding: 0; display: block; } body { background: white; } .area-redaccion { border: none !important; background: white !important; } }
+        /* MODAL (GUIAS Y VADEMECUM) */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 100; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; }
+        .modal-overlay.activo { opacity: 1; pointer-events: auto; }
+        .modal-content { background: white; width: 90%; max-width: 900px; max-height: 85vh; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); overflow-y: auto; transform: scale(0.95); transition: 0.3s; }
+        .modal-overlay.activo .modal-content { transform: scale(1); }
+        .modal-header { padding: 20px 30px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: rgba(255,255,255,0.95); z-index: 10; }
+        .modal-body { padding: 30px; }
+        .btn-cerrar-modal { background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; color: #64748b; }
+        
+        /* EXTRAS UI */
+        .mensaje-vacio { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 400px; color: #94a3b8; font-style: italic; text-align: center; }
+        .oculto { display: none !important; }
+        
+        @media print { header, .panel-config, .reporte-footer, .btn-copiloto, .workspace-nav { display: none !important; } .panel, .reporte-contenedor { box-shadow: none; border: none; } .area-redaccion { border: none !important; background: white !important; } }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>SIGA-PY CONSULTOR MASTER</h1>
-        <p>Sistema Experto de Gestión Ambiental e Ingeniería</p>
-        <small>v17.0 • Módulo Copiloto IA (Textos Base Profesionales)</small>
+        <div class="header-top">
+            <h1>SIGA-PY <span>Consultor Master Ultimate v18.0</span></h1>
+        </div>
+        
+        <nav class="workspace-nav">
+            <button class="workspace-btn activo" onclick="cambiarWorkspace('motor', this)">⚙️ Motor de Expedientes (Copiloto IA)</button>
+            <button class="workspace-btn" onclick="cambiarWorkspace('monitoreo', this)">📊 M9: Monitoreo & Gráficos</button>
+            <button class="workspace-btn" onclick="cambiarWorkspace('gis', this)">🗺️ M10: Cartografía GPS</button>
+            <button class="workspace-btn" onclick="cambiarWorkspace('licencias', this)">📅 M13: Alertas Vencimientos</button>
+            <button class="workspace-btn" onclick="abrirModal('guias-mades', '📚 Biblioteca: Guías Oficiales MADES')">📚 M11: Guías Oficiales MADES</button>
+        </nav>
     </header>
 
-    <div class="container">
-        <aside class="panel-config">
-            <h2>Configuración del Proyecto</h2>
-            <form id="form-ambiental">
-                
-                <div class="seccion-form" style="border-left: 4px solid var(--color-azul);">
-                    <h3>1. Requerimiento Técnico</h3>
-                    <div class="campo">
-                        <select id="instrumento" required>
-                            <option value="EIA" selected>Estudio de Impacto Ambiental Definitivo (EIA)</option>
-                            <option value="RIMA">Relatorio de Impacto Ambiental (RIMA)</option>
-                            <option value="PGA">Plan de Gestión Ambiental de Adecuación (PGA)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="seccion-form" style="border-left: 4px solid var(--color-acento);">
-                    <h3>2. Actividad Regulada</h3>
-                    <div class="campo">
-                        <select id="actividad" required>
-                            <option value="urbanizaciones">Loteamientos y Urbanizaciones</option>
-                            <option value="estaciones" selected>Estaciones de Servicio</option>
-                            <option value="industrias">Complejos Industriales</option>
-                            <option value="ganaderia">Establecimientos Ganaderos</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button type="button" class="btn-generar" onclick="simularCarga()">
-                    <span id="btn-texto">Generar Plantilla Inteligente</span>
-                    <div class="spinner" id="btn-spinner"></div>
-                </button>
-            </form>
-        </aside>
-
-        <main class="panel-resultado">
-            <div id="estado-vacio" class="mensaje-vacio">
-                <span>⚡</span>
-                <p>Configure los parámetros en el panel izquierdo. El sistema generará la plantilla con la opción del "Copiloto IA".</p>
+    <div id="modalConsulta" class="modal-overlay" onclick="cerrarModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 id="modal-title">Visor de Conocimiento</h2>
+                <button class="btn-cerrar-modal" onclick="cerrarModal()">✕</button>
             </div>
-
-            <div id="contenido-guia" class="oculto">
-                <div class="reporte-cuerpo" id="reporte-exportable">
-                    <div class="header-guia">
-                        <h2 id="res-titulo-doc">Documento Base de Consultoría</h2>
-                        <div class="badges-container">
-                            <span class="badge azul" id="res-inst-badge">Trámite: EIA</span>
-                        </div>
+            <div class="modal-body">
+                <div id="cont-guias-mades" class="oculto">
+                    <p style="margin-bottom: 20px;"><b>Biblioteca del Consultor:</b> Aquí el pasante puede consultar la teoría de cómo se redacta cada estudio según la Res. 433/19 del MADES.</p>
+                    <div style="background:#f8fafc; border:1px solid #cbd5e1; padding:20px; border-radius:8px;">
+                        <h4 style="margin-top:0; color:var(--color-primario);">¿Cómo elaborar un EIA?</h4>
+                        <ul style="font-size:0.9rem; color:#475569;">
+                            <li><b>Capítulo 1:</b> Identificación de Proponente, Marco Legal, Ubicación UTM.</li>
+                            <li><b>Capítulo 2:</b> Línea Base (Medio Físico, Biológico y Socioeconómico).</li>
+                            <li><b>Capítulo 3:</b> Matriz de Valoración de Impactos (Leopold).</li>
+                            <li><b>Capítulo 4:</b> Plan de Gestión Ambiental (PGA).</li>
+                        </ul>
+                        <h4 style="margin-top:20px; color:var(--color-primario);">¿Cómo elaborar un PGA?</h4>
+                        <ul style="font-size:0.9rem; color:#475569;">
+                            <li>Se divide en Programas (Mitigación, Monitoreo, Contingencia, Residuos).</li>
+                            <li>Todo programa lleva: Objetivo, Acción, Responsable, Frecuencia y Presupuesto.</li>
+                        </ul>
                     </div>
-
-                    <div class="reporte-contenido-interno">
-                        <section>
-                            <h3>Estructura y Copiloto de Redacción (Res. 433/19)</h3>
-                            <div class="res-cuerpo-informe" id="res-plantilla-activa">
-                                </div>
-                        </section>
-                    </div>
-                </div>
-                
-                <div class="acciones-guia">
-                    <button id="btn-descargar-word" class="btn-accion">📥 Exportar Reporte a Word (.doc)</button>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 
+    <main class="workspace-container">
+
+        <div id="ws-motor" class="workspace-panel activo">
+            <div class="layout-grid">
+                
+                <aside class="panel" style="position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow-y: auto;">
+                    <div class="panel-header"><h2>Configurador del Proyecto</h2></div>
+                    <div class="panel-body">
+                        <form id="form-core">
+                            
+                            <div class="card-seccion" style="border-left: 4px solid var(--color-azul);">
+                                <h3>1. Requerimiento Técnico-Legal</h3>
+                                <div class="campo">
+                                    <select id="instrumento" onchange="filtrarActividades()" required>
+                                        <option value="" selected disabled>Seleccione Trámite...</option>
+                                        <option value="EIA">Estudio de Impacto Ambiental Definitivo (EIA)</option>
+                                        <option value="RIMA">Relatorio de Impacto Ambiental (RIMA)</option>
+                                        <option value="EDE">Estudio de Disposición de Efluentes (EDE)</option>
+                                        <option value="PGA">Plan de Gestión Ambiental de Adecuación (PGA)</option>
+                                        <option value="AA">Auditoría Ambiental de Cumplimiento (AA)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="card-seccion" style="border-left: 4px solid var(--color-acento);">
+                                <h3>2. Actividad y Ubicación</h3>
+                                <div class="campo">
+                                    <label>Actividad Regulada (MADES):</label>
+                                    <select id="actividad" required>
+                                        <option value="">Esperando selección de trámite...</option>
+                                    </select>
+                                </div>
+                                <div class="campo">
+                                    <label>Región Geográfica:</label>
+                                    <select id="region">
+                                        <option value="oriental">Región Oriental</option>
+                                        <option value="occidental">Región Occidental / Chaco</option>
+                                    </select>
+                                </div>
+                                <div class="campo-grid">
+                                    <div class="campo"><label>Superficie (Ha):</label><input type="number" id="superficie" value="10"></div>
+                                    <div class="campo"><label>Efluentes (m³/día):</label><input type="number" id="efluentes" value="5"></div>
+                                </div>
+                            </div>
+
+                            <div class="card-seccion">
+                                <h3>3. Factores de Campo Críticos</h3>
+                                <label class="toggle-box"><span>Cobertura de Bosque Nativo</span><div class="switch"><input type="checkbox" id="c-bosque"><span class="slider"></span></div></label>
+                                <label class="toggle-box" style="background:#fff1f2;"><span>Déficit de Reserva Legal (&lt;25%)</span><div class="switch"><input type="checkbox" id="c-deficit"><span class="slider"></span></div></label>
+                                <label class="toggle-box"><span>Arroyos o cauces hídricos</span><div class="switch"><input type="checkbox" id="c-cauce"><span class="slider"></span></div></label>
+                                <label class="toggle-box" style="background:#fefce8;"><span>Afecta Área Silvestre Protegida</span><div class="switch"><input type="checkbox" id="c-asp"><span class="slider"></span></div></label>
+                                <label class="toggle-box" style="background:#f0f9ff;"><span>Contempla Pozo Profundo</span><div class="switch"><input type="checkbox" id="c-pozo"><span class="slider"></span></div></label>
+                                <label class="toggle-box"><span>Sustancias Peligrosas / PCB</span><div class="switch"><input type="checkbox" id="c-pcb"><span class="slider"></span></div></label>
+                                <label class="toggle-box" style="background:#f0fdf4;"><span style="font-weight:700; color:#166534;">➕ Módulo: Plan de Cierre</span><div class="switch"><input type="checkbox" id="c-cierre"><span class="slider"></span></div></label>
+                            </div>
+
+                            <button type="button" class="btn-accion-primario" onclick="simularCarga()">
+                                <span id="btn-texto">Generar Plantilla Inteligente (IA)</span>
+                                <div class="spinner" id="btn-spinner"></div>
+                            </button>
+                        </form>
+                    </div>
+                </aside>
+
+                <section class="panel" style="min-height: 600px;">
+                    <div id="estado-vacio-reporte" class="mensaje-vacio">
+                        <span style="font-size: 3rem;">⚡</span>
+                        <p>Configure los parámetros. El sistema inyectará la Base Legal y la Plantilla con Copiloto IA.</p>
+                    </div>
+
+                    <div id="contenido-reporte-real" class="oculto">
+                        <div id="area-imprimible">
+                            <div class="reporte-header">
+                                <h3 id="rep-titulo-tramite">Documento de Consultoría</h3>
+                                <div class="reporte-badge-container">
+                                    <span class="tag-badge">Categoría SIA</span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                
+                                <div id="rep-alerta-ingenieria"></div>
+                                <div id="rep-alerta-mades"></div>
+
+                                <h4 style="font-size: 1.1rem; border-bottom: 2px solid var(--color-gris-borde); padding-bottom: 6px; margin-top: 25px;">⚖️ MARCO LEGAL Y NORMATIVO</h4>
+                                <div id="rep-base-legal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
+
+                                <h4 style="font-size: 1.1rem; border-bottom: 2px solid var(--color-gris-borde); padding-bottom: 6px; margin-top: 30px; color: var(--color-azul);">📝 PLANTILLA DE REDACCIÓN ASISTIDA</h4>
+                                <div id="rep-plantilla-activa"></div>
+
+                            </div>
+                        </div>
+                        <div class="reporte-footer">
+                            <button class="btn-footer" onclick="window.print()">🖨️ Imprimir Visor</button>
+                            <button class="btn-footer primary" onclick="descargarWordOficial()">📥 Exportar a Word con Textos</button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <div id="ws-monitoreo" class="workspace-panel">
+            <div class="panel"><div class="panel-header"><h2>M9: Módulo de Monitoreo Ambiental Avanzado</h2></div><div class="panel-body"><p>Aquí se cargan los resultados laboratoriales de campo (pH, DBO, DQO) para generar históricos.</p></div></div>
+        </div>
+        <div id="ws-gis" class="workspace-panel">
+            <div class="panel"><div class="panel-header"><h2>M10: Cartografía Ambiental Virtual</h2></div><div class="panel-body"><p>Aquí se insertan coordenadas UTM para exportar polígonos a formato KML o GeoJSON.</p></div></div>
+        </div>
+        <div id="ws-licencias" class="workspace-panel">
+            <div class="panel"><div class="panel-header"><h2>M13: Seguimiento de Licencias Ambientales</h2></div><div class="panel-body"><p>Semáforo de vencimientos de Resoluciones DIA a 90, 60 y 30 días.</p></div></div>
+        </div>
+
+    </main>
+
     <script>
-        // --- BASE DE DATOS DEL COPILOTO IA ---
-        // Estos textos son inyectados cuando el usuario presiona "Redactar con IA"
+        // --- 1. BASE DE DATOS LEGAL ---
+        const DICCIONARIO_LEYES_SISTEMA = {
+            ley294: { c: 'Institucional', n: 'Ley 294/93 de Evaluación de Impacto Ambiental', d: 'Base rectora. Obliga a obtener la DIA.' },
+            res433: { c: 'Procedimental', n: 'Resolución MADES 433/19', d: 'Términos de Referencia oficiales para informes.' },
+            ley3239: { c: 'Recursos Hídricos', n: 'Ley 3239/07', d: 'Protección de cauces y fajas marginales.' },
+            resPozos: { c: 'Recursos Hídricos', n: 'Res. 2155/05', d: 'Regulación de perforación de pozos profundos.' },
+            ley422: { c: 'Bosques', n: 'Ley 422/73 Forestal', d: 'Reserva legal del 25% de la superficie.' },
+            ley2524: { c: 'Bosques', n: 'Ley 2524/04 Deforestación Cero', d: 'Veda en la Región Oriental.' },
+            ley3956: { c: 'Residuos', n: 'Ley 3956/09', d: 'Prohíbe disposición final a cielo abierto.' },
+            iso: { c: 'Estándares', n: 'Norma ISO 19011', d: 'Directrices para auditoría técnica de cumplimiento.' }
+        };
+
+        const DICCIONARIO_ACTIVIDADES = { 'urbanizaciones': 'Loteamientos y Urbanizaciones', 'estaciones': 'Estaciones de Servicio', 'hospitales': 'Hospitales o Centros', 'ganaderia': 'Ganadería / Agrícola', 'industrias': 'Complejos Industriales', 'canteras': 'Canteras / Minería', 'humedales': 'Proyectos en Humedales', 'residuos': 'Plantas de Tratamiento Residuos' };
+        
+        const MAPEO_TRAMITES = {
+            'EIA': ['urbanizaciones', 'estaciones', 'hospitales', 'ganaderia', 'industrias', 'canteras', 'humedales', 'residuos'],
+            'RIMA': ['urbanizaciones', 'industrias', 'canteras', 'humedales', 'residuos'],
+            'EDE': ['industrias', 'estaciones', 'hospitales', 'residuos'],
+            'PGA': ['urbanizaciones', 'estaciones', 'ganaderia', 'industrias'],
+            'AA': ['urbanizaciones', 'estaciones', 'hospitales', 'ganaderia', 'industrias', 'canteras', 'humedales', 'residuos']
+        };
+
+        // --- 2. BASE DE DATOS DEL COPILOTO IA (TEXTOS DE REDACCIÓN) ---
         const TEXTOS_COPILOTO = {
             'estaciones': {
-                'lb_fisico': 'El área de emplazamiento presenta una topografía altamente modificada, con un relieve predominantemente plano, característico del entorno urbano. El suelo se encuentra compactado y no presenta cobertura vegetal nativa significativa debido a las infraestructuras colindantes. No se observan afloramientos rocosos superficiales ni procesos erosivos severos.',
-                'impactos': 'En la fase operativa, el impacto ambiental negativo de mayor significancia (Valoración: Moderado/Alto) corresponde al riesgo potencial de contaminación de suelos y aguas subterráneas. Este riesgo deriva de posibles derrames accidentales de hidrocarburos durante las maniobras de descarga de combustibles, o fugas silenciosas en tanques subterráneos y cañerías conexas.',
-                'pga': 'PROGRAMA DE PREVENCIÓN Y MITIGACIÓN:\n1. Toda el área de carga y descarga de combustibles será pavimentada con hormigón armado de alta resistencia e impermeable.\n2. Se construirán canaletas perimetrales ciegas, dirigidas de manera exclusiva a un Separador de Agua y Aceite (Trampa API) normado.\n3. Los tanques subterráneos serán de doble pared (chaqueta de fibra de vidrio exterior) y contarán con sensores de monitoreo electrónico de intersticio para detección inmediata de fugas.'
+                'lb_fisico': 'El área de emplazamiento presenta topografía modificada y suelo compactado. No se observan afloramientos rocosos. La infiltración es baja debido a las infraestructuras colindantes.',
+                'impactos': 'El impacto de mayor significancia corresponde al riesgo potencial de contaminación de suelos y aguas subterráneas por derrames accidentales de hidrocarburos durante descargas o fugas en tanques subterráneos.',
+                'pga': 'PROGRAMA DE MITIGACIÓN:\n1. Área de carga pavimentada con hormigón impermeable.\n2. Construcción de canaletas conectadas a Trampa API.\n3. Tanques subterráneos de doble pared con monitoreo de intersticio.'
             },
             'urbanizaciones': {
-                'lb_fisico': 'El terreno presenta ondulaciones suaves con escorrentía natural orientada hacia el sur. El suelo presenta características arcillo-arenosas con moderada capacidad de infiltración. Se identifica un cuerpo hídrico intermitente en el lindero este del terreno.',
-                'impactos': 'El impacto principal durante la etapa operativa (Loteamiento activo) será la impermeabilización del suelo por la construcción de calles y viviendas, lo cual incrementará el caudal de escorrentía pluvial, generando riesgo potencial de erosión hídrica e inundaciones temporales en predios colindantes de menor cota.',
-                'pga': 'PROGRAMA DE MITIGACIÓN:\n1. Se destinará el 10% del terreno (según Ley Orgánica Municipal) para áreas verdes que actúen como zonas de absorción pluvial.\n2. Se diseñarán cunetas empastadas para disminuir la velocidad de correntada.\n3. Se respetará una faja de protección ecológica de 30 metros de ancho a cada margen del cauce hídrico lindante, en estricto cumplimiento de la Ley N.º 3239/07 de Recursos Hídricos.'
+                'lb_fisico': 'El terreno presenta ondulaciones suaves. Suelo arcillo-arenoso con moderada infiltración. Se identifica un cuerpo hídrico intermitente en el lindero.',
+                'impactos': 'El impacto principal será la impermeabilización del suelo por construcción de calles, incrementando la escorrentía pluvial y el riesgo de erosión hídrica a linderos.',
+                'pga': 'PROGRAMA DE MITIGACIÓN:\n1. Destinar el 10% del terreno para áreas verdes (Ley Orgánica Municipal).\n2. Diseñar cunetas empastadas.\n3. Respetar faja de protección ecológica del cauce hídrico (Ley 3239/07).'
             },
             'industrias': {
-                'lb_fisico': 'El terreno se ubica en un sector de zonificación industrial. La calidad del aire actual presenta niveles de material particulado dentro de los parámetros urbanos normales. El terreno ha sido previamente nivelado y compactado.',
-                'impactos': 'Los impactos más relevantes identificados corresponden a la generación continua de efluentes líquidos industriales con alta carga orgánica y sólidos suspendidos, y la emisión de material particulado y gases de combustión por el uso continuo de calderas a biomasa.',
-                'pga': 'PROGRAMA DE MITIGACIÓN (EFLUENTES Y EMISIONES):\n1. Construcción de una Planta de Tratamiento de Aguas Residuales Industriales (PTARI) basada en reactores biológicos para garantizar el cumplimiento de la Res. 222/02 antes del vertido final.\n2. Instalación de filtros multiciclón y lavadores de gases (scrubbers) en la chimenea de la caldera para mitigar la emisión de material particulado a la atmósfera.'
+                'lb_fisico': 'Terreno en zona de uso industrial. Nivelado y compactado. Calidad del aire dentro de parámetros urbanos normales.',
+                'impactos': 'Generación de efluentes líquidos con alta carga orgánica y sólidos suspendidos. Emisión de material particulado por uso de calderas.',
+                'pga': 'PROGRAMA DE MITIGACIÓN:\n1. Construcción de Planta de Tratamiento de Aguas Residuales (PTARI).\n2. Instalación de filtros multiciclón y lavadores de gases en chimeneas.\n3. Tinglado techado para acopio de residuos.'
             },
             'default': {
-                'lb_fisico': 'Se realiza el relevamiento topográfico y físico del terreno, identificando las características geológicas y climáticas de la zona para establecer el punto de partida del estudio ambiental.',
-                'impactos': 'Se identifican impactos de carácter puntual y temporal relacionados directamente con el desarrollo de la actividad propuesta, afectando de manera localizada el entorno inmediato.',
-                'pga': 'Se establecen medidas preventivas y correctivas enfocadas en la correcta disposición de residuos sólidos, control de emisiones y tratamiento básico de efluentes generados.'
+                'lb_fisico': 'Se realiza el relevamiento topográfico y físico del terreno, identificando las características geológicas y climáticas de la zona para establecer la línea base.',
+                'impactos': 'Se identifican impactos de carácter puntual y temporal relacionados directamente con el desarrollo de la actividad propuesta durante su fase operativa.',
+                'pga': 'Se establecen medidas preventivas enfocadas en la correcta disposición de residuos sólidos, control de emisiones y tratamiento básico de efluentes generados.'
             }
         };
 
-        // --- EFECTO DE CARGA ---
+        // PLANTILLAS ESTRUCTURADAS SEGÚN EL INSTRUMENTO
+        const PLANTILLAS_ESTRUCTURAS = {
+            'EIA': [
+                {id: 'lb_fisico', titulo: 'Capítulo 1: Línea de Base Ambiental (Medio Físico)', desc: 'Describa el terreno, suelo e hidrología.'},
+                {id: 'impactos', titulo: 'Capítulo 2: Impactos Ambientales', desc: 'Identifique y describa técnicamente el mayor daño o riesgo.'},
+                {id: 'pga', titulo: 'Capítulo 3: Medidas de Mitigación (PGA)', desc: 'Especifique medidas de ingeniería para solucionar impactos.'}
+            ],
+            'RIMA': [
+                {id: 'default', titulo: '1. Resumen Ejecutivo (Lenguaje Simple)', desc: 'Explique el proyecto al público.'},
+                {id: 'impactos', titulo: '2. Impactos Principales y Mitigación', desc: 'Liste los daños y sus soluciones.'}
+            ],
+            'EDE': [
+                {id: 'default', titulo: '1. Caracterización del Vertido', desc: 'Determine caudales y tipo de efluente.'},
+                {id: 'pga', titulo: '2. Sistema de Tratamiento (PTAR)', desc: 'Memoria de cálculo y diseño del sistema.'}
+            ],
+            'AA': [
+                {id: 'default', titulo: '1. Alcance de la Auditoría', desc: 'Declare periodo auditado según ISO 19011.'},
+                {id: 'impactos', titulo: '2. Hallazgos y No Conformidades', desc: 'Describa fallas legales detectadas en campo.'}
+            ],
+            'PGA': [
+                {id: 'pga', titulo: '1. Programas de Gestión Operativa', desc: 'Describa objetivos, acciones y presupuestos de mitigación.'}
+            ]
+        };
+
+        // --- 3. LÓGICA DE INTERFAZ Y WORKSPACES ---
+        function cambiarWorkspace(wsKey, btn) {
+            document.querySelectorAll('.workspace-panel').forEach(el => el.classList.remove('activo'));
+            document.querySelectorAll('.workspace-btn').forEach(el => el.classList.remove('activo'));
+            document.getElementById('ws-' + wsKey).classList.add('activo');
+            btn.classList.add('activo');
+        }
+
+        function abrirModal(seccion, titulo) {
+            document.getElementById('modal-title').innerText = titulo;
+            document.querySelectorAll('.modal-body > div').forEach(el => el.classList.add('oculto'));
+            document.getElementById('cont-' + seccion).classList.remove('oculto');
+            document.getElementById('modalConsulta').classList.add('activo');
+        }
+        function cerrarModal() { document.getElementById('modalConsulta').classList.remove('activo'); }
+
+        function filtrarActividades() {
+            const inst = document.getElementById('instrumento').value;
+            const selectAct = document.getElementById('actividad');
+            selectAct.innerHTML = '<option value="">-- Seleccione Actividad --</option>';
+            if (!inst || !MAPEO_TRAMITES[inst]) return;
+            MAPEO_TRAMITES[inst].forEach(c => selectAct.appendChild(new Option(DICCIONARIO_ACTIVIDADES[c].toUpperCase(), c)));
+        }
+
+        // --- 4. MOTOR PRINCIPAL DE INFERENCIA ---
         function simularCarga() {
             const btnTexto = document.getElementById('btn-texto');
             const spinner = document.getElementById('btn-spinner');
-            btnTexto.innerText = "Procesando..."; spinner.style.display = "block";
-            setTimeout(() => { generarGuia(); btnTexto.innerText = "Actualizar Plantilla"; spinner.style.display = "none"; }, 600);
+            if(!document.getElementById('instrumento').value || !document.getElementById('actividad').value) {
+                alert("Por favor, seleccione el Requerimiento y la Actividad."); return;
+            }
+            btnTexto.innerText = "Procesando IA..."; spinner.style.display = "block";
+            setTimeout(() => { generarGuia(); btnTexto.innerText = "Actualizar Plantilla (IA)"; spinner.style.display = "none"; }, 600);
         }
 
-        // --- INYECCIÓN DE LA PLANTILLA Y LOS BOTONES ---
         function generarGuia() {
             const inst = document.getElementById('instrumento').value;
             const act = document.getElementById('actividad').value;
-
-            document.getElementById('estado-vacio').classList.add('oculto');
-            document.getElementById('contenido-guia').classList.remove('oculto');
-            document.getElementById('res-inst-badge').innerText = `Trámite: ${inst}`;
-
-            let divPlantilla = document.getElementById('res-plantilla-activa');
             
-            // Estructura de la plantilla con Botones Copiloto
-            divPlantilla.innerHTML = `
-                <div class="plantilla-step">
-                    <div class="plantilla-step-header">Capítulo 1: Línea de Base Ambiental (Medio Físico)</div>
-                    <div class="plantilla-step-body">
-                        Describa el terreno, suelo, topografía e hidrología antes del proyecto.
-                        <br>
-                        <button class="btn-copiloto" onclick="usarCopiloto(this, '${act}', 'lb_fisico')">✨ Redactar con IA</button>
-                        <div class="area-redaccion" contenteditable="true" placeholder="Escriba aquí la descripción o presione el botón de la IA..."></div>
-                    </div>
-                </div>
+            // Recoger checks
+            const c_bosque = document.getElementById('c-bosque').checked;
+            const c_pozo = document.getElementById('c-pozo').checked;
+            const c_cauce = document.getElementById('c-cauce').checked;
+            const c_cierre = document.getElementById('c-cierre').checked;
 
-                <div class="plantilla-step">
-                    <div class="plantilla-step-header">Capítulo 2: Impactos Ambientales Principales</div>
-                    <div class="plantilla-step-body">
-                        Identifique y describa técnicamente cuál será el mayor daño o riesgo ambiental que generará esta actividad.
-                        <br>
-                        <button class="btn-copiloto" onclick="usarCopiloto(this, '${act}', 'impactos')">✨ Redactar con IA</button>
-                        <div class="area-redaccion" contenteditable="true" placeholder="Describa el impacto técnico aquí..."></div>
-                    </div>
-                </div>
+            document.getElementById('estado-vacio-reporte').classList.add('oculto');
+            document.getElementById('contenido-reporte-real').classList.remove('oculto');
+            document.getElementById('rep-titulo-tramite').innerText = `Expediente: ${inst}`;
 
+            // 4.1 Generar Base Legal Cruzada
+            let leyesSet = new Set(['ley294', 'res433']);
+            if (inst === 'AA') leyesSet.add('iso');
+            if (c_pozo) leyesSet.add('resPozos');
+            if (c_bosque) leyesSet.add('ley422');
+            if (c_cauce) leyesSet.add('ley3239');
+            if (c_cierre) leyesSet.add('cierreLey');
+
+            let divLegal = document.getElementById('rep-base-legal'); divLegal.innerHTML = '';
+            Array.from(leyesSet).forEach(k => {
+                if(DICCIONARIO_LEYES_SISTEMA[k]) {
+                    divLegal.innerHTML += `<div class="ley-tarjeta"><span class="ley-tarjeta-cat">${DICCIONARIO_LEYES_SISTEMA[k].c}</span><div class="ley-tarjeta-titulo">${DICCIONARIO_LEYES_SISTEMA[k].n}</div></div>`;
+                }
+            });
+
+            // 4.2 Alertas de Ingeniería (Contexto Fijo)
+            let divIng = document.getElementById('rep-alerta-ingenieria');
+            divIng.innerHTML = `<div class="alerta-ingenieria"><b>Instrucción del Director:</b> El documento final debe presentarse en formato anillado y digital (PDF), respetando el orden del índice de la Resolución 433/19.</div>`;
+
+            // 4.3 Generar Plantilla Activa con Botones Copiloto
+            let divPlantilla = document.getElementById('rep-plantilla-activa');
+            let htmlPlantilla = '';
+            
+            let estructuraActual = PLANTILLAS_ESTRUCTURAS[inst] || PLANTILLAS_ESTRUCTURAS['EIA'];
+
+            estructuraActual.forEach(seccion => {
+                htmlPlantilla += `
                 <div class="plantilla-step">
-                    <div class="plantilla-step-header">Capítulo 3: Medidas de Mitigación (PGA)</div>
+                    <div class="plantilla-step-header">${seccion.titulo}</div>
                     <div class="plantilla-step-body">
-                        Especifique las medidas de ingeniería o protocolos que aplicará para solucionar los impactos del punto anterior.
-                        <br>
-                        <button class="btn-copiloto" onclick="usarCopiloto(this, '${act}', 'pga')">✨ Redactar con IA</button>
-                        <div class="area-redaccion" contenteditable="true" placeholder="Liste las medidas ambientales aquí..."></div>
+                        <p style="margin-top:0; margin-bottom:10px;">${seccion.desc}</p>
+                        <button class="btn-copiloto" onclick="usarCopiloto(this, '${act}', '${seccion.id}')">✨ Redactar Párrafo con IA</button>
+                        <div class="area-redaccion" contenteditable="true" placeholder="Escriba la información aquí o presione el botón IA..."></div>
                     </div>
-                </div>
-            `;
+                </div>`;
+            });
+
+            if(c_cierre) {
+                htmlPlantilla += `<div class="plantilla-step"><div class="plantilla-step-header" style="background:#fefce8;">Módulo Extra: Plan de Cierre Operativo</div><div class="plantilla-step-body"><button class="btn-copiloto" onclick="usarCopiloto(this, 'default', 'pga')">✨ Redactar con IA</button><div class="area-redaccion" contenteditable="true" placeholder="Describa el desmantelamiento..."></div></div></div>`;
+            }
+
+            divPlantilla.innerHTML = htmlPlantilla;
         }
 
-        // --- FUNCIÓN MÁGICA DEL COPILOTO ---
+        // --- 5. FUNCIÓN DEL COPILOTO ---
         function usarCopiloto(boton, actividad, seccion) {
-            // Buscar los textos de esa actividad, si no hay, usar el default
             let diccionario = TEXTOS_COPILOTO[actividad] || TEXTOS_COPILOTO['default'];
-            let textoGenerado = diccionario[seccion];
-
-            // Seleccionar la caja de texto que está debajo del botón
-            let cajaRedaccion = boton.nextElementSibling;
+            let texto = diccionario[seccion] || diccionario['default'];
             
-            // Inyectar el texto
-            cajaRedaccion.innerText = textoGenerado;
-            
-            // Ocultar el botón para dar sensación de que ya se hizo el trabajo
-            boton.style.display = 'none';
+            let caja = boton.nextElementSibling;
+            caja.innerText = texto;
+            boton.style.display = 'none'; // Ocultar botón tras usarlo
         }
 
-        // --- EXPORTAR A WORD ---
-        document.getElementById('btn-descargar-word').addEventListener('click', function() {
-            let reporteHtml = document.getElementById('reporte-exportable').innerHTML;
-            let docCSS = `
-                <style>
-                    body { font-family: Arial, sans-serif; font-size: 11pt; color: #000; }
-                    h2, h3 { color: #1b4332; }
-                    .plantilla-step { border: 1px solid #cbd5e1; margin-bottom: 20px; }
-                    .plantilla-step-header { background-color: #f1f5f9; padding: 10px; font-weight: bold; font-size: 12pt; border-bottom: 1px solid #ccc; }
-                    .plantilla-step-body { padding: 15px; }
-                    .area-redaccion { background: #fefce8; padding: 15px; border: 1px dashed #eab308; font-family: 'Times New Roman', serif; }
-                    .btn-copiloto { display: none; } /* Ocultar botones en Word */
-                </style>
-            `;
-            let doc = `<html xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8">${docCSS}</head><body>${reporteHtml}</body></html>`;
-            let blob = new Blob(['\ufeff', doc], { type: 'application/msword' });
-            let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'SIGAPY_Expediente_Relleno.doc'; a.click();
-        });
+        // --- 6. EXPORTACIÓN ---
+        function descargarWordOficial() {
+            let reporteHtml = document.getElementById('area-imprimible').innerHTML;
+            let docCSS = `<style>body{font-family:Arial; font-size:11pt;} h2,h3,h4{color:#1b4332;} .plantilla-step{border:1px solid #ccc; margin-bottom:15px; page-break-inside: avoid;} .plantilla-step-header{background:#f1f5f9; padding:8px; font-weight:bold; border-bottom:1px solid #ccc;} .area-redaccion{background:#fefce8; padding:12px; font-family:'Times New Roman'; border:1px dashed #eab308;} .ley-tarjeta{border:1px solid #ccc; padding:8px; margin-bottom:5px;} .btn-copiloto{display:none !important;}</style>`;
+            let blob = new Blob(['\ufeff<html xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8">' + docCSS + '</head><body>' + reporteHtml + '</body></html>'], { type: 'application/msword' });
+            let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'SIGAPY_Expediente_Asistido.doc'; a.click();
+        }
+
+        window.onload = function() {
+            document.getElementById('instrumento').value = ""; 
+            filtrarActividades();
+        };
     </script>
 </body>
 </html>
