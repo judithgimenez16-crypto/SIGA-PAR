@@ -3,451 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master - Interfaz Premium v16.0</title>
+    <title>SIGA-PY Consultor Master v18.0 - EIA Interactivo</title>
     <style>
         :root {
-            --color-primario: #1b4332;
-            --color-secundario: #2d6a4f;
-            --color-acento: #52b788;
-            --color-fondo: #f1f5f9;
+            --color-primario: #0f2a22;
+            --color-secundario: #1b4332;
+            --color-acento: #2d6a4f;
+            --color-mint: #52b788;
+            --color-light-mint: #d8f3dc;
+            --color-fondo: #f8fafc;
             --color-tarjeta: #ffffff;
             --color-texto: #1e293b;
+            --color-texto-mutado: #64748b;
             --color-alerta: #ea580c;
+            --color-alerta-bg: #fff7ed;
             --color-azul: #0284c7;
+            --color-azul-bg: #f0f9ff;
             --color-gris-borde: #e2e8f0;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.03);
         }
 
-        body { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; background-color: var(--color-fondo); color: var(--color-texto); margin: 0; padding: 0; line-height: 1.6; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--color-fondo); color: var(--color-texto); margin: 0; padding: 0; line-height: 1.6; }
         
-        /* HEADER PREMIUM */
-        header { background: linear-gradient(135deg, #0f2a22 0%, var(--color-primario) 100%); color: white; padding: 25px 20px 15px 20px; text-align: center; box-shadow: var(--shadow-md); position: relative; z-index: 10; }
-        header h1 { margin: 0; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; }
-        header p { margin: 5px 0; color: #a7f3d0; font-size: 1.1rem; }
-        
-        /* BARRA HORIZONTAL MEJORADA */
-        .nav-consulta { display: flex; justify-content: center; gap: 15px; margin-top: 20px; padding-bottom: 10px; }
-        .tab-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); }
-        .tab-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+        header { background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%); color: white; padding: 20px 30px; box-shadow: var(--shadow-md); }
+        .header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 15px; }
+        .header-top h1 { margin: 0; font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
+        .header-top h1 span { color: var(--color-mint); }
 
-        /* CONTENEDOR PRINCIPAL Y STICKY SIDEBAR */
-        .container { display: flex; max-width: 1600px; margin: 30px auto; gap: 30px; padding: 0 20px; align-items: flex-start; }
+        .workspace-nav { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+        .workspace-btn { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease; }
+        .workspace-btn:hover { background: rgba(255,255,255,0.18); color: #ffffff; }
+        .workspace-btn.activo { background: var(--color-mint); color: var(--color-primario); border-color: var(--color-mint); box-shadow: 0 2px 8px rgba(82,183,136,0.3); }
+
+        .workspace-container { max-width: 1700px; margin: 25px auto; padding: 0 20px; }
+        .workspace-panel { display: none; }
+        .workspace-panel.activo { display: block; }
+
+        .layout-grid { display: grid; grid-template-columns: 450px 1fr; gap: 25px; align-items: flex-start; }
+        @media (max-width: 1200px) { .layout-grid { grid-template-columns: 1fr; } }
+
+        .panel { background: var(--color-tarjeta); border-radius: 14px; box-shadow: var(--shadow-md); border: 1px solid var(--color-gris-borde); overflow: hidden; margin-bottom: 25px; }
+        .panel-header { padding: 18px 20px; border-bottom: 1px solid var(--color-gris-borde); background: #fafafa; }
+        .panel-header h2 { margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--color-texto); }
+        .panel-body { padding: 20px; }
+
+        .card-seccion { background: #f8fafc; border: 1px solid var(--color-gris-borde); border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .card-seccion h3 { margin: 0 0 12px 0; font-size: 0.85rem; text-transform: uppercase; color: var(--color-texto-mutado); font-weight: 700; }
         
-        .panel-config { flex: 1; background: var(--color-tarjeta); padding: 25px; border-radius: 16px; box-shadow: var(--shadow-lg); border-top: 5px solid var(--color-primario); position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow-y: auto; }
-        
-        /* SCROLLBAR PERSONALIZADO PARA EL PANEL */
-        .panel-config::-webkit-scrollbar { width: 6px; }
-        .panel-config::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        
-        .panel-config h2 { color: var(--color-texto); margin-top: 0; font-size: 1.4rem; border-bottom: 1px solid var(--color-gris-borde); padding-bottom: 15px; margin-bottom: 20px; font-weight: 700; }
-        
-        /* FORMULARIO MEJORADO */
-        .seccion-form { background: #f8fafc; padding: 18px; border-radius: 12px; margin-bottom: 18px; border: 1px solid var(--color-gris-borde); transition: border-color 0.3s; }
-        .seccion-form:hover { border-color: #cbd5e1; }
-        .seccion-form h3 { margin-top: 0; font-size: 0.95rem; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-        
-        .campo { margin-bottom: 15px; }
-        .campo label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: #334155; }
-        .campo select, .campo input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; background-color: #ffffff; color: #1e293b; transition: all 0.2s; outline: none; }
-        .campo select:focus, .campo input:focus { border-color: var(--color-azul); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
+        .campo { margin-bottom: 12px; }
+        .campo label { display: block; font-size: 0.82rem; font-weight: 600; color: #475569; margin-bottom: 6px; }
+        .campo select, .campo input, .campo textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; font-family: inherit; box-sizing: border-box; outline: none; transition: 0.2s; resize: vertical;}
+        .campo select:focus, .campo input:focus, .campo textarea:focus { border-color: var(--color-azul); box-shadow: 0 0 0 3px rgba(2,132,199,0.1); }
         .campo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        
-        /* TOGGLES / SWITCHES MODERNOS */
-        .campo-checkbox { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; background: #fff; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--color-gris-borde); font-weight: 500; color: #334155; transition: all 0.2s; cursor: pointer; }
-        .campo-checkbox:hover { border-color: #cbd5e1; background: #f8fafc; }
-        
-        /* Estructura del Switch CSS */
-        .switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+
+        .toggle-box { display: flex; align-items: center; justify-content: space-between; background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px solid #cbd5e1; margin-bottom: 8px; font-size: 0.85rem; font-weight: 500; }
+        .switch { position: relative; display: inline-block; width: 38px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        input:checked + .slider { background-color: var(--color-acento); }
-        input:checked + .slider:before { transform: translateX(20px); }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .2s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .2s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--color-mint); }
+        input:checked + .slider:before { transform: translateX(16px); }
 
-        .btn-generar { width: 100%; background: linear-gradient(to right, var(--color-primario), var(--color-secundario)); color: white; border: none; padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: 10px; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px; }
-        .btn-generar:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-        .btn-generar:active { transform: translateY(0); }
-        .spinner { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid white; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .matriz-valoracion-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .resultado-valoracion { grid-column: span 2; background: #fffbeb; border: 1px solid #fef08a; border-radius: 6px; padding: 12px; text-align: center; margin-top: 5px; }
+        .resultado-valoracion h4 { margin: 0; font-size: 0.8rem; color: #b45309; text-transform: uppercase; }
+        .resultado-valoracion .valor-impacto { font-size: 1.4rem; font-weight: 800; color: #78350f; margin: 2px 0; }
 
-        /* PANEL DE RESULTADOS MEJORADO */
-        .panel-resultado { flex: 1.5; background: var(--color-tarjeta); padding: 0; border-radius: 16px; box-shadow: var(--shadow-lg); min-height: 600px; border-top: 5px solid var(--color-azul); overflow: hidden; }
-        .mensaje-vacio { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 500px; color: #94a3b8; font-style: italic; text-align: center; padding: 40px; }
-        .mensaje-vacio span { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
+        .btn-accion-primario { width: 100%; background: linear-gradient(135deg, var(--color-secundario) 0%, var(--color-acento) 100%); color: white; border: none; padding: 16px; border-radius: 8px; font-weight: 700; font-size: 1.05rem; cursor: pointer; box-shadow: var(--shadow-sm); margin-top: 10px;}
+        .btn-accion-primario:hover { opacity: 0.95; }
+
+        .reporte-contenedor { background: white; border: 1px solid var(--color-gris-borde); border-radius: 12px; box-shadow: var(--shadow-sm); }
+        .reporte-header { background: #f8fafc; padding: 20px 25px; border-bottom: 2px solid var(--color-gris-borde); display: flex; justify-content: space-between; align-items: center; }
+        .reporte-header h3 { margin: 0; font-size: 1.3rem; font-weight: 800; }
+        .tag-badge { background: var(--color-secundario); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .reporte-cuerpo { padding: 30px; }
+
+        /* ESTILOS PARA LA TABLA EIA (M4) GENERADA */
+        .tabla-eia { width: 100%; border-collapse: collapse; margin-bottom: 25px; font-family: 'Arial', sans-serif; font-size: 0.9rem; }
+        .tabla-eia th { background-color: #1b4332; color: white; text-align: left; padding: 10px; border: 1px solid #cbd5e1; font-weight: bold; }
+        .tabla-eia td { padding: 10px; border: 1px solid #cbd5e1; vertical-align: top; color: #1e293b; }
+        .tabla-eia .td-titulo { background-color: #f1f5f9; font-weight: bold; width: 25%; }
+        
+        .ley-tarjeta { background: #ffffff; border: 1px solid var(--color-gris-borde); border-left: 4px solid var(--color-secundario); border-radius: 6px; padding: 12px 15px; margin-bottom: 10px; }
+        .ley-tarjeta-cat { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: var(--color-texto-mutado); background: #f1f5f9; padding: 1px 5px; border-radius: 3px; display: inline-block; margin-bottom: 4px; }
+        .ley-tarjeta-titulo { font-weight: 700; font-size: 0.9rem; color: #0f172a; }
+
+        .reporte-footer { background: #f8fafc; padding: 15px 25px; border-top: 1px solid var(--color-gris-borde); display: flex; gap: 15px; }
+        .btn-footer { background: #ffffff; border: 1px solid #cbd5e1; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .btn-footer.primary { background: var(--color-azul); color: white; border-color: var(--color-azul); }
         .oculto { display: none !important; }
+        .mensaje-vacio { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 400px; color: #94a3b8; font-style: italic; text-align: center; }
 
-        .reporte-cuerpo { background: #ffffff; }
-        .header-guia { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 25px 30px; border-bottom: 1px solid var(--color-gris-borde); }
-        .header-guia h2 { color: #0f172a; margin: 0; font-size: 1.5rem; font-weight: 800; }
-        
-        .reporte-contenido-interno { padding: 30px; }
-        
-        /* CAJAS Y ALERTAS REFINADAS */
-        .alerta-requisitos { background-color: #fff7ed; border: 1px solid #ffedd5; border-left: 5px solid var(--color-alerta); padding: 20px 25px; border-radius: 10px; margin-bottom: 25px; box-shadow: var(--shadow-sm); }
-        .alerta-item { margin-bottom: 12px; font-weight: 500; padding-left: 28px; position: relative; font-size: 0.95rem; color: #9a3412; }
-        .alerta-item::before { content: "🎯"; position: absolute; left: 0; }
-        
-        .alerta-ingenieria { background-color: #f0f9ff; border: 1px solid #e0f2fe; border-left: 5px solid var(--color-ingenieria); padding: 18px 25px; border-radius: 10px; margin-bottom: 20px; font-weight: 600; font-size: 0.95rem; color: #075985; box-shadow: var(--shadow-sm); display: flex; gap: 12px; align-items: flex-start; }
-        
-        .ley-box { background: #ffffff; padding: 18px; border-radius: 10px; border: 1px solid var(--color-gris-borde); margin-bottom: 15px; border-left: 5px solid var(--color-azul); box-shadow: var(--shadow-sm); transition: transform 0.2s; }
-        .ley-box:hover { transform: translateX(3px); border-color: #cbd5e1; }
-        .ley-titulo-texto { font-weight: 700; color: #1e293b; font-size: 1rem; }
-        .ley-detalle { font-size: 0.9rem; color: #64748b; margin-top: 6px; }
-        .categoria-ley { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-azul); margin-bottom: 6px; display: inline-block; font-weight: 800; background: #e0f2fe; padding: 3px 8px; border-radius: 4px; }
-
-        .res-cuerpo-informe { background:#ffffff; padding:25px; border-radius:10px; border: 1px solid var(--color-gris-borde); font-family: 'Times New Roman', Times, serif; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
-        .res-cuerpo-informe li { margin-bottom: 12px; font-weight: bold; color: #0f172a; font-size: 1.1rem; }
-        .sub-item { font-weight: normal !important; color: #334155 !important; font-size: 1rem !important; padding-left: 18px; margin-bottom: 6px !important; }
-        .anexo-item { color: #0284c7 !important; font-size: 1rem !important; margin-top: 15px !important; border-top: 1px dashed #cbd5e1; padding-top: 12px; }
-
-        .acciones-guia { display: flex; gap: 20px; background: #f8fafc; padding: 25px 30px; border-top: 1px solid var(--color-gris-borde); border-radius: 0 0 16px 16px; }
-        
-        /* MODAL / VENTANA FLOTANTE (ESTILO BLUR) */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 100; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-        .modal-overlay.activo { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; width: 90%; max-width: 900px; max-height: 85vh; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow-y: auto; transform: scale(0.95); transition: transform 0.3s ease; position: relative; }
-        .modal-overlay.activo .modal-content { transform: scale(1); }
-        .modal-header { padding: 20px 30px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(5px); z-index: 10; }
-        .modal-header h2 { margin: 0; color: #0f172a; font-size: 1.3rem; }
-        .btn-cerrar-modal { background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; color: #64748b; transition: all 0.2s; display: flex; justify-content: center; align-items: center;}
-        .btn-cerrar-modal:hover { background: #e2e8f0; color: #0f172a; }
-        .modal-body { padding: 30px; }
-        
-        /* GRID DE CONSULTA DENTRO DEL MODAL */
-        .consulta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card-consulta { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; border-top: 4px solid var(--color-azul); box-shadow: var(--shadow-sm); transition: transform 0.2s; }
-        .card-consulta:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-        .card-consulta h4 { margin: 0 0 10px 0; color: #0f172a; font-size: 1.05rem; }
-        .card-consulta p { margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.5; }
-
-        @media print { header, .panel-config, .acciones-guia, .modal-overlay { display: none !important; } .panel-resultado { box-shadow: none; border: none; width: 100%; padding: 0; display: block; } body { background: white; } }
+        @media print { header, .panel-config, .workspace-nav, .reporte-footer { display: none !important; } .reporte-contenedor { border: none; box-shadow: none; } }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>SIGA-PY CONSULTOR MASTER</h1>
-        <p>Sistema Experto de Gestión Ambiental e Ingeniería</p>
-        <small>v16.0 • Entorno Gráfico Avanzado</small>
-        
-        <nav class="nav-consulta">
-            <button class="tab-btn" onclick="abrirModal('glosario', '📖 Glosario Técnico MADES')">📖 Glosario</button>
-            <button class="tab-btn" onclick="abrirModal('leyes', '⚖️ Vademécum Normativo Nacional')">⚖️ Leyes Nacionales</button>
-            <button class="tab-btn" onclick="abrirModal('convenios', '🌍 Acuerdos Internacionales')">🌍 Acuerdos Int.</button>
+        <div class="header-top">
+            <h1>SIGA-PY <span>Consultor Master v18.0</span></h1>
+            <div style="font-weight: 600; font-size: 0.9rem;">Módulo Interactivo EIA Activado</div>
+        </div>
+        <nav class="workspace-nav">
+            <button class="workspace-btn activo">⚙️ M4-M8: Formularios de Expediente</button>
+            <button class="workspace-btn">📊 M9: Monitoreo</button>
+            <button class="workspace-btn">🗺️ M10: Cartografía</button>
+            <button class="workspace-btn">📚 M11: Biblioteca Legal</button>
         </nav>
     </header>
 
-    <!-- VENTANA MODAL (FLOTANTE) -->
-    <div id="modalConsulta" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-title">Título Modal</h2>
-                <button class="btn-cerrar-modal" onclick="cerrarModal()">✕</button>
-            </div>
-            <div class="modal-body">
-                
-                <div id="cont-glosario" class="consulta-grid oculto">
-                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>DIA</h4><p>Declaración de Impacto Ambiental. Documento legal emitido por el MADES que aprueba o rechaza el proyecto. Debe ser renovada según su validez.</p></div>
-                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>EIA</h4><p>Estudio de Impacto Ambiental. Documento científico-técnico que identifica, predice y evalúa los impactos de un proyecto propuesto en el medio.</p></div>
-                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>RIMA</h4><p>Relatorio de Impacto Ambiental. Resumen del EIA redactado en lenguaje sencillo y comprensible para el público general.</p></div>
-                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>PGA</h4><p>Plan de Gestión Ambiental. Documento operativo que detalla las medidas de mitigación, monitoreo, contingencias y cronogramas.</p></div>
-                </div>
-                
-                <div id="cont-leyes" class="consulta-grid oculto">
-                    <div class="card-consulta"><h4>Marco Base y Penal</h4><p><b>Ley 294/93:</b> Base de evaluación de impacto. <br><b>Ley 6123/18:</b> Crea el MADES. <br><b>Ley 716/96:</b> Delitos Ecológicos (Penal).</p></div>
-                    <div class="card-consulta"><h4>Términos de Referencia</h4><p><b>Res. 433/19:</b> Guía de TdR y esquemas de informes para la presentación en el SIAM. <br><b>Res. 246/13:</b> Guía técnica conceptual.</p></div>
-                    <div class="card-consulta"><h4>Agua y Residuos</h4><p><b>Ley 3239/07:</b> Recursos Hídricos y fajas de protección.<br><b>Ley 3956/09:</b> Gestión de Residuos Sólidos (Prohibición de fosas).</p></div>
-                    <div class="card-consulta"><h4>Biodiversidad</h4><p><b>Ley 422/73:</b> Ley Forestal (Reserva 25%).<br><b>Ley 2524/04:</b> Deforestación Cero (R. Oriental).<br><b>Ley 352/94:</b> Áreas Protegidas.</p></div>
-                </div>
-
-                <div id="cont-convenios" class="consulta-grid oculto">
-                    <div class="card-consulta" style="border-top-color: #059669;"><h4>Convención Ramsar</h4><p>Tratado intergubernamental que sirve de marco para la acción nacional y la cooperación para la conservación de los humedales.</p></div>
-                    <div class="card-consulta" style="border-top-color: #059669;"><h4>Basilea y Estocolmo</h4><p>Control de movimientos transfronterizos de desechos peligrosos (Basilea) y gestión de contaminantes orgánicos persistentes (Estocolmo).</p></div>
-                    <div class="card-consulta" style="border-top-color: #059669;"><h4>Cambio Climático</h4><p>Convenio Marco de la ONU (CMNUCC) y el Acuerdo de París para la reducción de emisiones de gases de efecto invernadero.</p></div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <!-- CONFIGURADOR (STICKY SIDEBAR Y SWITCHES) -->
-        <aside class="panel-config">
-            <h2>Configuración del Proyecto</h2>
-            <form id="form-ambiental">
-                
-                <div class="seccion-form" style="border-left: 4px solid var(--color-azul);">
-                    <h3>1. Requerimiento Técnico</h3>
-                    <div class="campo">
-                        <select id="instrumento" onchange="filtrarActividades()" required>
-                            <option value="" selected disabled>Seleccione el Trámite Principal...</option>
-                            <option value="EIA">Estudio de Impacto Ambiental Definitivo (EIA)</option>
-                            <option value="RIMA">Relatorio de Impacto Ambiental (RIMA)</option>
-                            <option value="EDE">Estudio de Disposición de Efluentes (EDE)</option>
-                            <option value="PGA">Plan de Gestión Ambiental de Adecuación (PGA)</option>
-                            <option value="AA">Auditoría Ambiental de Cumplimiento (AA)</option>
-                        </select>
+    <main class="workspace-container">
+        <div class="layout-grid">
+            
+            <aside class="sidebar-sticky-panel" style="position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow-y: auto;">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Formulario del Estudio (Completar)</h2>
                     </div>
-                </div>
-
-                <div class="seccion-form" style="border-left: 4px solid var(--color-acento);">
-                    <h3>2. Actividad y Variables</h3>
-                    <div class="campo">
-                        <select id="actividad" required>
-                            <option value="">Esperando selección de trámite...</option>
-                        </select>
-                    </div>
-                    <div class="campo">
-                        <select id="region">
-                            <option value="oriental">📍 Región Oriental</option>
-                            <option value="occidental">📍 Región Occidental / Chaco</option>
-                        </select>
-                    </div>
-                    <div class="campo-grid">
-                        <div class="campo">
-                            <label>Superficie (Ha):</label>
-                            <input type="number" id="superficie" min="0" step="0.1" placeholder="Ej: 15.5">
-                        </div>
-                        <div class="campo">
-                            <label>Efluentes (m³/día):</label>
-                            <input type="number" id="efluentes" min="0" placeholder="Ej: 5">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="seccion-form">
-                    <h3>3. Factores Críticos (Checklist)</h3>
-                    
-                    <label class="campo-checkbox">
-                        <span>Cobertura de Bosque Nativo</span>
-                        <div class="switch"><input type="checkbox" id="tiene-bosque"><span class="slider"></span></div>
-                    </label>
-                    <label class="campo-checkbox" style="background:#fff1f2; border-color:#fecdd3;">
-                        <span style="color:#be123c;"><b>Déficit de Reserva Legal (&lt;25%)</b></span>
-                        <div class="switch"><input type="checkbox" id="deficit-bosque"><span class="slider"></span></div>
-                    </label>
-                    <label class="campo-checkbox">
-                        <span>Arroyos o cauces hídricos</span>
-                        <div class="switch"><input type="checkbox" id="tiene-cauce"><span class="slider"></span></div>
-                    </label>
-                    <label class="campo-checkbox" style="background:#fefce8; border-color:#fef08a;">
-                        <span style="color:#a16207;"><b>Afecta Área Silvestre Protegida</b></span>
-                        <div class="switch"><input type="checkbox" id="afecta-asp"><span class="slider"></span></div>
-                    </label>
-                    <label class="campo-checkbox" style="background:#f0f9ff; border-color:#bae6fd;">
-                        <span style="color:#0369a1;"><b>Contempla Pozo Profundo</b></span>
-                        <div class="switch"><input type="checkbox" id="requiere-pozo"><span class="slider"></span></div>
-                    </label>
-                    <label class="campo-checkbox">
-                        <span>Sustancias Peligrosas / PCB</span>
-                        <div class="switch"><input type="checkbox" id="posee-pcb"><span class="slider"></span></div>
-                    </label>
-                    <label class="campo-checkbox">
-                        <span>Utiliza Caldera o Chimenea</span>
-                        <div class="switch"><input type="checkbox" id="tiene-caldera"><span class="slider"></span></div>
-                    </label>
-                    
-                    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
-                    
-                    <label class="campo-checkbox" style="background:#fffbeb; border-color:#fcd34d; padding: 15px;">
-                        <span style="font-weight:700; color:#b45309;">➕ Módulo: Plan de Cierre</span>
-                        <div class="switch"><input type="checkbox" id="requiere-cierre"><span class="slider"></span></div>
-                    </label>
-                </div>
-
-                <button type="button" class="btn-generar" onclick="simularCarga()">
-                    <span id="btn-texto">Generar Dictamen Experto</span>
-                    <div class="spinner" id="btn-spinner"></div>
-                </button>
-            </form>
-        </aside>
-
-        <!-- PANEL DE RESPUESTAS -->
-        <main class="panel-resultado">
-            <div id="estado-vacio" class="mensaje-vacio">
-                <span>⚡</span>
-                <p>Configure los parámetros en el panel izquierdo para que el motor inteligente genere la estructura del expediente.</p>
-            </div>
-
-            <div id="contenido-guia" class="oculto">
-                <div class="reporte-cuerpo" id="reporte-exportable">
-                    <div class="header-guia">
-                        <h2>Documento Base de Consultoría</h2>
-                        <div class="badges-container">
-                            <span class="badge" id="res-categoria">Escala: -</span>
-                            <span class="badge azul" id="res-inst-badge">Trámite: -</span>
-                        </div>
-                    </div>
-
-                    <div class="reporte-contenido-interno">
-                        <section class="alerta-requisitos" id="seccion-alertas">
-                            <h3 style="color: #b45309; border-bottom: 2px solid #fef3c7; padding-bottom: 8px;">Directrices de Diseño e Ingeniería</h3>
-                            <div id="res-alertas"></div>
-                        </section>
-
-                        <section>
-                            <h3>Base Normativa Requerida</h3>
-                            <div id="res-legal" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;"></div>
-                        </section>
-
-                        <section>
-                            <h3>Índice Analítico Oficial (Res. 433/19)</h3>
-                            <div class="res-cuerpo-informe">
-                                <ol id="res-estructura"></ol>
+                    <div class="panel-body">
+                        <form id="form-core">
+                            
+                            <div class="card-seccion">
+                                <h3>M4-A: Requerimiento y Ubicación</h3>
+                                <div class="campo">
+                                    <label>Trámite Principal:</label>
+                                    <select id="instrumento">
+                                        <option value="EIA">Estudio de Impacto Ambiental (EIA)</option>
+                                        <option value="PGA">Plan de Gestión Ambiental (PGA)</option>
+                                        <option value="AA">Auditoría Ambiental (AA)</option>
+                                    </select>
+                                </div>
+                                <div class="campo">
+                                    <label>Actividad Regulada Oficial:</label>
+                                    <select id="actividad">
+                                        <option value="urbanizaciones">Loteamientos y Urbanizaciones</option>
+                                        <option value="estaciones" selected>Estaciones de Servicio</option>
+                                        <option value="hospitales">Hospitales / Radiología</option>
+                                        <option value="ganaderia">Establecimientos Ganaderos</option>
+                                        <option value="industrias">Complejos Industriales</option>
+                                        <option value="canteras">Canteras / Minería</option>
+                                    </select>
+                                </div>
+                                <div class="campo-grid">
+                                    <div class="campo"><label>Ubicación (Distrito):</label><input type="text" id="m-ubicacion" placeholder="Ej: Villarrica"></div>
+                                    <div class="campo"><label>Superficie (Ha):</label><input type="number" id="superficie" value="2.5"></div>
+                                </div>
                             </div>
-                        </section>
+
+                            <div class="card-seccion">
+                                <h3>M4-B: Línea Base Ambiental</h3>
+                                <div class="campo">
+                                    <label>Medio Físico (Clima, Suelo, Hidrología):</label>
+                                    <textarea id="lb-fisico" rows="2" placeholder="Describa el tipo de suelo, cercanía a cursos de agua, topografía..."></textarea>
+                                </div>
+                                <div class="campo">
+                                    <label>Medio Biológico (Flora y Fauna):</label>
+                                    <textarea id="lb-bio" rows="2" placeholder="Describa la cobertura vegetal, presencia de especies nativas..."></textarea>
+                                </div>
+                                <div class="campo">
+                                    <label>Medio Socioeconómico:</label>
+                                    <textarea id="lb-socio" rows="2" placeholder="Describa el entorno humano, urbanización, servicios básicos..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="card-seccion">
+                                <h3>M4-C & D: Identificación y Valoración</h3>
+                                <div class="campo">
+                                    <label>Actividad Operativa que genera impacto:</label>
+                                    <input type="text" id="m-act-operativa" placeholder="Ej: Carga y descarga de combustibles">
+                                </div>
+                                <div class="campo-grid">
+                                    <div class="campo"><label>Aspecto Ambiental:</label><input type="text" id="m-aspecto" placeholder="Ej: Posible derrame / Fugas"></div>
+                                    <div class="campo"><label>Impacto Identificado:</label><input type="text" id="m-impacto" placeholder="Ej: Contaminación de suelo"></div>
+                                </div>
+                                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
+                                <label style="display:block; font-size: 0.82rem; font-weight: 700; color: #475569; margin-bottom:10px;">Valoración del Riesgo/Impacto:</label>
+                                <div class="matriz-valoracion-grid">
+                                    <div class="campo"><label>Magnitud:</label><select id="m-magnitud" onchange="calcularMatrizImpacto()"><option value="1">Baja (1)</option><option value="2" selected>Media (2)</option><option value="3">Alta (3)</option></select></div>
+                                    <div class="campo"><label>Extensión:</label><select id="m-extension" onchange="calcularMatrizImpacto()"><option value="1" selected>Puntual (1)</option><option value="2">Local (2)</option><option value="3">Regional (3)</option></select></div>
+                                    <div class="campo"><label>Duración:</label><select id="m-duracion" onchange="calcularMatrizImpacto()"><option value="1">Temporal (1)</option><option value="2" selected>Media (2)</option><option value="3">Permanente (3)</option></select></div>
+                                    <div class="campo"><label>Probabilidad:</label><select id="m-probabilidad" onchange="calcularMatrizImpacto()"><option value="1">Baja (1)</option><option value="2" selected>Media (2)</option><option value="3">Alta (3)</option></select></div>
+                                    <div class="campo"><label>Reversibilidad:</label><select id="m-reversibilidad"><option value="Reversible">Reversible</option><option value="Irreversible">Irreversible</option></select></div>
+                                    
+                                    <div class="resultado-valoracion" style="grid-column: span 1; padding: 6px;">
+                                        <h4>Nivel Automático</h4>
+                                        <div class="valor-impacto" id="txt-matriz-score" style="font-size: 1.1rem;">Medio (12)</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-seccion">
+                                <h3>M4-E: Medidas de Mitigación (PGA)</h3>
+                                <div class="campo">
+                                    <label>Escriba las medidas preventivas o correctivas:</label>
+                                    <textarea id="m-medidas" rows="3" placeholder="Ej: Construcción de canaletas perimetrales, instalación de separador API..."></textarea>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn-accion-primario" onclick="generarInformeImprimible()">
+                                📄 Generar Informe para Imprimir
+                            </button>
+                        </form>
                     </div>
                 </div>
-                
-                <div class="acciones-guia">
-                    <button onclick="window.print()" class="btn-secundario">🖨️ Imprimir Visor</button>
-                    <button id="btn-descargar-word" class="btn-accion">📥 Exportar Reporte Word</button>
+            </aside>
+
+            <section class="reporte-contenedor">
+                <div id="estado-vacio-reporte" class="mensaje-vacio">
+                    <span style="font-size: 3rem;">🖨️</span>
+                    <p>Complete las casillas de la izquierda y presione generar. El sistema cruzará la matriz y armará la hoja de impresión del EIA.</p>
                 </div>
-            </div>
-        </main>
-    </div>
+
+                <div id="contenido-reporte-real" class="oculto">
+                    <div id="area-imprimible">
+                        <div class="reporte-header">
+                            <h3 id="rep-titulo-tramite">Ficha de Evaluación de Impacto Ambiental</h3>
+                            <div class="reporte-badge-container">
+                                <span class="tag-badge" style="background: var(--color-mint); color: #0f2a22;">LISTO PARA SIAM</span>
+                            </div>
+                        </div>
+                        <div class="reporte-cuerpo">
+                            
+                            <h4 style="color:var(--color-primario); border-bottom: 2px solid var(--color-gris-borde); padding-bottom: 5px; margin-top:0;">1. IDENTIFICACIÓN DEL PROYECTO</h4>
+                            <table class="tabla-eia">
+                                <tr><td class="td-titulo">Trámite Técnico:</td><td id="out-tramite"></td></tr>
+                                <tr><td class="td-titulo">Actividad Regulada:</td><td id="out-actividad"></td></tr>
+                                <tr><td class="td-titulo">Ubicación y Superficie:</td><td id="out-ubicacion"></td></tr>
+                            </table>
+
+                            <h4 style="color:var(--color-primario); border-bottom: 2px solid var(--color-gris-borde); padding-bottom: 5px; margin-top:25px;">2. LÍNEA DE BASE AMBIENTAL</h4>
+                            <table class="tabla-eia">
+                                <tr><td class="td-titulo">Medio Físico:</td><td id="out-fisico"></td></tr>
+                                <tr><td class="td-titulo">Medio Biológico:</td><td id="out-bio"></td></tr>
+                                <tr><td class="td-titulo">Medio Socioeconómico:</td><td id="out-socio"></td></tr>
+                            </table>
+
+                            <h4 style="color:var(--color-primario); border-bottom: 2px solid var(--color-gris-borde); padding-bottom: 5px; margin-top:25px;">3. MATRIZ DE EVALUACIÓN DE IMPACTOS</h4>
+                            <table class="tabla-eia">
+                                <tr><td class="td-titulo">Actividad Operativa:</td><td id="out-act-op"></td></tr>
+                                <tr><td class="td-titulo">Aspecto Ambiental:</td><td id="out-aspecto"></td></tr>
+                                <tr><td class="td-titulo">Impacto Ambiental:</td><td id="out-impacto"></td></tr>
+                                <tr>
+                                    <td class="td-titulo">Valoración de Riesgo:</td>
+                                    <td>
+                                        <b>Magnitud:</b> <span id="out-mag"></span> | 
+                                        <b>Extensión:</b> <span id="out-ext"></span> | 
+                                        <b>Duración:</b> <span id="out-dur"></span><br>
+                                        <b>Probabilidad:</b> <span id="out-prob"></span> | 
+                                        <b>Reversibilidad:</b> <span id="out-rev"></span><br>
+                                        <div style="margin-top: 8px; padding: 5px 10px; background: #fffbeb; border: 1px solid #fef08a; display: inline-block; font-weight: bold; color: #b45309;">
+                                            Clasificación Final: <span id="out-score"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <h4 style="color:var(--color-primario); border-bottom: 2px solid var(--color-gris-borde); padding-bottom: 5px; margin-top:25px;">4. MEDIDAS AMBIENTALES (PGA)</h4>
+                            <table class="tabla-eia">
+                                <tr><td class="td-titulo">Prevención / Mitigación:</td><td id="out-medidas" style="white-space: pre-wrap;"></td></tr>
+                            </table>
+
+                            <h4 style="color:var(--color-primario); border-bottom: 2px solid var(--color-gris-borde); padding-bottom: 5px; margin-top:25px;">5. MARCO LEGAL REQUERIDO</h4>
+                            <div id="rep-base-legal" style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 15px;"></div>
+
+                        </div>
+                    </div>
+                    <div class="reporte-footer">
+                        <button class="btn-footer" onclick="window.print()">🖨️ Imprimir Ficha EIA</button>
+                        <button class="btn-footer primary" onclick="descargarWordFicha()">📥 Exportar a Word</button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
 
     <script>
-        // --- CONTROL DEL MODAL (VENTANA FLOTANTE) ---
-        function abrirModal(seccion, titulo) {
-            document.getElementById('modal-title').innerText = titulo;
-            // Ocultar todos
-            document.querySelectorAll('.modal-body .consulta-grid').forEach(el => el.classList.add('oculto'));
-            // Mostrar seleccionado
-            document.getElementById('cont-' + seccion).classList.remove('oculto');
-            // Activar modal
-            document.getElementById('modalConsulta').classList.add('activo');
-        }
-
-        function cerrarModal() {
-            document.getElementById('modalConsulta').classList.remove('activo');
-        }
-
-        // --- EFECTO DE CARGA (LOADING STATE) ---
-        function simularCarga() {
-            const btnTexto = document.getElementById('btn-texto');
-            const spinner = document.getElementById('btn-spinner');
+        // M4-D: CÁLCULO DE LA MATRIZ
+        function calcularMatrizImpacto() {
+            const mag = parseInt(document.getElementById('m-magnitud').value);
+            const ext = parseInt(document.getElementById('m-extension').value);
+            const dur = parseInt(document.getElementById('m-duracion').value);
+            const prob = parseInt(document.getElementById('m-probabilidad').value);
             
-            // Validar antes de animar
-            if(!document.getElementById('instrumento').value || !document.getElementById('actividad').value) {
-                alert("Por favor, seleccione el Requerimiento y la Actividad.");
-                return;
-            }
+            const score = (mag + ext + dur) * prob;
+            let clasificacion = "Bajo";
+            if (score > 14) clasificacion = "Alto";
+            else if (score >= 9) clasificacion = "Medio";
 
-            btnTexto.innerText = "Procesando...";
-            spinner.style.display = "block";
-            
-            // Simula 0.6 segundos de procesamiento para dar sensación de análisis
-            setTimeout(() => {
-                generarGuia();
-                btnTexto.innerText = "Actualizar Dictamen";
-                spinner.style.display = "none";
-            }, 600);
+            document.getElementById('txt-matriz-score').innerText = `${clasificacion} (${score})`;
         }
 
-        // --- LÓGICA CORE (MANTENIDA DE LA V15) ---
-        const DB_LEYES = {
-            ley294: { c: 'Institucional', n: 'Ley 294/93 Evaluación Impacto', d: 'Marco rector. Obliga a obtener la DIA.' },
-            ley1561: { c: 'Institucional', n: 'Ley 1561/00 SISNAM', d: 'Establece el Sistema Nacional del Ambiente.' },
-            ley6123: { c: 'Institucional', n: 'Ley 6123/18 MADES', d: 'Ley de creación del Ministerio.' },
-            ley716: { c: 'Penal', n: 'Ley 716/96 Delitos Ecológicos', d: 'Tipifica y sanciona faltas graves.' },
-            res433: { c: 'Normativa Técnica', n: 'Res. MADES 433/19', d: 'Aprueba Términos de Referencia y esquemas.' },
-            iso: { c: 'Estándares', n: 'ISO 14001 e ISO 19011', d: 'Auditoría y Gestión.' },
-            ley3239: { c: 'Agua', n: 'Ley 3239/07 Recursos Hídricos', d: 'Protección de cauces.' },
-            resPozos: { c: 'Agua', n: 'Ley 5431/15 Pozos', d: 'Regula perforaciones profundas.' },
-            ley422: { c: 'Bosques', n: 'Ley 422/73 Forestal', d: 'Mantenimiento del 25% de bosque.' },
-            ley2524: { c: 'Bosques', n: 'Ley 2524/04 Deforestación Cero', d: 'Veda en Región Oriental.' },
-            ley96: { c: 'Biodiversidad', n: 'Ley 96/92 Vida Silvestre', d: 'Protección de fauna/flora.' },
-            ley352: { c: 'Áreas', n: 'Ley 352/94 Áreas Protegidas', d: 'Régimen de protección.' },
-            ley3956: { c: 'Residuos', n: 'Ley 3956/09 Residuos Sólidos', d: 'Gestión integral y disposición.' },
-            ley567: { c: 'Químicos', n: 'Ley 567/95 Sustancias', d: 'Manejo de peligrosos.' },
-            ramsar: { c: 'Convenio', n: 'Convención Ramsar', d: 'Protección de humedales.' },
-            cierreLey: { c: 'Cierre', n: 'Ley 3180/07', d: 'Planes de cierre y minería.' }
-        };
+        // GENERADOR DEL INFORME CON DATOS REALES
+        function generarInformeImprimible() {
+            document.getElementById('estado-vacio-reporte').classList.add('oculto');
+            document.getElementById('contenido-reporte-real').classList.remove('oculto');
 
-        const DICTAMEN_TECNICO = {
-            'estaciones': '<span style="font-size:1.3rem;">📐</span><div><b>Ingeniería Hidrosanitaria (Surtidores):</b> Exigir planos visados de Trampa API, detalle de tanques de doble pared y red contra incendios.</div>',
-            'urbanizaciones': '<span style="font-size:1.3rem;">📐</span><div><b>Ingeniería Civil:</b> Anexar cálculo hidrológico de escorrentía para mitigación de raudales e infraestructura cloacal.</div>',
-            'hospitales': '<span style="font-size:1.3rem;">📐</span><div><b>Ingeniería Hospitalaria:</b> Flujograma de Residuos Biocontagiosos (RBS) y diseño de cuarto frío temporal.</div>',
-            'ganaderia': '<span style="font-size:1.3rem;">📐</span><div><b>Infraestructura Rural:</b> Diseño de piletas de decantación y manejo topográfico de correntadas.</div>'
-        };
+            // 1. Recopilar datos del formulario
+            const inst = document.getElementById('instrumento').options[document.getElementById('instrumento').selectedIndex].text;
+            const act = document.getElementById('actividad').options[document.getElementById('actividad').selectedIndex].text;
+            const ubi = document.getElementById('m-ubicacion').value || "No especificada";
+            const sup = document.getElementById('superficie').value + " Hectáreas";
 
-        const DICCIONARIO_ACTIVIDADES = { 'urbanizaciones': 'Loteamientos y Urbanizaciones', 'estaciones': 'Estaciones de Servicio', 'hospitales': 'Hospitales o Centros', 'ganaderia': 'Ganadería / Agrícola', 'granjas': 'Granjas Intensivas', 'industrias': 'Complejos Industriales', 'depositos': 'Depósitos Logísticos', 'canteras': 'Canteras / Minería', 'humedales': 'Proyectos en Humedales', 'residuos': 'Plantas de Residuos', 'desmontes': 'Desmontes' };
-        
-        const MAPEO_TRAMITES = {
-            'EIA': ['urbanizaciones', 'estaciones', 'hospitales', 'ganaderia', 'granjas', 'industrias', 'depositos', 'canteras', 'humedales', 'residuos', 'desmontes'],
-            'RIMA': ['urbanizaciones', 'industrias', 'canteras', 'humedales', 'residuos', 'desmontes'],
-            'EDE': ['industrias', 'estaciones', 'hospitales', 'depositos', 'residuos'],
-            'PGA': ['urbanizaciones', 'estaciones', 'ganaderia', 'granjas', 'industrias', 'depositos'],
-            'AA': ['urbanizaciones', 'estaciones', 'hospitales', 'ganaderia', 'industrias', 'depositos', 'canteras', 'humedales', 'residuos']
-        };
+            const fisico = document.getElementById('lb-fisico').value || "Sin descripción.";
+            const bio = document.getElementById('lb-bio').value || "Sin descripción.";
+            const socio = document.getElementById('lb-socio').value || "Sin descripción.";
 
-        const ESQUEMAS_OFICIALES = {
-            'EIA': ['1. DATOS GENERALES', '--sub--Identificación del Proponente', '2. DESCRIPCIÓN TÉCNICA DEL PROYECTO', '--sub--Fases (Construcción, Operación, Abandono)', '3. LÍNEA DE BASE AMBIENTAL', '--sub--Medios Físico, Biológico y Socioeconómico', '4. EVALUACIÓN DE IMPACTOS', '5. PLAN DE GESTIÓN AMBIENTAL (PGA)', '--sub--Monitoreo y Contingencias'],
-            'RIMA': ['1. RESUMEN EN LENGUAJE ACCESIBLE', '2. ALTERNATIVAS DE INGENIERÍA', '3. SÍNTESIS DE LÍNEA DE BASE', '4. MEDIDAS DE MITIGACIÓN'],
-            'AA': ['1. ALCANCE DE LA AUDITORÍA', '2. METODOLOGÍA (ISO 19011)', '3. MATRIZ DE CUMPLIMIENTO LEGAL', '--sub--Evidencias Objetivas (Laboratorio)', '4. PLAN DE GESTIÓN REAJUSTADO']
-        };
+            const actOp = document.getElementById('m-act-operativa').value || "No especificada";
+            const aspecto = document.getElementById('m-aspecto').value || "No especificado";
+            const impacto = document.getElementById('m-impacto').value || "No especificado";
 
-        function filtrarActividades() {
-            const inst = document.getElementById('instrumento').value;
-            const selectAct = document.getElementById('actividad');
-            selectAct.innerHTML = '<option value="">-- Seleccione Actividad --</option>';
-            if (!inst || !MAPEO_TRAMITES[inst]) return;
-            MAPEO_TRAMITES[inst].forEach(c => selectAct.appendChild(new Option(DICCIONARIO_ACTIVIDADES[c].toUpperCase(), c)));
+            const mag = document.getElementById('m-magnitud').options[document.getElementById('m-magnitud').selectedIndex].text;
+            const ext = document.getElementById('m-extension').options[document.getElementById('m-extension').selectedIndex].text;
+            const dur = document.getElementById('m-duracion').options[document.getElementById('m-duracion').selectedIndex].text;
+            const prob = document.getElementById('m-probabilidad').options[document.getElementById('m-probabilidad').selectedIndex].text;
+            const rev = document.getElementById('m-reversibilidad').value;
+            const score = document.getElementById('txt-matriz-score').innerText;
+
+            const medidas = document.getElementById('m-medidas').value || "No se detallaron medidas de mitigación.";
+
+            // 2. Inyectar datos en la hoja imprimible (Lado Derecho)
+            document.getElementById('out-tramite').innerText = inst;
+            document.getElementById('out-actividad').innerText = act;
+            document.getElementById('out-ubicacion').innerText = `${ubi} - Superficie total: ${sup}`;
+
+            document.getElementById('out-fisico').innerText = fisico;
+            document.getElementById('out-bio').innerText = bio;
+            document.getElementById('out-socio').innerText = socio;
+
+            document.getElementById('out-act-op').innerText = actOp;
+            document.getElementById('out-aspecto').innerText = aspecto;
+            document.getElementById('out-impacto').innerText = impacto;
+
+            document.getElementById('out-mag').innerText = mag;
+            document.getElementById('out-ext').innerText = ext;
+            document.getElementById('out-dur').innerText = dur;
+            document.getElementById('out-prob').innerText = prob;
+            document.getElementById('out-rev').innerText = rev;
+            document.getElementById('out-score').innerText = score;
+
+            document.getElementById('out-medidas').innerText = medidas;
+
+            // 3. Agregar Leyes Básicas de Relleno (Para mantener el formato experto)
+            const divLegal = document.getElementById('rep-base-legal');
+            divLegal.innerHTML = `
+                <div class="ley-tarjeta">
+                    <div class="ley-tarjeta-titulo">⚖️ Ley N.º 294/93 de Evaluación de Impacto Ambiental</div>
+                    <div class="ley-tarjeta-desc" style="font-size:0.85rem; color:#475569; margin-top:3px;">Base rectora para la elaboración de la presente matriz y plan de mitigación.</div>
+                </div>
+                <div class="ley-tarjeta">
+                    <div class="ley-tarjeta-titulo">⚖️ Resolución MADES N.º 433/19</div>
+                    <div class="ley-tarjeta-desc" style="font-size:0.85rem; color:#475569; margin-top:3px;">Establece los Términos de Referencia (TdR) aplicados en esta ficha.</div>
+                </div>
+            `;
         }
 
-        function generarGuia() {
-            const inst = document.getElementById('instrumento').value;
-            const act = document.getElementById('actividad').value;
-            const region = document.getElementById('region').value;
-            const c_bosque = document.getElementById('tiene-bosque').checked;
-            const c_pozo = document.getElementById('requiere-pozo').checked;
-            const c_cierre = document.getElementById('requiere-cierre').checked;
-
-            document.getElementById('estado-vacio').classList.add('oculto');
-            document.getElementById('contenido-guia').classList.remove('oculto');
-            
-            document.getElementById('res-inst-badge').innerText = `Trámite: ${inst}`;
-            document.getElementById('res-categoria').innerText = `Procesamiento Legal SIAM`;
-
-            let leyesSet = new Set(['ley294', 'ley1561', 'ley6123', 'res433']);
-            let alertas = ['<div class="alerta-item">Cumplir estrictamente la Resolución 433/19 en el formato de presentación.</div>'];
-            let anexos = [];
-
-            if (DICTAMEN_TECNICO[act]) alertas.unshift(`<div class="alerta-ingenieria">${DICTAMEN_TECNICO[act]}</div>`);
-
-            if (c_pozo) { leyesSet.add('resPozos'); anexos.push('► ANEXO: Estudio Hidrogeológico'); }
-            if (c_bosque) { leyesSet.add('ley422'); anexos.push('► ANEXO: Inventario Forestal'); }
-
-            document.getElementById('res-alertas').innerHTML = alertas.join('');
-
-            let divLegal = document.getElementById('res-legal'); divLegal.innerHTML = '';
-            Array.from(leyesSet).forEach(k => {
-                if(DB_LEYES[k]) divLegal.innerHTML += `<div class="ley-box"><span class="categoria-ley">${DB_LEYES[k].c}</span><div class="ley-titulo-texto">${DB_LEYES[k].n}</div><div class="ley-detalle">${DB_LEYES[k].d}</div></div>`;
-            });
-
-            let listaEst = document.getElementById('res-estructura'); listaEst.innerHTML = '';
-            let esquema = ESQUEMAS_OFICIALES[inst] ? [...ESQUEMAS_OFICIALES[inst]] : ['1. CONTENIDO GENÉRICO'];
-            
-            if(c_cierre) esquema.push('6. PLAN DE CIERRE OPERATIVO');
-            if(anexos.length) { esquema.push('7. ANEXOS OBLIGATORIOS'); anexos.forEach(a => esquema.push(`--anexo--${a}`)); }
-
-            esquema.forEach(i => {
-                let li = document.createElement('li');
-                if(i.startsWith('--sub--')) { li.className = 'sub-item'; li.textContent = i.replace('--sub--',''); }
-                else if(i.startsWith('--anexo--')) { li.className = 'anexo-item'; li.textContent = i.replace('--anexo--',''); }
-                else li.textContent = i;
-                listaEst.appendChild(li);
-            });
+        function descargarWordFicha() {
+            let html = document.getElementById('area-imprimible').innerHTML;
+            let doc = `
+                <html xmlns:w="urn:schemas-microsoft-com:office:word">
+                <head><meta charset="utf-8">
+                <style>
+                    body { font-family: Arial, sans-serif; font-size: 11pt; color: #000; }
+                    h3 { color: #1b4332; text-align: center; }
+                    h4 { color: #1b4332; border-bottom: 1px solid #1b4332; padding-bottom: 5px; margin-top: 20px; }
+                    table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+                    td { border: 1px solid #000; padding: 8px; vertical-align: top; }
+                    .td-titulo { font-weight: bold; background-color: #f1f5f9; width: 30%; }
+                    .ley-tarjeta { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+                </style>
+                </head>
+                <body>${html}</body>
+                </html>
+            `;
+            let blob = new Blob(['\ufeff', doc], { type: 'application/msword' });
+            let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Ficha_EIA_Completada.doc'; a.click();
         }
 
-        document.getElementById('btn-descargar-word').addEventListener('click', function() {
-            let reporteHtml = document.getElementById('reporte-exportable').innerHTML;
-            let blob = new Blob(['\ufeff<html xmlns:w="urn:schemas-microsoft-com:office:word"><style>body{font-family:Arial;} h2,h3{color:#1b4332;} .ley-box{border-left:4px solid #0284c7; padding:10px; margin-bottom:10px;}</style><body>' + reporteHtml + '</body></html>'], { type: 'application/msword' });
-            let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'SIGAPY_Expediente.doc'; a.click();
-        });
+        window.onload = function() {
+            calcularMatrizImpacto();
+        };
     </script>
 </body>
 </html>
