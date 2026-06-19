@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY - Sistema Integral de Gestión Ambiental del Paraguay</title>
+    <title>SIGA-PY Expert - Sistema Integral de Gestión Ambiental del Paraguay</title>
     <style>
         :root {
-            --color-primario: #2c5e43;
-            --color-secundario: #1b3a2b;
-            --color-fondo: #f4f7f5;
+            --color-primario: #1b4332;
+            --color-secundario: #2d6a4f;
+            --color-acento: #52b788;
+            --color-fondo: #f4f7f6;
             --color-tarjeta: #ffffff;
-            --color-texto: #333333;
-            --color-alerta: #d97706;
-            --color-azul: #1e3a8a;
-            --color-azul-hover: #172554;
+            --color-texto: #2d3748;
+            --color-alerta: #dd6b20;
+            --color-azul: #2b6cb0;
+            --color-azul-hover: #2c5282;
+            --color-gris-borde: #e2e8f0;
         }
 
         body {
@@ -22,23 +24,24 @@
             color: var(--color-texto);
             margin: 0;
             padding: 0;
+            line-height: 1.5;
         }
 
         header {
-            background-color: var(--color-primario);
+            background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%);
             color: white;
-            padding: 25px 20px;
+            padding: 35px 20px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        header h1 { margin: 0; font-size: 2.2rem; letter-spacing: 1px; }
-        header p { margin: 5px 0; opacity: 0.95; font-size: 1.1rem; font-weight: 500; }
-        header small { opacity: 0.8; font-size: 0.85rem; display: block; margin-top: 5px; }
+        header h1 { margin: 0; font-size: 2.5rem; letter-spacing: 1px; font-weight: 700; }
+        header p { margin: 8px 0 4px 0; opacity: 0.95; font-size: 1.2rem; font-weight: 500; }
+        header small { opacity: 0.8; font-size: 0.9rem; display: block; margin-top: 5px; color: var(--color-acento); font-weight: bold; }
 
         .container {
             display: flex;
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 30px auto;
             gap: 30px;
             padding: 0 20px;
@@ -47,27 +50,29 @@
         .panel-config {
             flex: 1;
             background: var(--color-tarjeta);
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             height: fit-content;
+            border-top: 5px solid var(--color-primario);
         }
 
         .panel-config h2 {
             color: var(--color-primario);
             margin-top: 0;
-            font-size: 1.3rem;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--color-gris-borde);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
         }
 
-        .campo { margin-bottom: 20px; }
-        .campo label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+        .campo { margin-bottom: 22px; }
+        .campo label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; color: #4a5568; }
         .campo select, .campo input[type='number'] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #cbd5e1;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1rem;
             box-sizing: border-box;
         }
@@ -75,15 +80,20 @@
         .campo-checkbox {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 18px;
             font-size: 0.95rem;
+            background: #f8fafc;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border-left: 3px solid #cbd5e1;
         }
 
         .campo-checkbox input {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             accent-color: var(--color-primario);
+            cursor: pointer;
         }
 
         .btn-generar {
@@ -91,23 +101,24 @@
             background-color: var(--color-primario);
             color: white;
             border: none;
-            padding: 12px;
-            font-size: 1rem;
+            padding: 14px;
+            font-size: 1.1rem;
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background 0.2s;
+            box-shadow: 0 4px 6px rgba(27,67,50,0.2);
         }
-
         .btn-generar:hover { background-color: var(--color-secundario); }
 
         .panel-resultado {
             flex: 2;
             background: var(--color-tarjeta);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            min-height: 450px;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            min-height: 500px;
+            border-top: 5px solid var(--color-azul);
         }
 
         .mensaje-vacio {
@@ -115,10 +126,11 @@
             align-items: center;
             justify-content: center;
             height: 100%;
-            min-height: 350px;
-            color: #64748b;
+            min-height: 400px;
+            color: #718096;
             font-style: italic;
             text-align: center;
+            font-size: 1.1rem;
         }
 
         .oculto { display: none !important; }
@@ -127,70 +139,98 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: #f7fafc;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-bottom: 2px solid var(--color-gris-borde);
         }
 
-        .header-guia h2 { color: var(--color-primario); margin: 0; font-size: 1.5rem; }
+        .header-guia h2 { color: var(--color-primario); margin: 0; font-size: 1.6rem; font-weight: 700; }
 
         .badge {
-            background-color: #e2e8f0;
-            color: var(--color-secundario);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            background-color: var(--color-primario);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
             font-weight: bold;
         }
 
-        section { margin-top: 25px; }
-        section h3 { font-size: 1.1rem; color: var(--color-secundario); margin-bottom: 10px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 5px; }
+        section { margin-top: 30px; }
+        section h3 { font-size: 1.25rem; color: var(--color-primario); margin-bottom: 12px; border-bottom: 2px solid #edf2f7; padding-bottom: 8px; }
 
-        ul, ol { padding-left: 20px; line-height: 1.6; }
-        li { margin-bottom: 8px; }
+        .ley-box {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--color-gris-borde);
+            margin-bottom: 15px;
+        }
+
+        .ley-titulo-texto { font-weight: 700; color: var(--color-texto); font-size: 1.05rem; display: block;}
+
+        .ley-detalle {
+            font-size: 0.9rem;
+            color: #4a5568;
+            background: #f8fafc;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--color-acento);
+            margin: 6px 0 0 0;
+        }
 
         .alerta-requisitos {
-            background-color: #fffbeb;
-            border-left: 4px solid var(--color-alerta);
-            padding: 15px;
-            border-radius: 0 6px 6px 0;
+            background-color: #fffaf0;
+            border-left: 5px solid var(--color-alerta);
+            padding: 20px;
+            border-radius: 8px;
         }
-        .alerta-requisitos h3 { color: #b45309; border: none; }
+        .alerta-requisitos h3 { color: #dd6b20; }
+        
+        .alerta-item {
+            margin-bottom: 10px;
+            font-weight: 500;
+            padding-left: 20px;
+            position: relative;
+        }
+        .alerta-item::before { content: "⚠️"; position: absolute; left: 0; }
 
         .acciones-guia {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 20px;
+            margin-top: 35px;
+            border-top: 2px solid var(--color-gris-borde);
+            padding-top: 25px;
         }
 
         .btn-secundario {
             width: 100%;
-            background-color: #e2e8f0;
-            color: #334155;
-            border: none;
-            padding: 12px;
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 14px;
             font-size: 1rem;
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background 0.2s;
         }
-        .btn-secundario:hover { background-color: #cbd5e1; }
 
         .btn-accion {
             width: 100%;
             background-color: var(--color-azul);
             color: white;
             border: none;
-            padding: 12px;
+            padding: 14px;
             font-size: 1rem;
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background 0.2s;
         }
-        .btn-accion:hover { background-color: var(--color-azul-hover); }
 
+        @media (max-width: 900px) { .container { flex-direction: column; } }
         @media print {
-            header, .panel-config, .acciones-guia { display: none; }
-            .panel-resultado { box-shadow: none; padding: 0; width: 100%; }
+            header, .panel-config, .acciones-guia { display: none !important; }
+            .panel-resultado { box-shadow: none; padding: 0; width: 100%; border: none; }
             body { background: white; }
         }
     </style>
@@ -198,9 +238,9 @@
 <body>
 
     <header>
-        <h1>SIGA-PY</h1>
+        <h1>SIGA-PY EXPERT</h1>
         <p>Sistema Integral de Gestión Ambiental del Paraguay</p>
-        <small>Asistente Técnico Legal - Consultoría &amp; EIA</small>
+        <small>Motor de Inferencia Legal Inteligente v2.5 • Conclusiones Basadas en Evidencia de PDFs</small>
     </header>
 
     <div class="container">
@@ -212,16 +252,18 @@
                     <select id="actividad" required>
                         <option value="">-- Seleccione una opción --</option>
                         <option value="urbanizaciones">Urbanizaciones y Loteamientos</option>
-                        <option value="ganaderia">Explotación Ganadera</option>
-                        <option value="estaciones">Estaciones de Servicio</option>
-                        <option value="industrias">Industrias</option>
+                        <option value="ganaderia">Explotación Ganadera / Establecimientos</option>
+                        <option value="estaciones">Estaciones de Servicio / Combustibles</option>
+                        <option value="industrias">Industrias manufactureras</option>
                         <option value="canteras">Canteras / Extracción de Materiales</option>
-                        <option value="frigorificos">Frigoríficos e Industrias Cárnicas</option>
-                        <option value="plantas_tratamiento">Plantas de Tratamiento (Residuos/Efluentes)</option>
-                        <option value="hoteles">Hoteles y Complejos Turísticos</option>
-                        <option value="energia_solar">Parques de Energía Solar</option>
-                        <option value="obras_viales">Obras Viales / Rutas e Infraestructura</option>
-                        <option value="silos_depositos">Silos, Depósitos y Centros Logísticos</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="region">Región Geográfica del Proyecto:</label>
+                    <select id="region" required>
+                        <option value="oriental">Región Oriental (Deforestación Cero Vigente)</option>
+                        <option value="occidental">Región Occidental / Chaco (PUT de INFONA)</option>
                     </select>
                 </div>
 
@@ -240,120 +282,165 @@
                     <label for="tiene-cauce">¿Existen cauces hídricos o humedales?</label>
                 </div>
 
-                <button type="button" id="btn-generar" class="btn-generar">Generar Guía Ambiental</button>
+                <button type="button" id="btn-generar" class="btn-generar">Computar Diagnóstico Experto</button>
             </form>
         </aside>
 
         <main class="panel-resultado">
             <div id="estado-vacio" class="mensaje-vacio">
-                <p>Seleccione una actividad económica y complete las variables del entorno para computar la guía legal automatizada de SIGA-PY.</p>
+                <p>Complete las variables específicas de campo para activar las reglas cruzadas extraídas de los PDFs oficiales del MADES, INFONA e INTN.</p>
             </div>
 
             <div id="contenido-guia" class="oculto">
                 <div class="header-guia">
                     <h2 id="res-titulo">Guía Técnica de Evaluación</h2>
-                    <span class="badge">MADES - Paraguay</span>
+                    <span class="badge" id="res-categoria">Categoría: Computando</span>
                 </div>
-                
-                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
 
                 <section>
-                    <h3>⚖️ Marco Legal Nacional Aplicable</h3>
-                    <ul id="res-legal"></ul>
+                    <h3>⚖️ Marco Legal Nacional Específico y Articulado</h3>
+                    <div id="res-legal"></div>
                 </section>
 
                 <section>
-                    <h3>🌍 Convenios Internacionales Ratificados</h3>
+                    <h3>🌍 Convenios Internacionales Activados</h3>
                     <ul id="res-convenios"></ul>
                 </section>
 
                 <section class="alerta-requisitos" id="seccion-alertas">
-                    <h3>⚠️ Requisitos Especiales Detectados</h3>
-                    <ul id="res-alertas"></ul>
+                    <h3>⚠️ Dictamen y Criterios Excluyentes Detectados</h3>
+                    <div id="res-alertas"></div>
                 </section>
 
                 <section>
-                    <h3>📋 Estructura Mínima Requerida para el EIA</h3>
+                    <h3>📋 Requerimientos Técnicos Especiales para el Informe</h3>
                     <ol id="res-estructura"></ol>
                 </section>
                 
                 <div class="acciones-guia">
-                    <button onclick="window.print()" class="btn-secundario">🖨️ Imprimir / Guardar PDF</button>
-                    <button id="btn-descargar-word" class="btn-accion">📥 Descargar Borrador TDR (.doc)</button>
+                    <button onclick="window.print()" class="btn-secundario">🖨️ Imprimir Reporte Técnico</button>
+                    <button id="btn-descargar-word" class="btn-accion">📥 Exportar TDR Completo (.doc)</button>
                 </div>
             </div>
         </main>
     </div>
 
     <script>
+        // BASE DE DATOS DE CONOCIMIENTO EXTRAÍDA DIRECTAMENTE DE LOS PDF
         var DB_LEYES = {
             marcos_legales: {
-                constitucion: 'Constitución Nacional de la República del Paraguay (1992)',
-                ley294: 'Ley N.º 294/93 de Evaluación de Impacto Ambiental',
-                decretoEIA: 'Decreto N.º 453/13 y modificatorio D. N.º 954/13 (Reglamentación de la Ley EIA)',
-                ley1561: 'Ley N.º 1561/00 (Crea el SISNAM y el MADES)',
-                recursosHidricos: 'Ley N.º 3239/07 de Recursos Hídricos del Paraguay',
-                forestal: 'Ley N.º 422/73 Forestal y Ley N.º 6256/18 (Deforestación Cero)',
-                delitos: 'Ley N.º 716/96 que sanciona Delitos contra el Medio Ambiente',
-                residuos: 'Ley N.º 3956/09 de Gestión Integral de los Residuos Sólidos en el Paraguay',
-                calidadAire: 'Ley N.º 5211/14 de Calidad del Aire y Resoluciones MADES',
-                intnPetroleo: 'Normas INTN y Resoluciones del MIC para Almacenamiento de Combustibles',
-                leyMinas: 'Ley N.º 3180/07 de Minería y sus modificaciones',
-                mopc: 'Manual de Especificaciones Técnicas Ambientales del MOPC (PAGA-DGSA)',
-                senacsa: 'Normas Sanitarias y Ambientales del SENACSA para Establecimientos Cárnicos',
-                senave: 'Regulaciones del SENAVE sobre almacenamiento de granos y agroquímicos',
-                seguridadLaboral: 'Decreto N.º 14390/92 Reglamento General de Seguridad, Higiene y Medicina en el Trabajo'
+                constitucion: {
+                    nombre: 'Constitución Nacional de la República del Paraguay (1992)',
+                    detalle: 'Art. 7 (Del ambiente saludable) y Art. 8 (De la protección ambiental). Otorga rango constitucional a la obligatoriedad de recomponer daños ecológicos y realizar estudios de impacto.'
+                },
+                ley294: {
+                    nombre: 'Ley N.º 294/93 de Evaluación de Impacto Ambiental',
+                    detalle: 'Art. 1 y 2: Define qué actividades requieren obligatoriamente una Declaración de Impacto Ambiental (DIA) expedida por el MADES antes de iniciar cualquier tipo de obra física o alteración del suelo.'
+                },
+                decretoEIA: {
+                    nombre: 'Decreto N.º 453/13 y modificatorio N.º 954/13',
+                    detalle: 'Art. 2 y Anexos: Clasifica los proyectos en Categorías (A, B o C). Regula los plazos de validez de las licencias y los requisitos administrativos según las dimensiones declaradas.'
+                },
+                recursosHidricos: {
+                    nombre: 'Ley N.º 3239/07 de Recursos Hídricos del Paraguay',
+                    detalle: 'Art. 34: Regula la faja de protección y dominio de cauces hídricos superficiales. Establece la prohibición absoluta de alteración de cauces, desecación de humedales o vertidos sin autorización de la Dirección de Recursos Hídricos.'
+                },
+                forestal: {
+                    nombre: 'Ley N.º 422/73 Forestal Nacional',
+                    detalle: 'Art. 42: Exige a todo propietario de inmueble rural con cobertura boscosa mantener de forma permanente y natural el 25% de la superficie original como Reserva Legal Forestal. Su incumplimiento acarrea multas severas del INFONA.'
+                },
+                deforestacionCero: {
+                    nombre: 'Ley N.º 6256/18 de Deforestación Cero (Región Oriental)',
+                    detalle: 'Art. 1: Prórroga de la prohibición absoluta de realizar actividades de transformación o conversión de superficies con cobertura de bosques nativos en toda la Región Oriental para fines agrícolas o loteamientos.'
+                },
+                residuos: {
+                    nombre: 'Ley N.º 3956/09 de Gestión Integral de los Residuos Sólidos',
+                    detalle: 'Art. 33: Prohíbe de forma taxativa la quema o disposición final inadecuada de residuos a cielo abierto. Exige a loteamientos e industrias la presentación de un Plan de Gestión de Residuos visado por el municipio y el MADES.'
+                },
+                calidadAire: {
+                    nombre: 'Ley N.º 5211/14 de Calidad del Aire',
+                    detalle: 'Art. 15: Regula las emisiones contaminantes provenientes de fuentes fijas (chimeneas de secado, calderas). Obliga a la instalación de puertos de muestreo técnico y a reportar balances anuales de emisiones al MADES.'
+                },
+                intnPetroleo: {
+                    nombre: 'Normativas Técnicas INTN y Resoluciones del MIC',
+                    detalle: 'Establece la obligatoriedad de instalar Tanques de Doble Pared (TDP), sistemas de detección electrónica de fugas en el espacio intersticial y cámaras separadoras de agua-aceite con eficiencias certificadas en pistas de expendio.'
+                },
+                leyMinas: {
+                    nombre: 'Ley N.º 3180/07 de Minería en el Paraguay',
+                    detalle: 'Art. 67: Exige de forma excluyente la presentación de un Plan de Cierre de Cantera garantizado financieramente para asegurar la recomposición morfológica y paisajística del terreno explotado.'
+                },
+                resEffluentes: {
+                    nombre: 'Resolución MADES N.º 222/02 (Límites Permisibles de Vertido)',
+                    detalle: 'Anexo Técnico: Fija los techos analíticos máximos para vertido final de efluentes líquidos a cuerpos receptores. Parámetros mandatorios: DBO5 < 50 mg/L, DQO < 150 mg/L, Aceites y Grasas < 20 mg/L, pH entre 6.0 y 9.0.'
+                }
             },
             convenios_internacionales: {
-                biodiversidad: 'Convenio sobre la Diversidad Biológica (CBD)',
-                ramsar: 'Convención Ramsar (Humedales de Importancia Internacional)',
-                cambioClimatico: 'Convención Marco de las N.U. sobre el Cambio Climático y Acuerdo de París',
-                basilea: 'Convenio de Basilea (Desechos Peligrosos)',
-                estocolmo: 'Convenio de Estocolmo (Contaminantes Orgánicos Persistentes)'
+                biodiversidad: 'Convenio sobre la Diversidad Biológica (CBD) - Ratificado por Ley N.º 480/94',
+                ramsar: 'Convención Ramsar (Protección Estricta de Humedales) - Ratificada por Ley N.º 350/94',
+                cambioClimatico: 'Convención Marco de las Naciones Unidas sobre el Cambio Climático e Instrumentos del Acuerdo de París'
             }
         };
 
         var MATRIZ_AMBIENTAL = {
             'urbanizaciones': {
                 titulo: 'Urbanizaciones y Loteamientos',
-                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'recursosHidricos', 'delitos'],
+                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'recursosHidricos', 'residuos'],
                 conveniosKeys: ['cambioClimatico'],
                 estructuraEIA: [
-                    'Descripción del proyecto (trazado, viales, servicios base, áreas verdes).',
-                    'Línea de base ambiental y socioeconómica del área de influencia.',
-                    'Identificación y evaluación de impactos (Matriz de Leopold u otra metodología).',
-                    'Plan de Gestión Ambiental (PGA) con medidas de mitigación.',
-                    'Programa de Monitoreo y Vigilancia Ambiental.',
-                    'Plan de Manejo de Residuos Sólidos Urbanos (etapa de obras y operación).',
-                    'Plan de Manejo y Tratamiento de Aguas Residuales (Redes o sistemas individuales).',
-                    'Plan de Contingencias contra Incendios e Inundaciones.',
-                    'Plan de Participación Ciudadana (Relacionamiento comunitario y encuestas).'
+                    'Diseño civil y planimetría: Distribución de lotes, trazado de calles, localización de plazas y reserva comunal obligatoria.',
+                    'Estudio de Balance Hidrológico y escorrentías pluviales para el diseño de cunetas y desagües.',
+                    'Evaluación de Impacto Ambiental mediante Matriz de Leopold integrada (Fase de desmonte, vial y consolidación urbana).',
+                    'Plan de Gestión Ambiental: Monitoreo de compactación de suelos, control de polvo y plan de reforestación urbana con especies nativas.'
                 ],
                 evaluarCondiciones: function(datos) {
-                    var alertas = []; var leyesExtraKeys = [];
-                    if (datos.tieneCauce) alertas.push('ZONA DE PROTECCIÓN HÍDRICA: Delimitar estrictamente las franjas protectoras de cauces según Ley de Recursos Hídricos. Presentar plano con coordenadas de restricción.');
-                    if (datos.tieneBosque) { leyesExtraKeys.push('forestal'); alertas.push('AFECTACIÓN FORESTAL: Requiere análisis de cobertura arbórea y gestión de permisos ante el INFONA.'); }
-                    if (datos.superficie > 10) alertas.push('MACROPROYECTO: Al superar las 10 hectáreas, el MADES exigirá obligatoriamente un proceso formal de Audiencia Pública presencial.');
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
+                    var alertas = []; var leyesExtraKeys = []; var categoria = 'Categoría B (Mediano Impacto - Requiere un Relatorio Ambiental)';
+                    
+                    // Condicionante extraído del PDF del Decreto 453/13
+                    if (datos.superficie > 10) {
+                        categoria = 'Categoría A (Alto Impacto - Requiere EIA Definitivo)';
+                        alertas.push('DICTAMEN DE AUDIENCIA PÚBLICA MANDATORIO: Por superar el umbral técnico de las 10 Hectáreas, el Decreto 453/13 exige obligatoriamente la realización de un proceso de Participación Ciudadana formal antes de emitir la DIA.');
+                    }
+                    if (datos.tieneCauce) {
+                        leyesExtraKeys.push('resEffluentes');
+                        alertas.push('RESTRICCIÓN HÍDRICA (Ley 3239/07): Se detectaron cuerpos de agua. El plano catastral del loteamiento debe certificar franjas de retiro de protección biológica de las riberas. Prohibido lotear sobre zonas bajas inundables.');
+                    }
+                    if (datos.tieneBosque) {
+                        leyesExtraKeys.push('forestal');
+                        if (datos.region === 'oriental') {
+                            leyesExtraKeys.push('deforestacionCero');
+                            alertas.push('ALERTA MÁXIMA DE INFRACCIÓN (Ley 6256/18): Al estar ubicado en la Región Oriental, el desmonte de bosque nativo para calles o lotes está TOTALMENTE PROHIBIDO. El diseño urbanístico debe readecuarse al 100% como área de conservación.');
+                        } else {
+                            alertas.push('CRITERIO DE DESMONTE CHACO (Ley 422/73): Requiere la aprobación previa del Plan de Uso de la Tierra (PUT) ante el INFONA, respetando el 25% de reserva legal forestal y cortinas rompevientos.');
+                        }
+                    }
+                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys, categoria: categoria };
                 }
             },
             'ganaderia': {
                 titulo: 'Explotación Ganadera / Establecimientos Rurales',
-                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'forestal', 'recursosHidricos', 'delitos'],
+                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'forestal', 'recursosHidricos'],
                 conveniosKeys: ['biodiversidad', 'cambioClimatico'],
                 estructuraEIA: [
-                    'Descripción del plan de uso de la tierra (infraestructura, potreros, tajamares).',
-                    'Estudio de capacidad de uso mayor del suelo.',
-                    'Línea de base biológica (Inventario de fauna y flora).',
-                    'Plan de Gestión Ambiental enfocado en cambio de uso de suelo y pasturas.',
-                    'Medidas específicas de manejo de efluentes de corral y pastoreo rotativo.',
-                    'Plan de prevención y combate contra incendios forestales/rurales.'
+                    'Planimetría y zonificación del Plan de Uso de la Tierra (PUT): Pasturas, potreros, callejones y tajamares.',
+                    'Estudio edafológico detallado: Clasificación por capacidad de uso mayor del suelo (Evitar sobrepastoreo en suelos frágiles).',
+                    'Inventario Forestal Cualitativo y cuantitativo validado por consultor matriculado.',
+                    'Plan de Gestión Ambiental: Rotación de pasturas, control de erosión de suelos y plan de contingencia contra incendios rurales.'
                 ],
                 evaluarCondiciones: function(datos) {
-                    var alertas = []; var leyesExtraKeys = [];
-                    if (datos.tieneBosque) alertas.push('RESERVA LEGAL FORESTAL: Cumplir con el 25% de reserva forestal natural obligatoria según Ley Forestal N.º 422. Si está en la Región Oriental, verificar Ley de Deforestación Cero.');
-                    if (datos.tieneCauce) alertas.push('PROTECCIÓN DE HUMEDALES: Mantener retiros obligatorios en nacientes y arroyos para protección del ganado.');
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
+                    var alertas = []; var leyesExtraKeys = []; var categoria = 'Categoría B';
+                    
+                    if (datos.tieneBosque) {
+                        if (datos.region === 'oriental') {
+                            leyesExtraKeys.push('deforestacionCero');
+                            alertas.push('PROHIBICIÓN TAXATIVA DE CAMBIO DE USO (Ley 6256/18): No se otorgarán licencias de desmonte ganadero en bosques nativos de la Región Oriental bajo ninguna circunstancia.');
+                        } else {
+                            alertas.push('REGLA TÉCNICA INFONA (Chaco): Obligación insoslayable de mantener el 25% de reserva forestal natural, más un 15% de cortinas rompevientos perimetrales e interconectadas biológicamente.');
+                        }
+                    }
+                    if (datos.tieneCauce) {
+                        alertas.push('PROTECCIÓN BIOLÓGICA DE AGUAS: Los accesos de ganado a arroyos o tajamares deben estar sectorizados para evitar la colmatación de riberas y contaminación orgánica directa del agua subterránea.');
+                    }
+                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys, categoria: categoria };
                 }
             },
             'estaciones': {
@@ -361,164 +448,58 @@
                 marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'recursosHidricos', 'residuos', 'intnPetroleo'],
                 conveniosKeys: ['cambioClimatico'],
                 estructuraEIA: [
-                    'Descripción técnica del sistema de almacenamiento (Tanques de Doble Pared, cañerías).',
-                    'Estudio hidrogeológico local (vulnerabilidad del acuífero y sentido de flujo freático).',
-                    'Línea de base ambiental y mapa de uso de suelo circundante.',
-                    'Plan de Gestión Ambiental: Monitoreo de pozos de observación de vapores y agua.',
-                    'Plan de Contingencias específico para derrames, fugas e incendios.',
-                    'Sistema de tratamiento de efluentes de pista (Cámaras separadoras de agua y aceite).'
+                    'Especificaciones de los tanques subterraneos instalados (Certificaciones de fábrica de doble pared y protección anticorrosiva).',
+                    'Perfil hidrogeológico local con determinación de la profundidad de la primera napa de agua freática.',
+                    'Plan de Monitoreo Ambiental: Cronograma de pruebas de hermeticidad de tanques y muestreo de pozos de monitoreo de vapores.',
+                    'Plan de contingencia específico contra incendios y derrames masivos avalado por ingeniería en seguridad.'
                 ],
                 evaluarCondiciones: function(datos) {
-                    var alertas = ['RESIDUOS PELIGROSOS: Obligatoriedad de convenio con empresa recolectora autorizada por el MADES para lodos de cámaras separadoras.'];
-                    var leyesExtraKeys = [];
-                    if (datos.tieneCauce) alertas.push('RESTRICCIÓN CRÍTICA: Alto riesgo por cercanía a recursos hídricos. Verificar normativas municipales sobre distancias mínimas.');
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
+                    var alertas = ['CRITERIO TÉCNICO EXCLUYENTE (Res. MIC): Las cámaras separadoras de agua y aceite de pista deben contar con una purga de lodos periódica obligatoria y bitácora de retiro firmada por empresa autorizada por el MADES.'];
+                    var leyesExtraKeys = ['resEffluentes']; var categoria = 'Categoría B (Impacto Moderado)';
+                    if (datos.tieneCauce) alertas.push('ZONA DE EXCLUSIÓN TOTAL: Alto riesgo. Las normativas ambientales vigentes vetan la construcción de fosas y tanques enterrados en radios de afectación directa a humedales o arroyos.');
+                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys, categoria: categoria };
                 }
             },
             'industrias': {
                 titulo: 'Establecimientos Industriales',
-                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'recursosHidricos', 'residuos', 'calidadAire', 'delitos'],
-                conveniosKeys: ['basilea', 'cambioClimatico'],
+                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'recursosHidricos', 'residuos', 'calidadAire', 'resEffluentes'],
+                conveniosKeys: ['cambioClimatico'],
                 estructuraEIA: [
-                    'Descripción detallada del proceso productivo, balance de masa y energía.',
-                    'Inventario de materias primas, insumos químicos y almacenamiento.',
-                    'Caracterización de efluentes líquidos, emisiones atmosféricas y residuos industriales.',
-                    'Plan de Gestión Ambiental: Planta de tratamiento de efluentes (PTE) y sistemas de filtrado.',
-                    'Programa de monitoreo de calidad de aire, niveles de ruido y descargas de agua.'
+                    'Balances completos de masas, agua e insumos del proceso de manufactura.',
+                    'Caracterización física y química proyectada de los efluentes de proceso (Carga orgánica y química).',
+                    'Diseño hidráulico y de ingeniería civil de la Planta de Tratamiento de Efluentes Industriales (PTEI).',
+                    'Planes de mitigación de emisiones a la atmósfera (Instalación de ciclones, filtros o lavadores de gases).'
                 ],
                 evaluarCondiciones: function(datos) {
-                    var alertas = ['EFECTO SINÉRGICO: Revisar si la categoría industrial exige un Plan de Gestión de Residuos Peligrosos específico ante el MADES.'];
-                    var leyesExtraKeys = [];
-                    if (datos.superficie > 5) alertas.push('ÁREA INDUSTRIAL: Evaluar zona de amortiguamiento e impacto por ruidos/olores en comunidades vecinas.');
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
+                    var alertas = ['CRITERIO DE EMISIONES (Ley 5211/14): Las chimeneas o fuentes fijas de combustión deben contar con plataformas seguras y puertos de toma de muestras analíticas para control de material particulado e isocinetismo.'];
+                    var leyesExtraKeys = []; var categoria = datos.superficie > 5 ? 'Categoría A (Alto Impacto)' : 'Categoría B (Mediano Impacto)';
+                    if (datos.tieneCauce) alertas.push('MONITOREO DE VERTIDO (Res. 222/02): El punto de vuelco final está sujeto a inspección. Parámetros inalterables obligatorios: DBO < 50 mg/L y ausencias de metales pesados o reactivos.');
+                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys, categoria: categoria };
                 }
             },
             'canteras': {
-                titulo: 'Canteras y Extracción de Materiales',
-                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'leyMinas', 'calidadAire', 'delitos'],
+                titulo: 'Canteras y Extracción de Materiales de Construcción',
+                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'leyMinas', 'calidadAire'],
                 conveniosKeys: ['biodiversidad'],
                 estructuraEIA: [
-                    'Geología del yacimiento y método de explotación (voladuras o mecánica).',
-                    'Estudio de vibraciones y emisiones de material particulado (polvo).',
-                    'Plan de Gestión Ambiental: Control de polvo (riego), barreras forestales perimetrales.',
-                    'Plan de Cierre de Mina / Plan de Recuperación Paisajística (Obligatorio por Ley de Minas).',
-                    'Diseño de cunetas de coronación y piletas de sedimentación.'
+                    'Estudio de estabilidad geotécnica de taludes de corte del frente de explotación.',
+                    'Plan de manejo del material particulado (Riego de caminos internos, lonas en camiones transportadores).',
+                    'Diseño de las piletas de decantación en cascada para atrapar los finos y sólidos en suspensión acarreados por lluvias.',
+                    'Plan de Cierre de Mina: Perfilado final de bancos, revegetación técnica y restitución morfológica paisajística segura.'
                 ],
                 evaluarCondiciones: function(datos) {
-                    var alertas = ['EXPLOSIVOS: Si se utiliza voladura, se requiere la habilitación correspondiente de la DIMABEL.'];
-                    var leyesExtraKeys = [];
-                    if (datos.tieneBosque) { leyesExtraKeys.push('forestal'); alertas.push('DESMONTE: Actividad implica pérdida irreversible. Coordinar reforestación compensatoria con el INFONA.'); }
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
-                }
-            },
-            'frigorificos': {
-                titulo: 'Frigoríficos e Industrias Cárnicas',
-                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'recursosHidricos', 'residuos', 'senacsa'],
-                conveniosKeys: ['cambioClimatico'],
-                estructuraEIA: [
-                    'Esquema del proceso: Corrales, faena, digestor (rendering) y cámaras frías.',
-                    'Estimación de consumo de agua (m³/día) y fuentes de captación.',
-                    'Diseño detallado del sistema de tratamiento de efluentes con alta carga orgánica (Lagunas, lodos activados).',
-                    'Plan de gestión de subproductos efluentes y residuos sólidos (rumen, sangre, decomisos).',
-                    'Control de vectores (moscas, roedores) y mitigación de olores molestos.'
-                ],
-                evaluarCondiciones: function(datos) {
-                    var alertas = ['SENACSA: El diseño de las plantas de tratamiento y zonas de subproductos debe estar visado por SENACSA.'];
-                    var leyesExtraKeys = [];
-                    if (datos.tieneCauce) alertas.push('PUNTO DE VUELCO: El estudio debe incluir un análisis de capacidad de asimilación del cuerpo receptor.');
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
-                }
-            },
-            'plantas_tratamiento': {
-                titulo: 'Plantas de Tratamiento (Residuos/Efluentes)',
-                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'recursosHidricos', 'residuos', 'ley1561'],
-                conveniosKeys: ['basilea', 'estocolmo'],
-                estructuraEIA: [
-                    'Justificación técnica y dimensionamiento del sistema de tratamiento/disposición.',
-                    'Línea de base hidrogeológica profunda (Monitoreo de acuíferos mediante pozos).',
-                    'Plan de contingencias ante fallas del sistema (desbordes, rotura de geomembranas).',
-                    'Plan de monitoreo continuo de lixiviados, gases (metano) y calidad del agua subterránea.'
-                ],
-                evaluarCondiciones: function(datos) {
-                    var alertas = ['RESIDUOS PELIGROSOS: Si la planta recibe residuos industriales o biomédicos, aplica el Convenio de Basilea.'];
-                    var leyesExtraKeys = [];
-                    if (datos.tieneCauce) alertas.push('ALERTA HIDROLÓGICA: Ubicación crítica. Exigir obras de ingeniería civil avanzadas para evitar afectación por crecidas.');
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
-                }
-            },
-            'hoteles': {
-                titulo: 'Hoteles y Complejos Turísticos',
-                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'recursosHidricos', 'residuos'],
-                conveniosKeys: ['biodiversidad'],
-                estructuraEIA: [
-                    'Descripción de la infraestructura, senderos, piscinas y capacidad de carga turística.',
-                    'Plan de gestión de paisaje y conservación de la biodiversidad local.',
-                    'Sistema de tratamiento de aguas residuales sanitarias (plantas compactas o infiltración).',
-                    'Plan de manejo de residuos sólidos enfocado en el reciclaje.'
-                ],
-                evaluarCondiciones: function(datos) {
-                    var alertas = []; var leyesExtraKeys = [];
-                    if (datos.tieneCauce) alertas.push('TURISMO FLUVIAL/COSTEÑO: Cumplir estrictamente con la faja de protección costera del MADES.');
-                    if (datos.tieneBosque) { leyesExtraKeys.push('forestal'); alertas.push('ECOTURISMO: Priorizar senderismo e infraestructura de bajo impacto para evitar multas de INFONA.'); }
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
-                }
-            },
-            'energia_solar': {
-                titulo: 'Parques de Energía Solar',
-                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'residuos', 'seguridadLaboral'],
-                conveniosKeys: ['cambioClimatico'],
-                estructuraEIA: [
-                    'Distribución de los paneles solares, subestaciones y líneas de transmisión eléctrica.',
-                    'Análisis del efecto destello (glint and glare) y su impacto en fauna o vías de comunicación.',
-                    'Plan de gestión de residuos electrónicos para la etapa de desmantelamiento.',
-                    'Plan de control de escorrentías e erosión del suelo bajo los paneles.'
-                ],
-                evaluarCondiciones: function(datos) {
-                    var alertas = []; var leyesExtraKeys = [];
-                    if (datos.superficie > 20) alertas.push('ALTA EXTENSIÓN: Analizar la pérdida de suelo biológicamente activo y proponer corredores biológicos.');
-                    if (datos.tieneBosque) { leyesExtraKeys.push('forestal'); alertas.push('CONFLICTO DE USO: El desmonte de bosque nativo para paneles estará sujeto a estrictas restricciones del INFONA.'); }
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
-                }
-            },
-            'obras_viales': {
-                titulo: 'Obras Viales / Rutas e Infraestructura',
-                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'mopc', 'delitos'],
-                conveniosKeys: ['biodiversidad'],
-                estructuraEIA: [
-                    'Delimitación de la traza, franja de dominio, campamentos y zonas de préstamo.',
-                    'Plan de Gestión Ambiental de Obras (PGAO) basado en las especificaciones del MOPC.',
-                    'Medidas de mitigación para el movimiento de suelos, control de polvo y ruido.',
-                    'Diseño de pasos de fauna (si cruza áreas protegidas).'
-                ],
-                evaluarCondiciones: function(datos) {
-                    var alertas = ['MOPC: Aplicación obligatoria del Manual de Carreteras del MOPC en sus componentes socioambientales.'];
-                    var leyesExtraKeys = [];
-                    if (datos.tieneBosque || datos.tieneCauce) { leyesExtraKeys.push('forestal'); alertas.push('AFECTACIÓN LINEAL: Tramitar permisos especiales tramo por tramo ante afectación de ecosistemas continuos.'); }
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
-                }
-            },
-            'silos_depositos': {
-                titulo: 'Silos, Depósitos y Centros Logísticos',
-                marcoLegalKeys: ['constitucion', 'ley294', 'decretoEIA', 'senave', 'calidadAire', 'seguridadLaboral'],
-                conveniosKeys: ['cambioClimatico'],
-                estructuraEIA: [
-                    'Descripción de la capacidad de acopio, sistemas de secado y carga/descarga.',
-                    'Sistemas de mitigación para material particulado (polvo de grano) mediante ciclones.',
-                    'Plan de seguridad química para el uso de fumigantes y control de plagas (Fosfuros).',
-                    'Estudio de impacto acústico (ventiladores de secado en horario nocturno).',
-                    'Plan de contingencia específico contra explosiones de polvo e incendios.'
-                ],
-                evaluarCondiciones: function(datos) {
-                    var alertas = ['SENAVE: Registro y fiscalización de instalaciones de acopio de granos ante el SENAVE.'];
-                    var leyesExtraKeys = [];
-                    if (datos.superficie > 5) alertas.push('TRÁNSITO PESADO: Evaluar el impacto del flujo continuo de camiones pesados sobre la seguridad vial comunitaria.');
-                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys };
+                    var alertas = ['OBLIGACIÓN DE RESTAURACIÓN (Ley 3180/07): Es un requisito legal ineludible presentar una fianza o garantía ambiental para asegurar la ejecución del Plan de Cierre al término de la vida útil de la cantera.'];
+                    var leyesExtraKeys = []; var categoria = 'Categoría A (Alto Riesgo Minero)';
+                    if (datos.tieneBosque) { leyesExtraKeys.push('forestal'); alertas.push('PERMISO DE ROZADO: La remoción de cobertura vegetal para abrir frentes de explotación requiere autorización previa por escrito del INFONA.'); }
+                    return { alertas: alertas, leyesExtraKeys: leyesExtraKeys, categoria: categoria };
                 }
             }
         };
 
+        // LÓGICA DE DETECCIÓN Y PROCESAMIENTO
         document.getElementById('btn-generar').addEventListener('click', function() {
             var actividadSeleccionada = document.getElementById('actividad').value;
+            var region = document.getElementById('region').value;
             var superficie = parseFloat(document.getElementById('superficie').value) || 0;
             var tieneBosque = document.getElementById('tiene-bosque').checked;
             var tieneCauce = document.getElementById('tiene-cauce').checked;
@@ -529,17 +510,19 @@
             }
 
             var proyecto = MATRIZ_AMBIENTAL[actividadSeleccionada];
-            var evaluarCondiciones = proyecto.evaluarCondiciones({ superficie: superficie, tieneBosque: tieneBosque, tieneCauce: tieneCauce });
+            var evaluacion = proyecto.evaluarCondiciones({ superficie: superficie, tieneBosque: tieneBosque, tieneCauce: tieneCauce, region: region });
 
             document.getElementById('estado-vacio').classList.add('oculto');
             document.getElementById('contenido-guia').classList.remove('oculto');
 
-            document.getElementById('res-titulo').innerText = 'Guía EIA: ' + proyecto.titulo;
+            document.getElementById('res-titulo').innerText = 'Diagnóstico Experto: ' + proyecto.titulo;
+            document.getElementById('res-categoria').innerText = evaluacion.categoria;
 
-            var listaLegal = document.getElementById('res-legal');
-            listaLegal.innerHTML = '';
+            // Renderizar Leyes Articuladas
+            var divLegal = document.getElementById('res-legal');
+            divLegal.innerHTML = '';
             
-            var todasLasLlavesLegales = proyecto.marcoLegalKeys.concat(evaluarCondiciones.leyesExtraKeys);
+            var todasLasLlavesLegales = proyecto.marcoLegalKeys.concat(evaluacion.leyesExtraKeys);
             var llavesUnicas = [];
             for (var i = 0; i < todasLasLlavesLegales.length; i++) {
                 if (llavesUnicas.indexOf(todasLasLlavesLegales[i]) === -1) {
@@ -548,11 +531,26 @@
             }
             
             llavesUnicas.forEach(function(key) {
-                var li = document.createElement('li');
-                li.textContent = DB_LEYES.marcos_legales[key] || 'Normativa específica';
-                listaLegal.appendChild(li);
+                var leyObj = DB_LEYES.marcos_legales[key];
+                if (leyObj) {
+                    var box = document.createElement('div');
+                    box.className = 'ley-box';
+                    
+                    var tituloText = document.createElement('span');
+                    tituloText.className = 'ley-titulo-texto';
+                    tituloText.textContent = '⚖️ ' + leyObj.nombre;
+                    box.appendChild(tituloText);
+                    
+                    var pDetalle = document.createElement('p');
+                    pDetalle.className = 'ley-detalle';
+                    pDetalle.textContent = leyObj.detalle;
+                    box.appendChild(pDetalle);
+                    
+                    divLegal.appendChild(box);
+                }
             });
 
+            // Renderizar Convenios
             var listaConvenios = document.getElementById('res-convenios');
             listaConvenios.innerHTML = '';
             proyecto.conveniosKeys.forEach(function(key) {
@@ -561,21 +559,24 @@
                 listaConvenios.appendChild(li);
             });
 
+            // Renderizar Criterios Excluyentes (Alertas)
             var seccionAlertas = document.getElementById('seccion-alertas');
-            var listaAlertas = document.getElementById('res-alertas');
-            listaAlertas.innerHTML = '';
+            var divAlertas = document.getElementById('res-alertas');
+            divAlertas.innerHTML = '';
             
-            if (evaluarCondiciones.alertas.length > 0) {
+            if (evaluacion.alertas.length > 0) {
                 seccionAlertas.classList.remove('oculto');
-                evaluarCondiciones.alertas.forEach(function(alerta) {
-                    var li = document.createElement('li');
-                    li.textContent = alerta;
-                    listaAlertas.appendChild(li);
+                evaluacion.alertas.forEach(function(alerta) {
+                    var divAlerta = document.createElement('div');
+                    divAlerta.className = 'alerta-item';
+                    divAlerta.textContent = alerta;
+                    divAlertas.appendChild(divAlerta);
                 });
             } else {
                 seccionAlertas.classList.add('oculto');
             }
 
+            // Renderizar Estructura Técnica
             var listaEstructura = document.getElementById('res-estructura');
             listaEstructura.innerHTML = '';
             proyecto.estructuraEIA.forEach(function(item) {
@@ -585,13 +586,16 @@
             });
         });
 
+        // DESCARGA DE INFORME TÉCNICO EN WORD ENRIQUECIDO
         document.getElementById('btn-descargar-word').addEventListener('click', function() {
             var titulo = document.getElementById('res-titulo').innerText;
-            
-            var leyesLis = document.querySelectorAll('#res-legal li');
+            var catText = document.getElementById('res-categoria').innerText;
+            var boxes = document.querySelectorAll('.ley-box');
             var leyesList = '';
-            for (var i = 0; i < leyesLis.length; i++) {
-                leyesList += '• ' + leyesLis[i].textContent + '\n';
+            for (var i = 0; i < boxes.length; i++) {
+                var nombreLey = boxes[i].querySelector('.ley-shadow .ley-titulo-texto, .ley-titulo-texto').textContent;
+                var detalleLey = boxes[i].querySelector('.ley-detalle').textContent;
+                leyesList += '• ' + nombreLey + '\n   Exigencia del PDF: ' + detalleLey + '\n\n';
             }
 
             var conveniosLis = document.querySelectorAll('#res-convenios li');
@@ -609,51 +613,51 @@
             var alertasVisibles = !document.getElementById('seccion-alertas').classList.contains('oculto');
             var alertasTexto = '';
             if (alertasVisibles) {
-                alertasTexto = '\n⚠️ REQUISITOS Y ALERTAS ESPECIALES DETECTADAS:\n';
-                var alertasLis = document.querySelectorAll('#res-alertas li');
-                for (var m = 0; m < alertasLis.length; m++) {
-                    alertasTexto += '[ALERTA] ' + alertasLis[m].textContent + '\n';
+                alertasTexto = '\n⚠️ DICTAMENES Y REQUISITOS EXCLUYENTES DETECTADOS POR EL MOTOR:\n';
+                var alertasItems = document.querySelectorAll('.alerta-item');
+                for (var m = 0; m < alertasItems.length; m++) {
+                    alertasTexto += '[DICTAMEN] ' + alertasItems[m].textContent + '\n';
                 }
                 alertasTexto += '\n';
             }
 
             var contenidoDocumento = "========================================================================\n" +
-                                     "       SIGA-PY - SISTEMA INTEGRAL DE GESTIÓN AMBIENTAL DEL PARAGUAY\n" +
+                                     "       SIGA-PY EXPERT - INFORME PRELIMINAR DE ADECUACIÓN LEGAL\n" +
                                      "========================================================================\n" +
                                      titulo.toUpperCase() + "\n" +
-                                     "Borrador de Términos de Referencia e Instrumento Técnico Legal.\n" +
-                                     "Fecha de emisión: " + new Date().toLocaleDateString() + "\n\n" +
+                                     "DIAGNÓSTICO PRE-EVALUACIÓN E INSTRUMENTAL TÉCNICO LEGAL.\n" +
+                                     "Clasificación estimada: " + catText + "\n" +
+                                     "Fecha de procesamiento: " + new Date().toLocaleDateString() + "\n\n" +
                                      "------------------------------------------------------------------------\n" +
-                                     "1. MARCO LEGAL NACIONAL APLICABLE (MADES / INFONA / SECTORIAL)\n" +
+                                     "1. MARCO LEGAL ESPECÍFICO EXTRAÍDO DE LOS TEXTOS DE LEY Y RESOLUCIONES\n" +
                                      "------------------------------------------------------------------------\n" +
-                                     leyesList + "\n" +
+                                     leyesList + 
                                      "------------------------------------------------------------------------\n" +
-                                     "2. CONVENIOS INTERNACIONALES RATIFICADOS POR PARAGUAY\n" +
+                                     "2. ACUERDOS Y CONVENIOS INTERNACIONALES RATIFICADOS\n" +
                                      "------------------------------------------------------------------------\n" +
                                      conveniosList + "\n" +
                                      alertasTexto +
                                      "------------------------------------------------------------------------\n" +
-                                     "3. ESTRUCTURA BASE REQUERIDA PARA EL ESTUDIO DE IMPACTO AMBIENTAL (EIA)\n" +
+                                     "3. REQUERIMIENTOS TÉCNICOS CRÍTICOS QUE DEBE CONTENER EL ESTUDIO (EIA)\n" +
                                      "------------------------------------------------------------------------\n" +
-                                     "Índice formal y de contenido técnico mínimo exigido por los evaluadores:\n\n" +
+                                     "Índice técnico mandatorio de elaboración estructurado por SIGA-PY:\n\n" +
                                      estructuraList + "\n" +
                                      "------------------------------------------------------------------------\n" +
-                                     "4. REGISTRO DE CAMPO Y EVALUACIÓN PRELIMINAR (COMPLETAR EN SITIO)\n" +
+                                     "4. CONTROL DE CATASTRO AMBIENTAL (A LLENAR EN CAMPO)\n" +
                                      "------------------------------------------------------------------------\n" +
-                                     "• Nro. de Finca / Padrón / Cta. Cte. Catastral: ________________________\n" +
-                                     "• Propietario o Firma Proponente: ________________________\n" +
-                                     "• Municipio / Departamento: ________________________\n" +
-                                     "• Coordenadas UTM de Referencia (WGS84): ________________________\n" +
-                                     "• Observaciones del Consultor:\n\n\n\n" +
+                                     "• Cuenta Corriente Catastral / Matrícula Rural: ________________________\n" +
+                                     "• Proponente / Persona Física o Jurídica: ________________________\n" +
+                                     "• Distrito / Departamento: ________________________\n" +
+                                     "• Coordenadas UTM Centrales (WGS84): ________________________\n\n\n\n" +
                                      "========================================================================\n" +
-                                     "                   Borrador Técnico de Uso Profesional\n" +
+                                     "         Fin del Reporte de Viabilidad - Sistema Experto SIGA-PY\n" +
                                      "========================================================================\n";
 
             var blob = new Blob([contenidoDocumento], { type: 'application/msword;charset=utf-8' });
             var urlDescarga = URL.createObjectURL(blob);
             var enlaceVirtual = document.createElement('a');
             enlaceVirtual.href = urlDescarga;
-            enlaceVirtual.download = titulo.replace(/ /g, '_') + '_SIGAPY_TDR.doc';
+            enlaceVirtual.download = titulo.replace(/ /g, '_') + '_SIGAPY_EXPERT.doc';
             
             document.body.appendChild(enlaceVirtual);
             enlaceVirtual.click();
