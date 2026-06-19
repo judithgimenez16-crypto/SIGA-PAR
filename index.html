@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master - Auditoría Técnica</title>
+    <title>SIGA-PY Consultor Master v12.1</title>
     <style>
         :root {
             --color-primario: #1b4332;
@@ -81,12 +81,11 @@
 
     <header>
         <h1>SIGA-PY CONSULTOR MASTER</h1>
-        <p>Sistema Experto de Gestión Ambiental e Ingeniería del Paraguay</p>
-        <small>Motor Técnico y Legal Integrado v12.0</small>
+        <p>Sistema Experto de Gestión Ambiental e Ingeniería</p>
+        <small>Motor Técnico y Legal Integrado v12.1 - Libre de Caché</small>
     </header>
 
     <div class="container">
-        <!-- CONFIGURADOR -->
         <aside class="panel-config">
             <h2>Configurador de Expediente</h2>
             <form id="form-ambiental">
@@ -95,7 +94,7 @@
                     <h3>1. Requerimiento Técnico-Legal</h3>
                     <div class="campo">
                         <select id="instrumento" onchange="filtrarActividades()" required>
-                            <option value="">-- Seleccione el Trámite Principal --</option>
+                            <option value="" selected disabled>-- Seleccione el Trámite Principal --</option>
                             <option value="EIA">Estudio de Impacto Ambiental Definitivo (EIA)</option>
                             <option value="RIMA">Relatorio de Impacto Ambiental (RIMA)</option>
                             <option value="EDE">Estudio de Disposición de Efluentes (EDE)</option>
@@ -195,7 +194,8 @@
     </div>
 
     <script>
-        // --- 1. BASE DE DATOS LEGAL CLASIFICADA ---
+        console.log("Iniciando SIGA-PY v12.1...");
+
         const DB_LEYES = {
             ley294: { c: 'Institucional', n: 'Ley N.º 294/93 de Evaluación de Impacto Ambiental', d: 'Marco rector. Obliga a obtener la DIA y establece el marco procedimental.' },
             ley1561: { c: 'Institucional', n: 'Ley N.º 1561/00', d: 'Crea el Sistema Nacional del Ambiente (SISNAM) y establece la gestión ambiental.' },
@@ -216,16 +216,17 @@
             cierreLey: { c: 'Cierre y Minas', n: 'Ley N.º 3180/07', d: 'Obligatoriedad técnica de presentar Plan de Cierre.' }
         };
 
-        // --- 2. DICCIONARIO TÉCNICO DE INGENIERÍA (NUEVO MOTOR) ---
         const DICTAMEN_TECNICO = {
-            'estaciones': '<b>INGENIERÍA PARA SURTIDORES:</b> Incluir diseño hidrosanitario con Trampa API (separador agua/aceite) en pista, tanques subterráneos de doble pared con sensores de intersticio, canaletas perimetrales ciegas y sistema contra incendios con extintores en cada isla.',
-            'urbanizaciones': '<b>INGENIERÍA PARA LOTEAMIENTOS:</b> Presentar cálculo hidrológico de escorrentía para evitar inundaciones a linderos, diseño de red vial, sistema de provisión de agua y destinar el porcentaje exigido por la Ley Orgánica Municipal para plazas y edificios públicos.',
-            'hospitales': '<b>INGENIERÍA HOSPITALARIA:</b> Presentar flujograma estricto de Residuos Biocontagiosos (Patológicos), cuarto de almacenamiento temporal refrigerado, y validar convenio de recolección con empresa tratadora (autoclave/incineración).',
-            'ganaderia': '<b>INGENIERÍA RURAL:</b> Detallar piletas de decantación para efluentes, plan de manejo de estiércol/mortandad, diseño de tajamares y respeto topográfico de franjas de protección de cauces hídricos.',
+            'estaciones': '<b>INGENIERÍA PARA SURTIDORES:</b> Incluir diseño hidrosanitario con Trampa API (separador agua/aceite) en pista, tanques subterráneos de doble pared con sensores de intersticio, canaletas perimetrales ciegas y sistema contra incendios.',
+            'urbanizaciones': '<b>INGENIERÍA PARA LOTEAMIENTOS:</b> Presentar cálculo hidrológico de escorrentía, diseño de red vial, sistema de provisión de agua y destinar el porcentaje exigido por Ley para plazas y edificios públicos.',
+            'hospitales': '<b>INGENIERÍA HOSPITALARIA:</b> Presentar flujograma estricto de Residuos Biocontagiosos (Patológicos), cuarto de almacenamiento refrigerado y validar convenio de recolección (autoclave/incineración).',
+            'ganaderia': '<b>INGENIERÍA RURAL:</b> Detallar piletas de decantación para efluentes, plan de manejo de estiércol/mortandad, diseño de tajamares y respeto topográfico de franjas de cauces.',
             'granjas': '<b>INGENIERÍA PECUARIA:</b> Diseñar sistema de lagunas de estabilización o biodigestores para el guano, control de olores (barreras vivas) y pozo artesiano con medidor de caudal.',
-            'industrias': '<b>INGENIERÍA INDUSTRIAL:</b> Incluir flujograma de procesos, balance de masa/energía, diseño dimensionado del sistema de tratamiento de efluentes (físico-químico/biológico) y tinglado para manejo de residuos industriales.',
-            'canteras': '<b>INGENIERÍA MINERA:</b> Diseño de explotación escalonada por terrazas/bancos, polvorín habilitado por DIMABEL (si utiliza explosivos), control mitigante de material particulado y piletas de sedimentación de arrastre pluvial.',
-            'residuos': '<b>INGENIERÍA SANITARIA:</b> Diseño de celdas de confinamiento con impermeabilización (geomembrana HDPE), sistema de captación/quema de biogás, y piletas de recirculación de lixiviados.'
+            'industrias': '<b>INGENIERÍA INDUSTRIAL:</b> Incluir flujograma de procesos, balance de masa, diseño dimensionado del sistema de tratamiento de efluentes y tinglado para manejo de residuos industriales.',
+            'canteras': '<b>INGENIERÍA MINERA:</b> Diseño de explotación por terrazas/bancos, polvorín habilitado por DIMABEL (si aplica), control mitigante de material particulado y piletas de sedimentación.',
+            'residuos': '<b>INGENIERÍA SANITARIA:</b> Diseño de celdas de confinamiento con impermeabilización (geomembrana HDPE), captación/quema de biogás y piletas de lixiviados.',
+            'humedales': '<b>INGENIERÍA HIDROLÓGICA:</b> Evaluación rigurosa de recarga de acuíferos, afectación a avifauna migratoria y diseño de canales compensatorios ecológicos.',
+            'desmontes': '<b>INGENIERÍA FORESTAL:</b> Inventario de biomasa, diseño de parcelas de retención de árboles semilleros y cordones vivos de conservación.'
         };
 
         const DICCIONARIO_ACTIVIDADES = {
@@ -238,7 +239,7 @@
             'depositos': 'Depósitos / Silos',
             'canteras': 'Canteras / Minería',
             'humedales': 'Proyectos en Humedales',
-            'residuos': 'Rellenos Sanitarios / Tratamiento de Residuos',
+            'residuos': 'Rellenos Sanitarios / Tratamiento',
             'desmontes': 'Desmontes o Cambio de Uso de Suelo'
         };
 
@@ -254,4 +255,154 @@
             'EIA': ['1. Datos del Proponente', '2. Descripción técnica y de ingeniería', '3. Línea de Base Ambiental', '4. Matriz de Impactos', '5. Plan de Gestión Ambiental (PGA)', '6. Relatorio de Impacto Ambiental (RIMA)'],
             'RIMA': ['1. Resumen analítico', '2. Justificación de alternativas', '3. Síntesis de impactos significativos', '4. Resumen de medidas de mitigación'],
             'EDE': ['1. Caracterización del vertido', '2. Memoria de cálculo de ingeniería', '3. Matriz de dispersión', '4. Plan de monitoreo analítico'],
-            'PGA': ['1. Descripción operativa', '2. Cronograma de mitigación', '3. Presupuesto', '4. Conting
+            'PGA': ['1. Descripción operativa', '2. Cronograma de mitigación', '3. Presupuesto', '4. Contingencias y Capacitación'],
+            'AA': ['1. Declaración Jurada de Cumplimiento', '2. Metodología basada en ISO 19011', '3. Matriz de Cumplimiento de la DIA', '4. Evidencias analíticas in situ', '5. PGA reajustado']
+        };
+
+        function filtrarActividades() {
+            const inst = document.getElementById('instrumento').value;
+            const selectAct = document.getElementById('actividad');
+            
+            // Limpiamos siempre primero
+            selectAct.innerHTML = '<option value="">-- Seleccione Actividad --</option>';
+            
+            if (!inst || !MAPEO_TRAMITES[inst]) return;
+            
+            // Llenamos según el instrumento
+            MAPEO_TRAMITES[inst].forEach(function(clave) {
+                let opt = document.createElement('option');
+                opt.value = clave;
+                opt.textContent = DICCIONARIO_ACTIVIDADES[clave].toUpperCase();
+                selectAct.appendChild(opt);
+            });
+        }
+
+        function generarGuia() {
+            const inst = document.getElementById('instrumento').value;
+            const act = document.getElementById('actividad').value;
+            
+            if (!inst || !act) {
+                alert("Por favor, seleccione el Requerimiento y la Actividad en los selectores.");
+                return;
+            }
+
+            const region = document.getElementById('region').value;
+            const sup = parseFloat(document.getElementById('superficie').value) || 0;
+            const c_bosque = document.getElementById('tiene-bosque').checked;
+            const c_deficit = document.getElementById('deficit-bosque').checked;
+            const c_cauce = document.getElementById('tiene-cauce').checked;
+            const c_asp = document.getElementById('afecta-asp').checked;
+            const c_pozo = document.getElementById('requiere-pozo').checked;
+            const c_pcb = document.getElementById('posee-pcb').checked;
+            const c_cierre = document.getElementById('requiere-cierre').checked;
+
+            document.getElementById('estado-vacio').classList.add('oculto');
+            document.getElementById('contenido-guia').classList.remove('oculto');
+            
+            let macroproyecto = (act === 'urbanizaciones' && sup > 10) || ['canteras','residuos'].includes(act);
+            let categoria = (macroproyecto || c_asp || (act === 'ganaderia' && sup > 500 && region === 'oriental')) ? 'Categoría A (Alto Impacto)' : 'Categoría B (Mediano Impacto)';
+
+            document.getElementById('res-inst-badge').innerText = `Trámite: ${inst}`;
+            document.getElementById('res-categoria').innerText = `Escala: ${categoria}`;
+
+            let leyesSet = new Set(['ley294', 'ley1561', 'ley6123', 'res433', 'ley716']);
+            let alertas = [];
+
+            if (DICTAMEN_TECNICO[act]) {
+                alertas.push(`<div class="alerta-ingenieria"><span style="padding-left:10px;">${DICTAMEN_TECNICO[act]}</span></div>`);
+            }
+
+            alertas.push('<div class="alerta-item"><b>MARCO RECTOR:</b> Alinear la redacción estrictamente a la Resolución 433/19 del MADES.</div>');
+
+            if (inst === 'AA') {
+                leyesSet.add('iso');
+                alertas.push('<div class="alerta-item"><b>AUDITORÍA ISO:</b> Aplicar principios de auditoría según ISO 19011.</div>');
+            }
+            if (act === 'humedales' || c_cauce) {
+                leyesSet.add('ley3239');
+                if (act === 'humedales') leyesSet.add('ramsar');
+                alertas.push('<div class="alerta-item"><b>PROTECCIÓN HÍDRICA:</b> Garantizar preservación de humedales/cauces y citar Ley 3239/07.</div>');
+            }
+            if (act === 'industrias' || c_pcb || act === 'estaciones' || act === 'depositos') {
+                leyesSet.add('ley567');
+                if(c_pcb) leyesSet.add('conveniosPeligrosos');
+                leyesSet.add('ley3956');
+                alertas.push('<div class="alerta-item"><b>SUSTANCIAS PELIGROSAS Y RESIDUOS:</b> Implementar basureros clasificados y manejo de sustancias según Ley 567/95.</div>');
+            }
+            if (c_pozo) {
+                leyesSet.add('resPozos');
+                alertas.push('<div class="alerta-item"><b>AGUA SUBTERRÁNEA:</b> Gestionar permisos de perforación y ensayo de bombeo.</div>');
+            }
+            if (c_asp) {
+                leyesSet.add('ley352');
+                alertas.push('<div class="alerta-item"><b>ÁREAS PROTEGIDAS:</b> EIA presencial obligatorio según Ley 352/94 por afectación de ASP.</div>');
+            }
+            if (c_bosque || act === 'desmontes') {
+                leyesSet.add('ley422');
+                leyesSet.add('ley96');
+                if (region === 'oriental') leyesSet.add('ley2524');
+                alertas.push('<div class="alerta-item"><b>BIODIVERSIDAD Y BOSQUES:</b> Elaborar inventario forestal. Riesgo penal activo en Región Oriental por Ley de Deforestación Cero.</div>');
+            }
+
+            document.getElementById('res-alertas').innerHTML = alertas.join('');
+
+            let divLegal = document.getElementById('res-legal');
+            divLegal.innerHTML = '';
+            Array.from(leyesSet).forEach(function(key) {
+                if(DB_LEYES[key]) {
+                    let box = document.createElement('div');
+                    box.className = 'ley-box';
+                    box.innerHTML = `<span class="categoria-ley">${DB_LEYES[key].c}</span><div class="ley-titulo-texto">⚖️ ${DB_LEYES[key].n}</div><div class="ley-detalle">${DB_LEYES[key].d}</div>`;
+                    divLegal.appendChild(box);
+                }
+            });
+
+            let listaEst = document.getElementById('res-estructura');
+            listaEst.innerHTML = '';
+            document.getElementById('res-nombre-doc').innerText = `Índice Obligatorio: ${inst}`;
+            
+            let estructuraActual = [...ESTRUCTURAS[inst]];
+            if (c_cierre) {
+                if(DB_LEYES['cierreLey'] && !Array.from(leyesSet).includes('cierreLey')){
+                     let box = document.createElement('div');
+                     box.className = 'ley-box';
+                     box.innerHTML = `<span class="categoria-ley">${DB_LEYES['cierreLey'].c}</span><div class="ley-titulo-texto">⚖️ ${DB_LEYES['cierreLey'].n}</div><div class="ley-detalle">${DB_LEYES['cierreLey'].d}</div>`;
+                     divLegal.appendChild(box);
+                }
+                estructuraActual.push('► MÓDULO ANEXO: Plan de Cierre Operativo');
+                estructuraActual.push('   - Ingeniería de Estabilización y Revegetación');
+            }
+
+            estructuraActual.forEach(function(item) {
+                let li = document.createElement('li');
+                if(item.startsWith('   -')) {
+                    li.style.listStyleType = 'none'; 
+                    li.style.paddingLeft = '20px';
+                }
+                li.textContent = item;
+                listaEst.appendChild(li);
+            });
+        }
+
+        // Event listener seguro para el arranque inicial
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectInst = document.getElementById('instrumento');
+            if(selectInst) {
+                selectInst.value = ""; // Resetea el valor por seguridad
+                filtrarActividades();
+            }
+        });
+
+        document.getElementById('btn-descargar-word').addEventListener('click', function() {
+            let contenido = document.getElementById('contenido-guia').innerText;
+            let blob = new Blob(['\ufeff', contenido], { type: 'application/msword' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = 'SIGAPY_Dictamen_Ingenieria.doc';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
