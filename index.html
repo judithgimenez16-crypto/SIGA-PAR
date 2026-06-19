@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master - Base Enriquecida v16.1</title>
+    <title>SIGA-PY Consultor Master - Guía EIA v16.2</title>
     <style>
         :root {
             --color-primario: #1b4332;
@@ -26,9 +26,10 @@
         header h1 { margin: 0; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; }
         header p { margin: 5px 0; color: #a7f3d0; font-size: 1.1rem; }
         
-        .nav-consulta { display: flex; justify-content: center; gap: 15px; margin-top: 20px; padding-bottom: 10px; }
+        .nav-consulta { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: 20px; padding-bottom: 10px; }
         .tab-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); }
         .tab-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+        .tab-btn.highlight { background: rgba(82, 183, 136, 0.3); border-color: var(--color-acento); }
 
         .container { display: flex; max-width: 1600px; margin: 30px auto; gap: 30px; padding: 0 20px; align-items: flex-start; }
         
@@ -103,7 +104,7 @@
         /* MODAL / VENTANA FLOTANTE */
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 100; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .modal-overlay.activo { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; width: 90%; max-width: 900px; max-height: 85vh; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow-y: auto; transform: scale(0.95); transition: transform 0.3s ease; position: relative; }
+        .modal-content { background: white; width: 90%; max-width: 1000px; max-height: 85vh; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow-y: auto; transform: scale(0.95); transition: transform 0.3s ease; position: relative; }
         .modal-overlay.activo .modal-content { transform: scale(1); }
         .modal-header { padding: 20px 30px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(5px); z-index: 10; }
         .modal-header h2 { margin: 0; color: #0f172a; font-size: 1.3rem; }
@@ -117,6 +118,14 @@
         .card-consulta h4 { margin: 0 0 10px 0; color: #0f172a; font-size: 1.05rem; }
         .card-consulta p { margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.5; }
 
+        /* ESTILOS ESPECÍFICOS PARA LA GUÍA EIA */
+        .eia-step { margin-bottom: 20px; border: 1px solid #cbd5e1; border-radius: 10px; overflow: hidden; }
+        .eia-step-header { background: #f8fafc; padding: 15px 20px; font-weight: bold; color: var(--color-primario); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e2e8f0; font-size: 1.1rem; }
+        .eia-step-body { padding: 20px; background: #ffffff; font-size: 0.95rem; color: #334155; }
+        .eia-step-body ul { padding-left: 20px; margin-top: 10px; }
+        .eia-step-body li { margin-bottom: 8px; }
+        .eia-tip { background: #fff7ed; padding: 10px 15px; border-left: 4px solid var(--color-alerta); font-size: 0.85rem; margin-top: 15px; color: #9a3412; font-style: italic; }
+
         @media print { header, .panel-config, .acciones-guia, .modal-overlay { display: none !important; } .panel-resultado { box-shadow: none; border: none; width: 100%; padding: 0; display: block; } body { background: white; } }
     </style>
 </head>
@@ -125,22 +134,95 @@
     <header>
         <h1>SIGA-PY CONSULTOR MASTER</h1>
         <p>Sistema Experto de Gestión Ambiental e Ingeniería</p>
-        <small>v16.1 • Base de Datos Técnica Enriquecida</small>
+        <small>v16.2 • Entorno Gráfico + Guía Metodológica MADES</small>
         
         <nav class="nav-consulta">
             <button class="tab-btn" onclick="abrirModal('glosario', '📖 Glosario Técnico MADES')">📖 Glosario</button>
             <button class="tab-btn" onclick="abrirModal('leyes', '⚖️ Vademécum Normativo Nacional')">⚖️ Leyes Nacionales</button>
             <button class="tab-btn" onclick="abrirModal('convenios', '🌍 Acuerdos Internacionales')">🌍 Acuerdos Int.</button>
+            <button class="tab-btn highlight" onclick="abrirModal('guia-eia', '📝 Guía Definitiva: ¿Cómo elaborar un EIA?')">📝 Guía de Elaboración EIA</button>
         </nav>
     </header>
 
-    <div id="modalConsulta" class="modal-overlay">
-        <div class="modal-content">
+    <!-- VENTANA MODAL (FLOTANTE) -->
+    <div id="modalConsulta" class="modal-overlay" onclick="cerrarModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h2 id="modal-title">Título Modal</h2>
                 <button class="btn-cerrar-modal" onclick="cerrarModal()">✕</button>
             </div>
             <div class="modal-body">
+                
+                <!-- GUIA DE ELABORACIÓN EIA -->
+                <div id="cont-guia-eia" class="oculto">
+                    <p style="margin-top:0; font-size:1.05rem; color:#475569;">Estructura obligatoria extraída de la <b>Resolución MADES N.º 433/19</b>. Siga estos pasos para evitar rechazos en el SIAM.</p>
+                    
+                    <div class="eia-step">
+                        <div class="eia-step-header"><span>1️⃣</span> Capítulo 1: Datos del Proyecto y Proponente</div>
+                        <div class="eia-step-body">
+                            Debes describir el "Quién" y el "Dónde".
+                            <ul>
+                                <li><b>Ubicación Exacta:</b> Incluye Coordenadas UTM (WGS84), Distrito y Departamento.</li>
+                                <li><b>Superficie:</b> Total del terreno y área a ser afectada (construida).</li>
+                                <li><b>Actividad Operativa:</b> Descripción técnica de lo que hará la empresa.</li>
+                                <li><b>Marco Legal:</b> Cita las leyes específicas que aplican (usa las que te arroja esta aplicación en el panel principal).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="eia-step">
+                        <div class="eia-step-header"><span>2️⃣</span> Capítulo 2: Línea de Base Ambiental (El Antes)</div>
+                        <div class="eia-step-body">
+                            Es la fotografía del terreno <i>antes</i> de que inicie el proyecto. Se divide en tres ejes:
+                            <ul>
+                                <li><b>Medio Físico:</b> Tipo de suelo, topografía, clima local, cercanía a ríos o arroyos, calidad del aire inicial.</li>
+                                <li><b>Medio Biológico:</b> Lista de flora nativa presente (maderables) y avistamiento o rastro de fauna silvestre.</li>
+                                <li><b>Medio Socioeconómico:</b> Distancia al vecino más cercano, servicios básicos disponibles (agua/luz), tráfico vehicular actual.</li>
+                            </ul>
+                            <div class="eia-tip">💡 TIP para el Pasante: Debes definir aquí el Área de Influencia Directa (AID) y el Área de Influencia Indirecta (AII) con mapas.</div>
+                        </div>
+                    </div>
+
+                    <div class="eia-step">
+                        <div class="eia-step-header"><span>3️⃣</span> Capítulo 3: Matriz de Evaluación de Impactos</div>
+                        <div class="eia-step-body">
+                            Es el corazón del estudio. Debes identificar qué actividades del proyecto causan daño y calificarlo.
+                            <ul>
+                                <li>Usa metodologías reconocidas como la <b>Matriz de Leopold</b> o <b>Conesa</b>.</li>
+                                <li><b>Calificación:</b> Evalúa la <i>Magnitud</i> (qué tan fuerte es), <i>Extensión</i> (qué tan lejos llega), <i>Duración</i> (cuánto tiempo dura) y <i>Probabilidad</i> de cada impacto.</li>
+                                <li>Clasifica los impactos en: Bajo, Medio o Alto/Crítico.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="eia-step">
+                        <div class="eia-step-header"><span>4️⃣</span> Capítulo 4: Plan de Gestión Ambiental (PGA)</div>
+                        <div class="eia-step-body">
+                            El "recetario" para curar los impactos del Capítulo 3. Se divide en Programas Obligatorios:
+                            <ul>
+                                <li>Programa de <b>Prevención y Mitigación</b> (Ej. Poner filtros, construir trampas de grasa).</li>
+                                <li>Programa de <b>Gestión de Residuos y Efluentes</b>.</li>
+                                <li>Programa de <b>Monitoreo Ambiental</b> (cada cuánto se medirán los gases o el agua).</li>
+                                <li>Programa de <b>Contingencias</b> (Qué hacer en caso de incendio o derrame).</li>
+                            </ul>
+                            <div class="eia-tip">💡 TIP para el Pasante: Todo PGA debe incluir un Cronograma de actividades y un Presupuesto estimado de las medidas.</div>
+                        </div>
+                    </div>
+
+                    <div class="eia-step">
+                        <div class="eia-step-header"><span>5️⃣</span> Capítulo 5: RIMA (Relatorio de Impacto Ambiental)</div>
+                        <div class="eia-step-body">
+                            Es un resumen del EIA, pero escrito para que cualquier ciudadano común lo entienda.
+                            <ul>
+                                <li><b>NO uses tecnicismos complejos.</b></li>
+                                <li>Resume el proyecto, los impactos principales y cómo la empresa se compromete a solucionarlos.</li>
+                                <li>Debe estar listo para impresión y publicación obligatoria.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
                 <div id="cont-glosario" class="consulta-grid oculto">
                     <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>DIA</h4><p>Declaración de Impacto Ambiental. Documento legal emitido por el MADES.</p></div>
                     <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>EIA</h4><p>Estudio de Impacto Ambiental. Análisis técnico exhaustivo de un proyecto.</p></div>
@@ -163,6 +245,7 @@
     </div>
 
     <div class="container">
+        <!-- CONFIGURADOR (STICKY SIDEBAR Y SWITCHES) -->
         <aside class="panel-config">
             <h2>Configuración del Proyecto</h2>
             <form id="form-ambiental">
@@ -253,6 +336,7 @@
             </form>
         </aside>
 
+        <!-- PANEL DE RESPUESTAS -->
         <main class="panel-resultado">
             <div id="estado-vacio" class="mensaje-vacio">
                 <span>⚡</span>
@@ -306,7 +390,7 @@
         // --- CONTROL DEL MODAL ---
         function abrirModal(seccion, titulo) {
             document.getElementById('modal-title').innerText = titulo;
-            document.querySelectorAll('.modal-body .consulta-grid').forEach(el => el.classList.add('oculto'));
+            document.querySelectorAll('.modal-body > div').forEach(el => el.classList.add('oculto'));
             document.getElementById('cont-' + seccion).classList.remove('oculto');
             document.getElementById('modalConsulta').classList.add('activo');
         }
@@ -343,7 +427,6 @@
             cierreLey: { c: 'Cierre', n: 'Ley 3180/07 Minería', d: 'Exige póliza de seguro y un plan de cierre morfológico (revegetación y nivelación) al terminar la vida útil del proyecto.' }
         };
 
-        // --- DICCIONARIO TÉCNICO DE INGENIERÍA MASIVAMENTE ENRIQUECIDO ---
         const DICTAMEN_TECNICO = {
             'estaciones': `
                 <h4>📐 Exigencias de Ingeniería para Estaciones de Servicio (Surtidores)</h4>
@@ -406,7 +489,7 @@
         };
 
         const ESQUEMAS_OFICIALES = {
-            'EIA': ['1. DATOS GENERALES', '--sub--Identificación del Proponente', '2. DESCRIPCIÓN TÉCNICA DEL PROYECTO', '--sub--Fases (Construcción, Operación, Abandono)', '3. LÍNEA DE BASE AMBIENTAL', '--sub--Medios Físico, Biológico y Socioeconómico', '4. EVALUACIÓN DE IMPACTOS', '5. PLAN DE GESTIÓN AMBIENTAL (PGA)', '--sub--Monitoreo y Contingencias'],
+            'EIA': ['1. DATOS GENERALES', '--sub--Identificación del Proponente', '2. DESCRIPCIÓN TÉCNICA DEL PROYECTO', '--sub--Fases (Construcción, Operación, Abandono)', '3. LÍNEA DE BASE AMBIENTAL', '--sub--Medios Físico, Biológico y Socioeconómico', '4. EVALUACIÓN DE IMPACTOS', '5. PLAN DE GESTIÓN AMBIENTAL (PGA)', '--sub--Monitoreo y Contingencias', '6. RELATORIO DE IMPACTO AMBIENTAL (RIMA)'],
             'RIMA': ['1. RESUMEN EN LENGUAJE ACCESIBLE', '2. ALTERNATIVAS DE INGENIERÍA', '3. SÍNTESIS DE LÍNEA DE BASE', '4. MEDIDAS DE MITIGACIÓN'],
             'AA': ['1. ALCANCE DE LA AUDITORÍA', '2. METODOLOGÍA (ISO 19011)', '3. MATRIZ DE CUMPLIMIENTO LEGAL', '--sub--Evidencias Objetivas (Laboratorio)', '4. PLAN DE GESTIÓN REAJUSTADO'],
             'EDE': ['1. CARACTERIZACIÓN DEL VERTIDO', '2. MEMORIA DE CÁLCULO DE TRATAMIENTO', '3. MATRIZ DE DISPERSIÓN', '4. PLAN DE MONITOREO'],
@@ -441,7 +524,6 @@
             let alertasMades = ['<div class="alerta-item"><b>FORMATO SIAM:</b> Cumplir estrictamente la Resolución 433/19 en la estructuración del documento final.</div>'];
             let anexos = [];
 
-            // INYECCIÓN DE DICTAMEN TÉCNICO ENRIQUECIDO
             let divIng = document.getElementById('res-alertas-ingenieria');
             if (DICTAMEN_TECNICO[act]) {
                 divIng.innerHTML = `<div class="alerta-ingenieria"><div>${DICTAMEN_TECNICO[act]}</div></div>`;
@@ -449,7 +531,6 @@
                 divIng.innerHTML = `<div class="alerta-ingenieria"><div><h4>📐 Directrices Generales de Ingeniería</h4><ul><li>Presentar planos arquitectónicos, cortes y fachadas.</li><li>Adjuntar diagrama de flujo de procesos operativos.</li><li>Detallar gestión básica de residuos asimilables a urbanos.</li></ul></div></div>`;
             }
 
-            // INYECCIÓN DE ALERTAS Y LEYES CRUZADAS
             if (c_pozo) { leyesSet.add('resPozos'); anexos.push('► ANEXO: Estudio Hidrogeológico y Perfil Litológico'); alertasMades.push('<div class="alerta-item"><b>AGUA SUBTERRÁNEA:</b> Gestionar Ensayo de Bombeo y Permiso de Perforación ante MADES.</div>');}
             if (c_bosque) { leyesSet.add('ley422'); leyesSet.add('ley96'); anexos.push('► ANEXO: Inventario Forestal (Maderables)'); alertasMades.push('<div class="alerta-item"><b>BOSQUES:</b> Presentar censo forestal. Riesgo penal activo si se deforesta en Región Oriental (Ley 2524/04).</div>');}
             if (region === 'oriental' && c_bosque) { leyesSet.add('ley2524'); }
@@ -460,22 +541,20 @@
 
             document.getElementById('res-alertas-generales').innerHTML = alertasMades.join('');
 
-            // RENDER LEYES
             let divLegal = document.getElementById('res-legal'); divLegal.innerHTML = '';
             Array.from(leyesSet).forEach(k => {
                 if(DB_LEYES[k]) divLegal.innerHTML += `<div class="ley-box"><span class="categoria-ley">${DB_LEYES[k].c}</span><div class="ley-titulo-texto">${DB_LEYES[k].n}</div><div class="ley-detalle">${DB_LEYES[k].d}</div></div>`;
             });
 
-            // RENDER ÍNDICE
             let listaEst = document.getElementById('res-estructura'); listaEst.innerHTML = '';
             let esquema = ESQUEMAS_OFICIALES[inst] ? [...ESQUEMAS_OFICIALES[inst]] : ['1. CONTENIDO GENÉRICO'];
             
             if(c_cierre) {
-                esquema.push('6. PLAN DE CIERRE OPERATIVO Y RECOMPOSICIÓN (Ley 3180/07)');
+                esquema.push('MÓDULO EXTRA: PLAN DE CIERRE OPERATIVO Y RECOMPOSICIÓN (Ley 3180/07)');
                 esquema.push('--sub--Inventario de Pasivos y Desmantelamiento');
                 esquema.push('--sub--Ingeniería de Revegetación y Nivelación');
             }
-            if(anexos.length) { esquema.push('7. ANEXOS OBLIGATORIOS TÉCNICOS'); anexos.forEach(a => esquema.push(`--anexo--${a}`)); }
+            if(anexos.length) { esquema.push('ANEXOS OBLIGATORIOS TÉCNICOS'); anexos.forEach(a => esquema.push(`--anexo--${a}`)); }
 
             esquema.forEach(i => {
                 let li = document.createElement('li');
