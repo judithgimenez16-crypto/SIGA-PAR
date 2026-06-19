@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master - Esquemas Profesionales v14.0</title>
+    <title>SIGA-PY Consultor Master - v15.0</title>
     <style>
         :root {
             --color-primario: #1b4332;
@@ -19,10 +19,23 @@
         }
 
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--color-fondo); color: var(--color-texto); margin: 0; padding: 0; line-height: 1.5; }
-        header { background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%); color: white; padding: 30px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        header { background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%); color: white; padding: 30px 20px 10px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         header h1 { margin: 0; font-size: 2.2rem; font-weight: 700; letter-spacing: 1px; }
         header p { margin: 8px 0 4px 0; opacity: 0.95; font-size: 1.1rem; }
-        header small { opacity: 0.8; font-size: 0.9rem; font-weight: bold; color: var(--color-acento); }
+        header small { opacity: 0.8; font-size: 0.9rem; font-weight: bold; color: var(--color-acento); display: block; margin-bottom: 20px; }
+
+        /* NUEVA BARRA HORIZONTAL DE CONSULTA */
+        .nav-consulta { display: flex; justify-content: center; gap: 15px; margin-top: 15px; padding-bottom: 20px; }
+        .tab-btn { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .tab-btn:hover, .tab-btn.activo { background: white; color: var(--color-primario); border-color: white; }
+        
+        .panel-consulta { background: white; border-bottom: 4px solid var(--color-acento); display: none; padding: 30px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .panel-consulta.activo { display: block; }
+        .consulta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1600px; margin: 0 auto; }
+        .card-consulta { background: #f8fafc; border: 1px solid var(--color-gris-borde); border-radius: 8px; padding: 15px; border-left: 4px solid var(--color-azul); }
+        .card-consulta h4 { margin: 0 0 8px 0; color: var(--color-primario); font-size: 1rem; }
+        .card-consulta p { margin: 0; font-size: 0.88rem; color: #4a5568; line-height: 1.4; }
+        .cerrar-panel { display: block; width: fit-content; margin: 20px auto 0 auto; background: #e2e8f0; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; color: #4a5568; }
 
         .container { display: flex; max-width: 1600px; margin: 30px auto; gap: 30px; padding: 0 20px; }
         
@@ -82,7 +95,7 @@
         .btn-secundario { background-color: #edf2f7; color: #2d3748; border: 1px solid #cbd5e0; }
         .btn-accion { background-color: var(--color-azul); color: white; border: none; }
 
-        @media print { header, .panel-config, .acciones-guia { display: none !important; } .panel-resultado { box-shadow: none; border: none; width: 100%; padding: 0; } body { background: white; } }
+        @media print { header, .panel-config, .acciones-guia, .nav-consulta, .panel-consulta { display: none !important; } .panel-resultado { box-shadow: none; border: none; width: 100%; padding: 0; } body { background: white; } }
     </style>
 </head>
 <body>
@@ -90,8 +103,40 @@
     <header>
         <h1>SIGA-PY CONSULTOR MASTER</h1>
         <p>Sistema Experto de Gestión Ambiental e Ingeniería del Paraguay</p>
-        <small>Motor Técnico y Legal Integrado v14.0 • Esquemas Oficiales Res. 433/19</small>
+        <small>Motor Técnico y Legal Integrado v15.0 • Centro de Inteligencia</small>
+        
+        <nav class="nav-consulta">
+            <button class="tab-btn" onclick="abrirPanel('glosario', this)">📖 Glosario Básico</button>
+            <button class="tab-btn" onclick="abrirPanel('leyes', this)">⚖️ Vademécum Normativo</button>
+            <button class="tab-btn" onclick="abrirPanel('convenios', this)">🌍 Convenios Internacionales</button>
+        </nav>
     </header>
+
+    <div id="panel-visor" class="panel-consulta">
+        <div id="cont-glosario" class="consulta-grid oculto">
+            <div class="card-consulta"><h4>DIA</h4><p>Declaración de Impacto Ambiental. Documento legal emitido por el MADES que aprueba o rechaza el proyecto.</p></div>
+            <div class="card-consulta"><h4>EIA</h4><p>Estudio de Impacto Ambiental. Documento científico-técnico que identifica y evalúa los impactos de un proyecto propuesto.</p></div>
+            <div class="card-consulta"><h4>RIMA</h4><p>Relatorio de Impacto Ambiental. Resumen del EIA redactado en lenguaje sencillo para el público general.</p></div>
+            <div class="card-consulta"><h4>PGA</h4><p>Plan de Gestión Ambiental. Documento que detalla las medidas de mitigación, monitoreo, contingencias y cronogramas.</p></div>
+            <div class="card-consulta"><h4>EDE / AA</h4><p>Estudio de Disposición de Efluentes (EDE) y Auditoría Ambiental (AA), instrumentos para proyectos ya en operación o con vertidos líquidos.</p></div>
+        </div>
+        
+        <div id="cont-leyes" class="consulta-grid oculto">
+            <div class="card-consulta"><h4>Leyes Fundamentales</h4><p><b>Ley 294/93:</b> Base de evaluación de impacto. <br><b>Ley 6123/18:</b> Crea el MADES. <br><b>Ley 716/96:</b> Delitos Ecológicos (Penal).</p></div>
+            <div class="card-consulta"><h4>Resoluciones MADES</h4><p><b>Res. 433/19:</b> Guía de TdR y esquemas de informes. <br><b>Res. 246/13:</b> Guía técnica para estudios ambientales.</p></div>
+            <div class="card-consulta"><h4>Agua y Residuos</h4><p><b>Ley 3239/07:</b> Recursos Hídricos. <br><b>Ley 1614/00:</b> Servicios de saneamiento.<br><b>Ley 3956/09:</b> Gestión de Residuos Sólidos.</p></div>
+            <div class="card-consulta"><h4>Bosques y Biodiversidad</h4><p><b>Ley 422/73:</b> Ley Forestal (Reserva 25%).<br><b>Ley 2524/04:</b> Deforestación Cero.<br><b>Ley 352/94:</b> Áreas Silvestres Protegidas.</p></div>
+        </div>
+
+        <div id="cont-convenios" class="consulta-grid oculto">
+            <div class="card-consulta"><h4>Convención Ramsar</h4><p>Tratado internacional para la conservación y uso racional de los humedales y sus recursos.</p></div>
+            <div class="card-consulta"><h4>Basilea y Estocolmo</h4><p>Control de movimientos transfronterizos de desechos peligrosos (Basilea) y contaminantes orgánicos persistentes (Estocolmo).</p></div>
+            <div class="card-consulta"><h4>Diversidad y CITES</h4><p>Convenio sobre Diversidad Biológica y CITES (Comercio Internacional de Especies Amenazadas de Fauna y Flora Silvestres).</p></div>
+            <div class="card-consulta"><h4>Cambio Climático</h4><p>Convenio Marco de las Naciones Unidas sobre el Cambio Climático y el Acuerdo de París para la reducción de emisiones.</p></div>
+        </div>
+        
+        <button class="cerrar-panel" onclick="cerrarPanel()">Cerrar Panel 🔼</button>
+    </div>
 
     <div class="container">
         <aside class="panel-config">
@@ -206,6 +251,34 @@
     </div>
 
     <script>
+        // --- FUNCIONES DEL PANEL DE CONSULTA (NUEVO) ---
+        function abrirPanel(seccion, btnElement) {
+            const panel = document.getElementById('panel-visor');
+            const tabs = document.querySelectorAll('.tab-btn');
+            const grids = document.querySelectorAll('.consulta-grid');
+            
+            // Si el botón ya está activo, cerramos el panel
+            if (btnElement.classList.contains('activo')) {
+                cerrarPanel();
+                return;
+            }
+
+            // Reseteamos botones y grids
+            tabs.forEach(t => t.classList.remove('activo'));
+            grids.forEach(g => g.classList.add('oculto'));
+            
+            // Activamos el actual
+            btnElement.classList.add('activo');
+            document.getElementById('cont-' + seccion).classList.remove('oculto');
+            panel.classList.add('activo');
+        }
+
+        function cerrarPanel() {
+            document.getElementById('panel-visor').classList.remove('activo');
+            document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('activo'));
+        }
+
+        // --- MOTOR DEL CONFIGURADOR (SE MANTIENE V14.0) ---
         const DB_LEYES = {
             ley294: { c: 'Institucional', n: 'Ley N.º 294/93 de Evaluación de Impacto Ambiental', d: 'Marco rector. Obliga a obtener la DIA y establece el marco procedimental.' },
             ley1561: { c: 'Institucional', n: 'Ley N.º 1561/00', d: 'Crea el Sistema Nacional del Ambiente (SISNAM).' },
@@ -260,7 +333,6 @@
             'AA': ['urbanizaciones', 'estaciones', 'hospitales', 'ganaderia', 'industrias', 'depositos', 'canteras', 'humedales', 'residuos']
         };
 
-        // ESTRUCTURAS OFICIALES PROFESIONALES (Res 433/19)
         const ESQUEMAS_OFICIALES = {
             'EIA': [
                 '1. DATOS GENERALES',
@@ -363,7 +435,6 @@
             if (DICTAMEN_TECNICO[act]) alertas.push(`<div class="alerta-ingenieria"><span>${DICTAMEN_TECNICO[act]}</span></div>`);
             alertas.push('<div class="alerta-item"><b>DISEÑO DOCUMENTAL:</b> Estructurar el índice analítico estrictamente según los lineamientos de la Res. 433/19.</div>');
 
-            // INFERENCIAS LEGALES Y DE ANEXOS
             if (inst === 'AA') leyesSet.add('iso');
             if (act === 'humedales' || c_cauce) {
                 leyesSet.add('ley3239');
@@ -400,7 +471,6 @@
                 }
             });
 
-            // RENDERIZAR ESTRUCTURA PROFESIONAL
             let listaEst = document.getElementById('res-estructura');
             listaEst.innerHTML = '';
             document.getElementById('res-nombre-doc').innerText = `Esquema Oficial: ${inst} (Res. 433/19)`;
@@ -419,7 +489,6 @@
                 estructuraActual.push('--sub--Ingeniería de Estabilización y Revegetación');
             }
 
-            // Inyectar anexos dinámicos al final
             if(anexosDinamicos.length > 0) {
                 estructuraActual.push('8. DOCUMENTOS Y ANEXOS OBLIGATORIOS');
                 anexosDinamicos.forEach(anexo => estructuraActual.push(`--anexo--${anexo}`));
