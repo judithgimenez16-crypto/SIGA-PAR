@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master - Guías Completas v16.4</title>
+    <title>SIGA-PY Consultor Master - Plantillas Activas v16.5</title>
     <style>
         :root {
             --color-primario: #1b4332;
@@ -29,7 +29,6 @@
         .nav-consulta { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: 20px; padding-bottom: 10px; }
         .tab-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); }
         .tab-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
-        .tab-btn.highlight { background: rgba(82, 183, 136, 0.3); border-color: var(--color-acento); }
 
         .container { display: flex; max-width: 1600px; margin: 30px auto; gap: 30px; padding: 0 20px; align-items: flex-start; }
         
@@ -89,10 +88,14 @@
         .ley-detalle { font-size: 0.9rem; color: #64748b; margin-top: 6px; }
         .categoria-ley { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-azul); margin-bottom: 6px; display: inline-block; font-weight: 800; background: #e0f2fe; padding: 3px 8px; border-radius: 4px; }
 
-        .res-cuerpo-informe { background:#ffffff; padding:25px; border-radius:10px; border: 1px solid var(--color-gris-borde); font-family: 'Times New Roman', Times, serif; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
-        .res-cuerpo-informe li { margin-bottom: 12px; font-weight: bold; color: #0f172a; font-size: 1.1rem; }
-        .sub-item { font-weight: normal !important; color: #334155 !important; font-size: 1rem !important; padding-left: 18px; margin-bottom: 6px !important; }
-        .anexo-item { color: #0284c7 !important; font-size: 1rem !important; margin-top: 15px !important; border-top: 1px dashed #cbd5e1; padding-top: 12px; }
+        /* ESTILOS NUEVOS PARA LA PLANTILLA ACTIVA (GUÍA EN EL DOCUMENTO) */
+        .res-cuerpo-informe { background:#ffffff; padding:25px; border-radius:10px; border: 1px solid var(--color-gris-borde); font-family: 'Arial', sans-serif; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+        .plantilla-step { margin-bottom: 20px; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; page-break-inside: avoid; }
+        .plantilla-step-header { background: #f8fafc; padding: 12px 20px; font-weight: bold; color: var(--color-primario); border-bottom: 1px solid #e2e8f0; font-size: 1.1rem; }
+        .plantilla-step-body { padding: 15px 20px; font-size: 0.95rem; color: #334155; background: #ffffff;}
+        .plantilla-step-body ul { padding-left: 20px; margin-top: 5px; margin-bottom: 5px; }
+        .plantilla-tip { background: #fff7ed; padding: 10px 15px; border-left: 4px solid var(--color-alerta); font-size: 0.85rem; margin-top: 10px; color: #9a3412; font-style: italic; }
+        .plantilla-anexo { background: #f0f9ff; border: 1px dashed var(--color-azul); color: #0284c7; font-weight: bold; }
 
         .acciones-guia { display: flex; gap: 20px; background: #f8fafc; padding: 25px 30px; border-top: 1px solid var(--color-gris-borde); border-radius: 0 0 16px 16px; }
         .btn-secundario, .btn-accion { width: 100%; padding: 14px; font-size: 1rem; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
@@ -111,29 +114,11 @@
         .btn-cerrar-modal { background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; color: #64748b; transition: all 0.2s; display: flex; justify-content: center; align-items: center;}
         .btn-cerrar-modal:hover { background: #e2e8f0; color: #0f172a; }
         .modal-body { padding: 30px; }
-        
         .consulta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .card-consulta { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; border-top: 4px solid var(--color-azul); box-shadow: var(--shadow-sm); transition: transform 0.2s; }
         .card-consulta:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
         .card-consulta h4 { margin: 0 0 10px 0; color: #0f172a; font-size: 1.05rem; }
         .card-consulta p { margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.5; }
-
-        /* SUB-NAVEGACIÓN INTERNA DE GUÍAS MADES */
-        .sub-nav-guias { display: flex; gap: 10px; border-bottom: 2px solid var(--color-gris-borde); padding-bottom: 15px; margin-bottom: 20px; overflow-x: auto; }
-        .sub-btn-guia { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-weight: 700; color: #475569; cursor: pointer; transition: 0.2s; white-space: nowrap; }
-        .sub-btn-guia:hover { background: #e2e8f0; }
-        .sub-btn-guia.activo { background: var(--color-primario); color: white; border-color: var(--color-primario); }
-        .guia-content-block { display: none; animation: fadeIn 0.3s; }
-        .guia-content-block.activo { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* ESTILOS DE PASOS PARA GUÍAS */
-        .eia-step { margin-bottom: 20px; border: 1px solid #cbd5e1; border-radius: 10px; overflow: hidden; background: #ffffff; }
-        .eia-step-header { background: #f8fafc; padding: 15px 20px; font-weight: bold; color: var(--color-primario); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e2e8f0; font-size: 1.05rem; }
-        .eia-step-body { padding: 20px; font-size: 0.95rem; color: #334155; }
-        .eia-step-body ul { padding-left: 20px; margin-top: 10px; margin-bottom: 0; }
-        .eia-step-body li { margin-bottom: 8px; }
-        .eia-tip { background: #fff7ed; padding: 12px 15px; border-left: 4px solid var(--color-alerta); font-size: 0.85rem; margin-top: 15px; color: #9a3412; font-style: italic; border-radius: 4px; }
 
         @media print { header, .panel-config, .acciones-guia, .modal-overlay { display: none !important; } .panel-resultado { box-shadow: none; border: none; width: 100%; padding: 0; display: block; } body { background: white; } }
     </style>
@@ -143,13 +128,12 @@
     <header>
         <h1>SIGA-PY CONSULTOR MASTER</h1>
         <p>Sistema Experto de Gestión Ambiental e Ingeniería</p>
-        <small>v16.4 • Centro de Guías Metodológicas Completas</small>
+        <small>v16.5 • Plantillas Activas de Redacción</small>
         
         <nav class="nav-consulta">
             <button class="tab-btn" onclick="abrirModal('glosario', '📖 Glosario Técnico MADES')">📖 Glosario</button>
             <button class="tab-btn" onclick="abrirModal('leyes', '⚖️ Vademécum Normativo Nacional')">⚖️ Leyes Nacionales</button>
             <button class="tab-btn" onclick="abrirModal('convenios', '🌍 Acuerdos Internacionales')">🌍 Acuerdos Int.</button>
-            <button class="tab-btn highlight" onclick="abrirModal('guias-mades', '📝 Guías Metodológicas Oficiales MADES')">📝 Guías de Elaboración (MADES)</button>
         </nav>
     </header>
 
@@ -161,68 +145,6 @@
                 <button class="btn-cerrar-modal" onclick="cerrarModal()">✕</button>
             </div>
             <div class="modal-body">
-                
-                <!-- CENTRO DE GUÍAS MADES (MULTIPLE TABS) -->
-                <div id="cont-guias-mades" class="oculto">
-                    <p style="margin-top:0; font-size:1rem; color:#475569; margin-bottom: 20px;">Directrices extraídas de la <b>Resolución MADES N.º 433/19 y Normas ISO</b>. Seleccione el estudio que desea redactar:</p>
-                    
-                    <div class="sub-nav-guias">
-                        <button class="sub-btn-guia activo" onclick="mostrarSubGuia('guia-eia', this)">1. EIA</button>
-                        <button class="sub-btn-guia" onclick="mostrarSubGuia('guia-rima', this)">2. RIMA</button>
-                        <button class="sub-btn-guia" onclick="mostrarSubGuia('guia-pga', this)">3. PGA</button>
-                        <button class="sub-btn-guia" onclick="mostrarSubGuia('guia-ede', this)">4. EDE</button>
-                        <button class="sub-btn-guia" onclick="mostrarSubGuia('guia-aa', this)">5. Auditoría (AA)</button>
-                    </div>
-
-                    <!-- 1. GUIA EIA -->
-                    <div id="guia-eia" class="guia-content-block activo">
-                        <p style="margin-top:0; font-size:0.95rem;">Estructura obligatoria extraída de la <b>Resolución MADES N.º 433/19</b>. Siga estos pasos para evitar rechazos en el SIAM.</p>
-                        <div class="eia-step"><div class="eia-step-header"><span>1️⃣</span> Capítulo 1: Datos del Proyecto y Proponente</div><div class="eia-step-body">Debes describir el "Quién" y el "Dónde".<ul><li><b>Ubicación Exacta:</b> Incluye Coordenadas UTM (WGS84), Distrito y Departamento.</li><li><b>Superficie:</b> Total del terreno y área a ser afectada (construida).</li><li><b>Actividad Operativa:</b> Descripción técnica de lo que hará la empresa.</li><li><b>Marco Legal:</b> Cita las leyes específicas que aplican (usa las que te arroja esta aplicación en el panel principal).</li></ul></div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>2️⃣</span> Capítulo 2: Línea de Base Ambiental (El Antes)</div><div class="eia-step-body">Es la fotografía del terreno <i>antes</i> de que inicie el proyecto. Se divide en tres ejes:<ul><li><b>Medio Físico:</b> Tipo de suelo, topografía, clima local, cercanía a ríos o arroyos, calidad del aire inicial.</li><li><b>Medio Biológico:</b> Lista de flora nativa presente (maderables) y avistamiento o rastro de fauna silvestre.</li><li><b>Medio Socioeconómico:</b> Distancia al vecino más cercano, servicios básicos disponibles (agua/luz), tráfico vehicular actual.</li></ul><div class="eia-tip">💡 TIP para el Pasante: Debes definir aquí el Área de Influencia Directa (AID) y el Área de Influencia Indirecta (AII) con mapas.</div></div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>3️⃣</span> Capítulo 3: Matriz de Evaluación de Impactos</div><div class="eia-step-body">Es el corazón del estudio. Debes identificar qué actividades del proyecto causan daño y calificarlo.<ul><li>Usa metodologías reconocidas como la <b>Matriz de Leopold</b> o <b>Conesa</b>.</li><li><b>Calificación:</b> Evalúa la <i>Magnitud</i> (qué tan fuerte es), <i>Extensión</i> (qué tan lejos llega), <i>Duración</i> (cuánto tiempo dura) y <i>Probabilidad</i> de cada impacto.</li><li>Clasifica los impactos en: Bajo, Medio o Alto/Crítico.</li></ul></div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>4️⃣</span> Capítulo 4: Plan de Gestión Ambiental (PGA)</div><div class="eia-step-body">El "recetario" para curar los impactos del Capítulo 3. Se divide en Programas Obligatorios:<ul><li>Programa de <b>Prevención y Mitigación</b> (Ej. Poner filtros, construir trampas de grasa).</li><li>Programa de <b>Gestión de Residuos y Efluentes</b>.</li><li>Programa de <b>Monitoreo Ambiental</b> (cada cuánto se medirán los gases o el agua).</li><li>Programa de <b>Contingencias</b> (Qué hacer en caso de incendio o derrame).</li></ul><div class="eia-tip">💡 TIP para el Pasante: Todo PGA debe incluir un Cronograma de actividades y un Presupuesto estimado de las medidas.</div></div></div>
-                    </div>
-
-                    <!-- 2. GUIA RIMA -->
-                    <div id="guia-rima" class="guia-content-block">
-                        <p style="margin-top:0; font-size:0.95rem;">Es el resumen público del EIA. Debe ser comprensible para un ciudadano sin formación técnica.</p>
-                        <div class="eia-step"><div class="eia-step-header"><span>1️⃣</span> Capítulo 1: Resumen Ejecutivo del Proyecto</div><div class="eia-step-body">Explicar el "Qué, Quién y Dónde" en lenguaje coloquial.<ul><li><b>Contenido:</b> Descripción breve de la obra, monto de inversión estimado, cantidad de mano de obra a contratar y la ubicación exacta (usar referencias conocidas, no solo coordenadas).</li></ul></div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>2️⃣</span> Capítulo 2: Justificación de Alternativas</div><div class="eia-step-body"><ul><li><b>Alternativa Tecnológica:</b> Por qué se eligió ese método de trabajo (ej. "Usamos tanques de doble pared por mayor seguridad").</li><li><b>Alternativa Locacional:</b> Por qué se construye en ese terreno y no en otro.</li><li><b>Alternativa Cero:</b> Qué pasaría si el proyecto NO se hace (pérdida de empleos, falta de servicios).</li></ul></div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>3️⃣</span> Capítulo 3: Síntesis de la Línea Base</div><div class="eia-step-body">Explicar cómo está el terreno hoy, pero de forma gráfica. Si hay bosque, mencionarlo; si hay vecinos, a qué distancia están. (Evitar listas largas de nombres científicos de animales o plantas).</div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>4️⃣</span> Capítulo 4: Impactos Principales y Medidas de Mitigación</div><div class="eia-step-body">No incluir la matriz de números. Solo listar los <b>impactos más importantes</b> (ej. "Generación de Ruido"). Inmediatamente debajo, explicar <b>cómo se va a solucionar</b>. <div class="eia-tip">💡 TIP para el Pasante: El RIMA entra por los ojos. Usa muchas fotografías del terreno, esquemas simples y mapas satelitales grandes. Prohibido usar jerga de ingeniería pesada.</div></div></div>
-                    </div>
-
-                    <!-- 3. GUIA PGA -->
-                    <div id="guia-pga" class="guia-content-block">
-                        <p style="margin-top:0; font-size:0.95rem;">Es el manual de operaciones ambientales. Un PGA correcto no es texto corrido, se divide estrictamente en <b>Programas</b>. Cada programa debe contener: <i>1. Objetivo, 2. Actividades, 3. Indicadores, 4. Responsable, 5. Frecuencia, 6. Presupuesto.</i></p>
-                        <div class="eia-step"><div class="eia-step-header"><span>🟢</span> 1. Programa de Mitigación y Prevención</div><div class="eia-step-body">Acciones directas sobre la obra: Horarios de trabajo (para evitar ruidos nocturnos), humectación de caminos (para evitar polvo), mantenimiento de maquinarias.</div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>🟢</span> 2. Programa de Gestión de Residuos y Efluentes</div><div class="eia-step-body"><ul><li><b>Sólidos:</b> Ubicación del basurero central, clasificación por colores, empresa encargada de recolección final.</li><li><b>Líquidos:</b> Frecuencia de limpieza de la trampa API, fosas sépticas o PTAR.</li></ul></div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>🟢</span> 3. Programa de Monitoreo Ambiental</div><div class="eia-step-body">Definir qué se va a medir en laboratorio (ej. pH, DBO, Ruido), cada cuánto (ej. semestral/anual) y contra qué norma (ej. Res. 222/02 para agua).</div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>🟢</span> 4. Programa de Capacitación y Contingencias</div><div class="eia-step-body"><ul><li><b>Capacitación:</b> Cronograma de charlas para los obreros (Uso de extintores, manejo de residuos).</li><li><b>Contingencias:</b> Protocolo paso a paso en caso de incendio, derrame de combustible o accidente laboral.</li></ul></div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>🟢</span> 5. Cronograma y Presupuesto Global</div><div class="eia-step-body">Un cuadro de Gantt anual marcando meses de ejecución y la estimación en Guaraníes de cuánto le costará a la empresa implementar este PGA al año.</div></div>
-                    </div>
-
-                    <!-- 4. GUIA EDE -->
-                    <div id="guia-ede" class="guia-content-block">
-                        <p style="margin-top:0; font-size:0.95rem;">Es un documento 100% de ingeniería sanitaria exigido para vertidos líquidos (Ley 3239/07 y Res. 222/02).</p>
-                        <div class="eia-step"><div class="eia-step-header"><span>1️⃣</span> Capítulo 1: Caracterización del Vertido</div><div class="eia-step-body"><ul><li>Describir si el efluente es industrial, cloacal o pluvial.</li><li>Determinar <b>Caudales</b> (metros cúbicos por día/hora).</li><li>Adjuntar resultados analíticos (laboratorio) del agua <i>antes</i> del tratamiento.</li></ul></div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>2️⃣</span> Capítulo 2: Memoria de Cálculo de Ingeniería</div><div class="eia-step-body">Es el "cerebro" del diseño. Deben figurar los cálculos matemáticos: Tiempo de Retención Hidráulica (TRH), carga orgánica, volúmenes útiles de los reactores, decantadores o trampas.</div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>3️⃣</span> Capítulo 3: Planimetría y Diseño Constructivo</div><div class="eia-step-body">Adjuntar planos técnicos visados del Sistema de Tratamiento (PTAR) con vista en planta, cortes transversales y detalles de cañerías.</div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>4️⃣</span> Capítulo 4: Matriz de Dispersión y Punto de Vertido</div><div class="eia-step-body">Indicar la ubicación georreferenciada exacta de dónde cae el agua tratada (Canal, Arroyo, ESSAP o Infiltración). <div class="eia-tip">💡 TIP para el Pasante: El EDE siempre debe ir acompañado de análisis laboratoriales firmados por un laboratorio acreditado ante el MADES y planos firmados por un Ingeniero Civil, Sanitario o Ambiental. Si el efluente va a un arroyo, se debe calcular la capacidad de dilución del cauce.</div></div></div>
-                    </div>
-
-                    <!-- 5. GUIA AUDITORIA (AA) -->
-                    <div id="guia-aa" class="guia-content-block">
-                        <p style="margin-top:0; font-size:0.95rem;">Es el "examen" que evalúa si la empresa cumplió lo que prometió en el EIA original.</p>
-                        <div class="eia-step"><div class="eia-step-header"><span>1️⃣</span> Capítulo 1: Alcance y Metodología (ISO 19011)</div><div class="eia-step-body">Declarar el periodo auditado (Ej. "Operaciones entre 2022 y 2024"). Adjuntar los datos y condicionantes de la <b>Declaración de Impacto Ambiental (DIA) anterior</b>.</div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>2️⃣</span> Capítulo 2: Matriz de Cumplimiento Legal y del PGA</div><div class="eia-step-body">Crear una tabla tomando la DIA vieja y el PGA anterior y responder punto por punto: ¿Cumplió? (Sí / No / Parcialmente).</div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>3️⃣</span> Capítulo 3: Hallazgos y Evidencias Objetivas</div><div class="eia-step-body">Clasificar los errores encontrados en: <ul><li><b>No Conformidad Mayor:</b> Falla grave con riesgo ambiental (Ej. Fugas de aceite al suelo).</li><li><b>No Conformidad Menor:</b> Falla documental o leve (Ej. Falta de cartel de señalización).</li></ul>Obligatorio anexar fotografías con fecha y reportes de análisis actualizados.</div></div>
-                        <div class="eia-step"><div class="eia-step-header"><span>4️⃣</span> Capítulo 4: Plan de Acción Correctiva (PGA Reajustado)</div><div class="eia-step-body">Diseñar un nuevo plan enfocado en corregir inmediatamente las "No Conformidades" encontradas. <div class="eia-tip">💡 TIP para el Pasante: La Auditoría NO es para adivinar impactos nuevos. Su único objetivo es ir con la DIA anterior en la mano como un "checklist" y comprobar si el cliente hizo o no hizo la tarea.</div></div></div>
-                    </div>
-
-                </div>
-
-                <!-- OTRAS SECCIONES DEL MODAL -->
                 <div id="cont-glosario" class="consulta-grid oculto">
                     <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>DIA</h4><p>Declaración de Impacto Ambiental. Documento legal emitido por el MADES.</p></div>
                     <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>EIA</h4><p>Estudio de Impacto Ambiental. Análisis técnico exhaustivo de un proyecto.</p></div>
@@ -330,7 +252,7 @@
                 </div>
 
                 <button type="button" class="btn-generar" onclick="simularCarga()">
-                    <span id="btn-texto">Generar Dictamen Experto</span>
+                    <span id="btn-texto">Generar Plantilla de Expediente</span>
                     <div class="spinner" id="btn-spinner"></div>
                 </button>
             </form>
@@ -340,13 +262,13 @@
         <main class="panel-resultado">
             <div id="estado-vacio" class="mensaje-vacio">
                 <span>⚡</span>
-                <p>Configure los parámetros en el panel izquierdo para que el motor inteligente genere el dictamen con exigencias normativas.</p>
+                <p>Configure los parámetros en el panel izquierdo. El sistema generará el dictamen normativo y la plantilla paso a paso para redactar el estudio.</p>
             </div>
 
             <div id="contenido-guia" class="oculto">
                 <div class="reporte-cuerpo" id="reporte-exportable">
                     <div class="header-guia">
-                        <h2>Documento Base de Consultoría</h2>
+                        <h2 id="res-titulo-doc">Documento Base de Consultoría</h2>
                         <div class="badges-container">
                             <span class="badge" id="res-categoria">Escala: -</span>
                             <span class="badge azul" id="res-inst-badge">Trámite: -</span>
@@ -369,46 +291,34 @@
                             <div id="res-legal" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;"></div>
                         </section>
 
+                        <!-- AQUI SE INYECTA LA PLANTILLA ACTIVA -->
                         <section>
-                            <h3>4. Índice Analítico Oficial (Res. 433/19)</h3>
-                            <div class="res-cuerpo-informe">
-                                <ol id="res-estructura"></ol>
+                            <h3>4. Estructura y Guía de Redacción Oficial (Res. 433/19)</h3>
+                            <div class="res-cuerpo-informe" id="res-plantilla-activa">
+                                <!-- El contenido se genera via JS -->
                             </div>
                         </section>
                     </div>
                 </div>
                 
                 <div class="acciones-guia">
-                    <button onclick="window.print()" class="btn-secundario">🖨️ Imprimir Visor</button>
-                    <button id="btn-descargar-word" class="btn-accion">📥 Exportar Reporte Word</button>
+                    <button onclick="window.print()" class="btn-secundario">🖨️ Imprimir Pantalla</button>
+                    <button id="btn-descargar-word" class="btn-accion">📥 Exportar Plantilla a Word (.doc)</button>
                 </div>
             </div>
         </main>
     </div>
 
     <script>
-        // --- CONTROL DEL MODAL Y SUB-TABS ---
+        // --- CONTROL DEL MODAL ---
         function abrirModal(seccion, titulo) {
             document.getElementById('modal-title').innerText = titulo;
             document.querySelectorAll('.modal-body > div').forEach(el => el.classList.add('oculto'));
             document.getElementById('cont-' + seccion).classList.remove('oculto');
             document.getElementById('modalConsulta').classList.add('activo');
-            
-            // Si es la sección de guías, resetear a la primera pestaña (EIA)
-            if(seccion === 'guias-mades') {
-                mostrarSubGuia('guia-eia', document.querySelector('.sub-btn-guia'));
-            }
         }
         function cerrarModal() { document.getElementById('modalConsulta').classList.remove('activo'); }
 
-        function mostrarSubGuia(idGuia, btnElement) {
-            document.querySelectorAll('.guia-content-block').forEach(el => el.classList.remove('activo'));
-            document.querySelectorAll('.sub-btn-guia').forEach(el => el.classList.remove('activo'));
-            document.getElementById(idGuia).classList.add('activo');
-            btnElement.classList.add('activo');
-        }
-
-        // --- EFECTO DE CARGA ---
         function simularCarga() {
             const btnTexto = document.getElementById('btn-texto');
             const spinner = document.getElementById('btn-spinner');
@@ -416,39 +326,38 @@
                 alert("Por favor, seleccione el Requerimiento y la Actividad."); return;
             }
             btnTexto.innerText = "Procesando..."; spinner.style.display = "block";
-            setTimeout(() => { generarGuia(); btnTexto.innerText = "Actualizar Dictamen"; spinner.style.display = "none"; }, 600);
+            setTimeout(() => { generarGuia(); btnTexto.innerText = "Actualizar Plantilla"; spinner.style.display = "none"; }, 600);
         }
 
-        // --- BASE DE DATOS LEGAL (ENRIQUECIDA) ---
         const DB_LEYES = {
             ley294: { c: 'Institucional', n: 'Ley 294/93 Evaluación Impacto Ambiental', d: 'Marco rector. Obliga a obtener la DIA antes de iniciar cualquier movimiento de suelo u obra civil.' },
             ley1561: { c: 'Institucional', n: 'Ley 1561/00 SISNAM', d: 'Establece el Sistema Nacional del Ambiente y el Consejo Nacional del Ambiente.' },
-            ley6123: { c: 'Institucional', n: 'Ley 6123/18 MADES', d: 'Creación del MADES como autoridad de aplicación, reemplazando a la antigua SEAM.' },
-            ley716: { c: 'Penal', n: 'Ley 716/96 Delitos Ecológicos', d: 'Tipifica como delito la elusión de mitigaciones, destrucción de bosques, contaminación de aguas y falsedad de datos.' },
+            ley6123: { c: 'Institucional', n: 'Ley 6123/18 MADES', d: 'Creación del MADES como autoridad de aplicación.' },
+            ley716: { c: 'Penal', n: 'Ley 716/96 Delitos Ecológicos', d: 'Tipifica como delito la elusión de mitigaciones, destrucción de bosques y contaminación.' },
             res433: { c: 'Normativa Técnica', n: 'Res. MADES 433/19', d: 'Aprueba Términos de Referencia, esquemas y contenidos mínimos obligatorios de EIA, RIMA y PGA.' },
-            iso: { c: 'Estándares', n: 'ISO 14001 e ISO 19011', d: 'Exige basar las Auditorías Ambientales (AA) en criterios de gestión y verificación internacional estandarizada.' },
-            ley3239: { c: 'Agua', n: 'Ley 3239/07 Recursos Hídricos', d: 'Obliga a respetar fajas marginales de protección en ríos y arroyos, prohibiendo construcciones en cota de inundación.' },
-            resPozos: { c: 'Agua', n: 'Ley 5431/15 Pozos Tubulares', d: 'Regula perforaciones, exige permiso de prospección/explotación y ensayos de bombeo para garantizar caudal ecológico.' },
-            ley422: { c: 'Bosques', n: 'Ley 422/73 Forestal', d: 'Mandato estricto de mantener el 25% de la superficie del predio rural bajo cobertura de bosque nativo.' },
-            ley2524: { c: 'Bosques', n: 'Ley 2524/04 Deforestación Cero', d: 'Veda absoluta de transformación y conversión de superficies boscosas en la Región Oriental del país.' },
-            ley96: { c: 'Biodiversidad', n: 'Ley 96/92 Vida Silvestre', d: 'Prohíbe la caza, recolección o destrucción de hábitats críticos de especies nativas de flora y fauna.' },
-            ley352: { c: 'Áreas', n: 'Ley 352/94 Áreas Protegidas', d: 'Condiciona duramente proyectos ubicados en zonas de amortiguamiento de parques nacionales y reservas.' },
-            ley3956: { c: 'Residuos', n: 'Ley 3956/09 Residuos Sólidos', d: 'Prohibición explícita de quemar basura o disponerla en fosas no impermeabilizadas. Exige clasificación.' },
-            ley567: { c: 'Químicos', n: 'Ley 567/95 Sustancias Peligrosas', d: 'Norma el almacenamiento con bandejas antiderrame, etiquetado y gestión de envases vacíos contaminados.' },
-            ramsar: { c: 'Convenio', n: 'Convención Ramsar', d: 'Tratado internacional ratificado para la protección ineludible de zonas de humedales y recarga de acuíferos.' },
-            cierreLey: { c: 'Cierre', n: 'Ley 3180/07 Minería', d: 'Exige póliza de seguro y un plan de cierre morfológico (revegetación y nivelación) al terminar la vida útil del proyecto.' }
+            iso: { c: 'Estándares', n: 'ISO 14001 e ISO 19011', d: 'Exige basar las Auditorías Ambientales (AA) en criterios de gestión y verificación internacional.' },
+            ley3239: { c: 'Agua', n: 'Ley 3239/07 Recursos Hídricos', d: 'Obliga a respetar fajas marginales de protección en ríos y arroyos.' },
+            resPozos: { c: 'Agua', n: 'Ley 5431/15 Pozos Tubulares', d: 'Regula perforaciones, exige permiso de prospección/explotación y ensayos de bombeo.' },
+            ley422: { c: 'Bosques', n: 'Ley 422/73 Forestal', d: 'Mandato estricto de mantener el 25% de la superficie rural bajo cobertura de bosque nativo.' },
+            ley2524: { c: 'Bosques', n: 'Ley 2524/04 Deforestación Cero', d: 'Veda absoluta de transformación de bosques en la Región Oriental.' },
+            ley96: { c: 'Biodiversidad', n: 'Ley 96/92 Vida Silvestre', d: 'Prohíbe la caza o destrucción de hábitats críticos de especies nativas.' },
+            ley352: { c: 'Áreas', n: 'Ley 352/94 Áreas Protegidas', d: 'Condiciona proyectos ubicados en zonas de amortiguamiento de parques nacionales.' },
+            ley3956: { c: 'Residuos', n: 'Ley 3956/09 Residuos Sólidos', d: 'Prohibición explícita de quemar basura o disponerla en fosas no impermeabilizadas.' },
+            ley567: { c: 'Químicos', n: 'Ley 567/95 Sustancias Peligrosas', d: 'Norma el almacenamiento con bandejas antiderrame y gestión de envases contaminados.' },
+            ramsar: { c: 'Convenio', n: 'Convención Ramsar', d: 'Tratado internacional para la protección ineludible de zonas de humedales.' },
+            cierreLey: { c: 'Cierre', n: 'Ley 3180/07 Minería', d: 'Exige póliza de seguro y un plan de cierre morfológico (revegetación y nivelación).' }
         };
 
         const DICTAMEN_TECNICO = {
-            'estaciones': `<h4>📐 Exigencias de Ingeniería para Estaciones de Servicio (Surtidores)</h4><ul><li><b>Sistema API:</b> Es obligatorio presentar planos hidrosanitarios que incluyan un Separador de Agua y Aceite (Trampa API) conectado a las rejillas perimetrales de la pista de carga.</li><li><b>Tanques Subterráneos:</b> Deben ser de doble pared (chaqueta exterior de fibra de vidrio/HDPE) con sensores electrónicos para monitoreo continuo del espacio intersticial.</li><li><b>Monitoreo Subterráneo:</b> Instalación obligatoria de Freatímetros (pozos de monitoreo) en los vértices del predio para control semestral de aguas subterráneas.</li><li><b>Pruebas:</b> Anexar certificados de Pruebas de Hermeticidad del sistema de cañerías e inspección de tanques según normas del INTN.</li></ul>`,
-            'urbanizaciones': `<h4>📐 Exigencias de Ingeniería para Loteamientos y Urbanizaciones</h4><ul><li><b>Estudio Hidrológico:</b> Presentar cálculo de escorrentía pluvial (antes y después del proyecto). Diseñar lagunas de retención temporal si la pavimentación genera riesgo de inundación a linderos.</li><li><b>Protección de Cauces:</b> Respetar estrictamente la faja marginal de protección dictada por la Ley 3239/07 (mínimo 100m en áreas rurales) si el predio linda con arroyos.</li><li><b>Saneamiento:</b> Si no hay red cloacal pública, es obligatorio diseñar una Planta de Tratamiento de Aguas Residuales (PTAR) o un sistema de humedales artificiales para la comunidad.</li><li><b>Reserva Municipal:</b> Asegurar la cesión del porcentaje legal de áreas verdes y calles exigido por la Ley Orgánica Municipal.</li></ul>`,
-            'hospitales': `<h4>📐 Exigencias de Ingeniería Hospitalaria y Sanatorios</h4><ul><li><b>Gestión de Residuos:</b> Presentar flujograma estricto de segregación de Residuos Biocontagiosos (RBS), Punzocortantes y Especiales.</li><li><b>Infraestructura de Acopio:</b> Diseñar un cuarto de almacenamiento temporal refrigerado (menor a 4°C) exclusivo para residuos patológicos, con acceso fácil para camiones recolectores.</li><li><b>Tratamiento:</b> Adjuntar convenio vigente con empresa habilitada por MADES para tratamiento final (Autoclave o Incineración pirolítica).</li><li><b>Efluentes Especiales:</b> Pre-tratamiento de efluentes de laboratorios, rayos X (líquidos reveladores) y morgue antes de la descarga a la red cloacal.</li></ul>`,
-            'ganaderia': `<h4>📐 Exigencias de Infraestructura para Ganadería / Producción</h4><ul><li><b>Tratamiento de Efluentes:</b> Diseñar un sistema de lagunas de estabilización en serie (anaerobia, facultativa, maduración) para tratar el lavado de corrales o salas de ordeñe.</li><li><b>Disposición de Mortandad:</b> Detallar técnica de disposición de animales muertos (fosas sanitarias encaladas o sistema de compostaje aislado).</li><li><b>Protección Hídrica:</b> Aislar tajamares y cauces hídricos con alambrados para evitar el pisoteo directo y la eutrofización por heces del ganado.</li><li><b>Barreras:</b> Establecer barreras vivas (cortinas forestales) perimetrales y dejar franja de protección libre de agroquímicos si se cultiva pastura.</li></ul>`,
-            'industrias': `<h4>📐 Exigencias de Ingeniería para Complejos Industriales</h4><ul><li><b>Balance Hídrico y Masa:</b> Incluir flujograma de procesos detallando entradas de materia prima, consumo de agua y salidas de productos/efluentes.</li><li><b>Sistema PTARI:</b> Diseño y dimensionamiento de la Planta de Tratamiento de Aguas Residuales Industriales (físico-químico o biológico) para cumplir los límites de la Res. 222/02.</li><li><b>Emisiones Atmosféricas:</b> Declarar uso de calderas/chimeneas, prever puertos de muestreo isocinético y filtros manga/lavadores de gases según Ley 5211/14.</li><li><b>Residuos Industriales:</b> Tinglado cerrado, techado y con piso impermeable para acopio de residuos industriales y peligrosos (borras, aceites usados, envases químicos).</li></ul>`,
-            'canteras': `<h4>📐 Exigencias de Ingeniería para Minería y Canteras</h4><ul><li><b>Plan de Explotación:</b> Presentar cronograma de avance de frente de cantera, diseño de explotación escalonada por terrazas/bancos para evitar derrumbes.</li><li><b>Control de Material Particulado:</b> Medidas de humectación continua de caminos internos y trituradoras para minimizar emisión de polvo.</li><li><b>Gestión de Aguas:</b> Diseño de canales perimetrales de guardia y piletas de sedimentación de gran volumen para clarificar aguas de escorrentía antes del vertido.</li><li><b>Explosivos:</b> Si aplica, detallar construcción de polvorín bajo normativas estrictas y permisos aprobados por DIMABEL.</li></ul>`
+            'estaciones': `<h4>📐 Exigencias de Ingeniería para Estaciones de Servicio</h4><ul><li><b>Sistema API:</b> Presentar planos hidrosanitarios que incluyan un Separador de Agua y Aceite (Trampa API).</li><li><b>Tanques Subterráneos:</b> Deben ser de doble pared con sensores electrónicos de intersticio.</li><li><b>Monitoreo:</b> Instalación obligatoria de Freatímetros en vértices del predio.</li><li><b>Pruebas:</b> Anexar certificados de Pruebas de Hermeticidad (INTN).</li></ul>`,
+            'urbanizaciones': `<h4>📐 Exigencias de Ingeniería para Loteamientos</h4><ul><li><b>Estudio Hidrológico:</b> Presentar cálculo de escorrentía pluvial y diseño de lagunas de retención si aplica.</li><li><b>Protección de Cauces:</b> Respetar faja marginal de protección (Ley 3239/07).</li><li><b>Saneamiento:</b> Obligatorio diseñar PTAR si no hay red cloacal pública.</li><li><b>Reserva Municipal:</b> Asegurar la cesión del porcentaje legal de áreas verdes.</li></ul>`,
+            'hospitales': `<h4>📐 Exigencias de Ingeniería Hospitalaria</h4><ul><li><b>Gestión de Residuos:</b> Flujograma estricto de segregación de Residuos Biocontagiosos (RBS).</li><li><b>Acopio:</b> Cuarto de almacenamiento temporal refrigerado (menor a 4°C).</li><li><b>Tratamiento:</b> Convenio vigente con empresa habilitada por MADES (Autoclave/Incineración).</li><li><b>Efluentes Especiales:</b> Pre-tratamiento de efluentes de laboratorios y rayos X.</li></ul>`,
+            'ganaderia': `<h4>📐 Exigencias de Infraestructura Ganadera</h4><ul><li><b>Efluentes:</b> Sistema de lagunas de estabilización en serie (anaerobia, facultativa, maduración).</li><li><b>Mortandad:</b> Detallar técnica de fosas sanitarias encaladas o compostaje.</li><li><b>Protección Hídrica:</b> Aislar tajamares con alambrados para evitar eutrofización.</li><li><b>Barreras:</b> Establecer cortinas forestales perimetrales.</li></ul>`,
+            'industrias': `<h4>📐 Exigencias de Ingeniería para Complejos Industriales</h4><ul><li><b>Balance Hídrico y Masa:</b> Flujograma detallando entradas, consumos y efluentes.</li><li><b>Sistema PTARI:</b> Diseño de Planta de Tratamiento de Aguas Residuales Industriales.</li><li><b>Emisiones:</b> Declarar calderas/chimeneas y prever puertos de muestreo.</li><li><b>Residuos:</b> Tinglado cerrado y con piso impermeable para acopio de residuos industriales.</li></ul>`,
+            'canteras': `<h4>📐 Exigencias de Ingeniería para Minería y Canteras</h4><ul><li><b>Plan de Explotación:</b> Diseño de explotación escalonada por terrazas/bancos.</li><li><b>Material Particulado:</b> Medidas de humectación de caminos internos.</li><li><b>Gestión de Aguas:</b> Canales perimetrales de guardia y piletas de sedimentación.</li><li><b>Explosivos:</b> Construcción de polvorín bajo normativas DIMABEL si aplica.</li></ul>`
         };
 
-        const DICCIONARIO_ACTIVIDADES = { 'urbanizaciones': 'Loteamientos y Urbanizaciones', 'estaciones': 'Estaciones de Servicio', 'hospitales': 'Hospitales o Centros', 'ganaderia': 'Ganadería / Agrícola', 'granjas': 'Granjas Intensivas', 'industrias': 'Complejos Industriales', 'depositos': 'Depósitos Logísticos', 'canteras': 'Canteras / Minería', 'humedales': 'Proyectos en Humedales', 'residuos': 'Plantas de Residuos', 'desmontes': 'Desmontes' };
+        const DICCIONARIO_ACTIVIDADES = { 'urbanizaciones': 'Loteamientos y Urbanizaciones', 'estaciones': 'Estaciones de Servicio', 'hospitales': 'Hospitales o Centros Médicos', 'ganaderia': 'Ganadería / Agrícola', 'granjas': 'Granjas Intensivas', 'industrias': 'Complejos Industriales', 'depositos': 'Depósitos Logísticos', 'canteras': 'Canteras / Minería', 'humedales': 'Proyectos en Humedales', 'residuos': 'Plantas de Tratamiento Residuos', 'desmontes': 'Desmontes' };
         
         const MAPEO_TRAMITES = {
             'EIA': ['urbanizaciones', 'estaciones', 'hospitales', 'ganaderia', 'granjas', 'industrias', 'depositos', 'canteras', 'humedales', 'residuos', 'desmontes'],
@@ -458,12 +367,40 @@
             'AA': ['urbanizaciones', 'estaciones', 'hospitales', 'ganaderia', 'industrias', 'depositos', 'canteras', 'humedales', 'residuos']
         };
 
-        const ESQUEMAS_OFICIALES = {
-            'EIA': ['1. DATOS GENERALES', '--sub--Identificación del Proponente', '2. DESCRIPCIÓN TÉCNICA DEL PROYECTO', '--sub--Fases (Construcción, Operación, Abandono)', '3. LÍNEA DE BASE AMBIENTAL', '--sub--Medios Físico, Biológico y Socioeconómico', '4. EVALUACIÓN DE IMPACTOS', '5. PLAN DE GESTIÓN AMBIENTAL (PGA)', '--sub--Monitoreo y Contingencias', '6. RELATORIO DE IMPACTO AMBIENTAL (RIMA)'],
-            'RIMA': ['1. RESUMEN EN LENGUAJE ACCESIBLE', '2. ALTERNATIVAS DE INGENIERÍA', '3. SÍNTESIS DE LÍNEA DE BASE', '4. MEDIDAS DE MITIGACIÓN'],
-            'AA': ['1. ALCANCE DE LA AUDITORÍA', '2. METODOLOGÍA (ISO 19011)', '3. MATRIZ DE CUMPLIMIENTO LEGAL', '--sub--Evidencias Objetivas (Laboratorio)', '4. PLAN DE GESTIÓN REAJUSTADO'],
-            'EDE': ['1. CARACTERIZACIÓN DEL VERTIDO', '2. MEMORIA DE CÁLCULO DE TRATAMIENTO', '3. MATRIZ DE DISPERSIÓN', '4. PLAN DE MONITOREO'],
-            'PGA': ['1. DIAGNÓSTICO OPERATIVO', '2. PLAN DE MEDIDAS CORRECTIVAS', '3. CRONOGRAMA Y PRESUPUESTO']
+        // --- PLANTILLAS ACTIVAS DE REDACCIÓN (NUEVO MOTOR) ---
+        const PLANTILLAS_GUIAS = {
+            'EIA': `
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 1: Datos del Proyecto y Proponente</div><div class="plantilla-step-body">Describa aquí el promotor del proyecto y la ubicación.<ul><li><b>Ubicación:</b> Ingrese Coordenadas UTM (WGS84), Distrito y Departamento.</li><li><b>Superficie:</b> Total del terreno y área a construir.</li><li><b>Actividad Operativa:</b> Descripción técnica de los procesos del proyecto.</li></ul><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 2: Línea de Base Ambiental</div><div class="plantilla-step-body">Describa la fotografía del terreno antes del proyecto.<ul><li><b>Físico:</b> Suelo, topografía, clima, hidrología local.</li><li><b>Biológico:</b> Flora (maderables) y fauna silvestre presente.</li><li><b>Socioeconómico:</b> Distancia al vecino más cercano, servicios básicos.</li></ul><div class="plantilla-tip">💡 TIP: Defina el Área de Influencia Directa e Indirecta con mapas satelitales.</div><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 3: Matriz de Evaluación de Impactos</div><div class="plantilla-step-body">Identifique y califique los daños (Uso de Matriz Leopold/Conesa).<ul><li>Evalúe: Magnitud, Extensión, Duración y Probabilidad de cada impacto.</li><li>Clasifique los impactos en: Bajo, Medio o Alto/Crítico.</li></ul><br><i>[Inserte su tabla de matriz aquí...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 4: Plan de Gestión Ambiental (PGA)</div><div class="plantilla-step-body">Redacte los Programas Obligatorios de mitigación.<ul><li>Programa de Prevención y Mitigación.</li><li>Programa de Gestión de Residuos y Efluentes.</li><li>Programa de Monitoreo Ambiental.</li><li>Programa de Contingencias.</li></ul><div class="plantilla-tip">💡 TIP: Todo PGA debe incluir un Cronograma y un Presupuesto estimado en Gs.</div><br><i>[Redacte los programas debajo de esta línea...]</i><br><br><br></div></div>
+            `,
+            'RIMA': `
+                <div class="plantilla-step"><div class="plantilla-step-header">1. Resumen Ejecutivo del Proyecto</div><div class="plantilla-step-body">Explique el proyecto en lenguaje coloquial (sin tecnicismos). Incluya descripción breve de la obra, inversión, mano de obra y ubicación.<br><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">2. Justificación de Alternativas</div><div class="plantilla-step-body"><ul><li><b>Tecnológica:</b> Por qué se eligió ese método de trabajo.</li><li><b>Locacional:</b> Por qué se construye en ese terreno.</li><li><b>Alternativa Cero:</b> Qué pasaría si el proyecto NO se hace.</li></ul><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">3. Síntesis de la Línea Base</div><div class="plantilla-step-body">Explique cómo está el terreno hoy de forma gráfica (bosque, vecinos, etc.).<br><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">4. Impactos Principales y Medidas de Mitigación</div><div class="plantilla-step-body">Liste los impactos "Medios" y "Altos". Debajo de cada uno, explique de forma sencilla cómo se va a solucionar.<div class="plantilla-tip">💡 TIP: El RIMA debe ser muy visual. Inserte fotografías del terreno y mapas satelitales grandes.</div><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+            `,
+            'PGA': `
+                <p style="margin-bottom:15px; color:#475569;"><b>Estructura de un Programa:</b> 1. Objetivo, 2. Actividades, 3. Indicadores, 4. Responsable, 5. Frecuencia, 6. Presupuesto.</p>
+                <div class="plantilla-step"><div class="plantilla-step-header">Programa 1: Mitigación y Prevención</div><div class="plantilla-step-body">Describa las acciones directas sobre la obra (ej. horarios, control de polvo).<br><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Programa 2: Gestión de Residuos y Efluentes</div><div class="plantilla-step-body">Detalle ubicación del basurero, clasificación por colores, limpieza de PTAR o trampas API.<br><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Programa 3: Monitoreo Ambiental</div><div class="plantilla-step-body">Defina qué se va a medir en laboratorio (agua/aire) y cada cuánto tiempo.<br><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Programa 4: Capacitación y Contingencias</div><div class="plantilla-step-body">Cronograma de charlas y protocolo de emergencias (incendio, derrame).<br><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">5. Cronograma y Presupuesto</div><div class="plantilla-step-body">Inserte un cuadro de Gantt anual y la estimación presupuestaria.<br><br><i>[Inserte su tabla aquí...]</i><br><br><br></div></div>
+            `,
+            'EDE': `
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 1: Caracterización del Vertido</div><div class="plantilla-step-body">Determine si el efluente es industrial o cloacal. Declare caudales (m³/día) y adjunte resultados laboratoriales iniciales.<br><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 2: Memoria de Cálculo de Ingeniería</div><div class="plantilla-step-body">Justificación matemática: Tiempos de Retención Hidráulica (TRH), carga orgánica, volúmenes de reactores o decantadores.<br><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 3: Planimetría y Diseño Constructivo</div><div class="plantilla-step-body">Inserte o referencie los planos técnicos visados de la PTAR.<br><br><i>[Inserte planos o referencias aquí...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 4: Matriz de Dispersión y Punto de Vertido</div><div class="plantilla-step-body">Indique la coordenada exacta de descarga y calcule la capacidad de dilución del arroyo receptor si aplica.<div class="plantilla-tip">💡 TIP: Acompañe siempre con firmas de Ing. Civil/Sanitario/Ambiental y laboratorio acreditado.</div><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+            `,
+            'AA': `
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 1: Alcance y Metodología (ISO 19011)</div><div class="plantilla-step-body">Declare el periodo auditado. Inserte los condicionantes de la Declaración de Impacto Ambiental (DIA) anterior.<br><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 2: Matriz de Cumplimiento Legal y del PGA</div><div class="plantilla-step-body">Responda punto por punto a la DIA vieja: ¿Cumplió? (Sí / No / Parcialmente).<br><br><i>[Inserte su matriz de cumplimiento aquí...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 3: Hallazgos y Evidencias Objetivas</div><div class="plantilla-step-body">Clasifique los errores en No Conformidad Mayor o Menor. Anexe fotografías fechadas y reportes analíticos.<br><br><i>[Redacte y pegue fotos debajo de esta línea...]</i><br><br><br></div></div>
+                <div class="plantilla-step"><div class="plantilla-step-header">Capítulo 4: Plan de Acción Correctiva (PGA Reajustado)</div><div class="plantilla-step-body">Diseñe acciones urgentes para solucionar las No Conformidades.<div class="plantilla-tip">💡 TIP: La auditoría no adivina impactos nuevos, solo verifica el cumplimiento del checklist de la DIA anterior.</div><br><i>[Redacte debajo de esta línea...]</i><br><br><br></div></div>
+            `
         };
 
         function filtrarActividades() {
@@ -489,23 +426,21 @@
             document.getElementById('contenido-guia').classList.remove('oculto');
             
             document.getElementById('res-inst-badge').innerText = `Trámite: ${inst}`;
+            document.getElementById('res-titulo-doc').innerText = `Plantilla Estructurada: ${inst}`;
 
             let leyesSet = new Set(['ley294', 'ley1561', 'ley6123', 'res433']);
-            let alertasMades = ['<div class="alerta-item"><b>FORMATO SIAM:</b> Cumplir estrictamente la Resolución 433/19 en la estructuración del documento final.</div>'];
+            let alertasMades = ['<div class="alerta-item"><b>FORMATO SIAM:</b> Llene la plantilla inferior respetando el orden establecido por la Res. 433/19.</div>'];
             let anexos = [];
 
             let divIng = document.getElementById('res-alertas-ingenieria');
-            if (DICTAMEN_TECNICO[act]) {
-                divIng.innerHTML = `<div class="alerta-ingenieria"><div>${DICTAMEN_TECNICO[act]}</div></div>`;
-            } else {
-                divIng.innerHTML = `<div class="alerta-ingenieria"><div><h4>📐 Directrices Generales de Ingeniería</h4><ul><li>Presentar planos arquitectónicos, cortes y fachadas.</li><li>Adjuntar diagrama de flujo de procesos operativos.</li><li>Detallar gestión básica de residuos asimilables a urbanos.</li></ul></div></div>`;
-            }
+            if (DICTAMEN_TECNICO[act]) { divIng.innerHTML = `<div class="alerta-ingenieria"><div>${DICTAMEN_TECNICO[act]}</div></div>`; } 
+            else { divIng.innerHTML = `<div class="alerta-ingenieria"><div><h4>📐 Directrices Generales</h4><ul><li>Presentar planos arquitectónicos y diagramas de flujo.</li></ul></div></div>`; }
 
-            if (c_pozo) { leyesSet.add('resPozos'); anexos.push('► ANEXO: Estudio Hidrogeológico y Perfil Litológico'); alertasMades.push('<div class="alerta-item"><b>AGUA SUBTERRÁNEA:</b> Gestionar Ensayo de Bombeo y Permiso de Perforación ante MADES.</div>');}
-            if (c_bosque) { leyesSet.add('ley422'); leyesSet.add('ley96'); anexos.push('► ANEXO: Inventario Forestal (Maderables)'); alertasMades.push('<div class="alerta-item"><b>BOSQUES:</b> Presentar censo forestal. Riesgo penal activo si se deforesta en Región Oriental (Ley 2524/04).</div>');}
+            if (c_pozo) { leyesSet.add('resPozos'); anexos.push('Estudio Hidrogeológico y Perfil Litológico (Pozo)'); alertasMades.push('<div class="alerta-item"><b>AGUA SUBTERRÁNEA:</b> Gestionar Ensayo de Bombeo y Permiso de Perforación ante MADES.</div>');}
+            if (c_bosque) { leyesSet.add('ley422'); leyesSet.add('ley96'); anexos.push('Inventario Forestal (Censo Maderable)'); alertasMades.push('<div class="alerta-item"><b>BOSQUES:</b> Presentar censo forestal. Riesgo penal activo si se deforesta en Región Oriental.</div>');}
             if (region === 'oriental' && c_bosque) { leyesSet.add('ley2524'); }
-            if (c_cauce) { leyesSet.add('ley3239'); alertasMades.push('<div class="alerta-item"><b>RECURSOS HÍDRICOS:</b> Delimitar y respetar fajas marginales de protección ecológica obligatoria.</div>');}
-            if (c_pcb || act === 'estaciones' || act === 'industrias') { leyesSet.add('ley567'); leyesSet.add('ley3956'); alertasMades.push('<div class="alerta-item"><b>RESIDUOS Y SUSTANCIAS:</b> Prohibición de quema. Disponer área impermeabilizada para acopio temporal.</div>');}
+            if (c_cauce) { leyesSet.add('ley3239'); alertasMades.push('<div class="alerta-item"><b>RECURSOS HÍDRICOS:</b> Delimitar y respetar fajas marginales ecológicas.</div>');}
+            if (c_pcb || act === 'estaciones' || act === 'industrias') { leyesSet.add('ley567'); leyesSet.add('ley3956'); alertasMades.push('<div class="alerta-item"><b>RESIDUOS Y SUSTANCIAS:</b> Prohibición de quema. Disponer área impermeabilizada para acopio.</div>');}
             if (c_asp) { leyesSet.add('ley352'); alertasMades.push('<div class="alerta-item"><b>ÁREAS PROTEGIDAS:</b> Requisito excluyente de presentar EIA presencial por cruce con polígono de ASP.</div>');}
             if (inst === 'AA') { leyesSet.add('iso'); alertasMades.push('<div class="alerta-item"><b>AUDITORÍA:</b> Levantar Evidencias Objetivas fotográficas y analíticas según estándar ISO 19011.</div>');}
 
@@ -516,29 +451,56 @@
                 if(DB_LEYES[k]) divLegal.innerHTML += `<div class="ley-box"><span class="categoria-ley">${DB_LEYES[k].c}</span><div class="ley-titulo-texto">${DB_LEYES[k].n}</div><div class="ley-detalle">${DB_LEYES[k].d}</div></div>`;
             });
 
-            let listaEst = document.getElementById('res-estructura'); listaEst.innerHTML = '';
-            let esquema = ESQUEMAS_OFICIALES[inst] ? [...ESQUEMAS_OFICIALES[inst]] : ['1. CONTENIDO GENÉRICO'];
+            // INYECCION DE LA PLANTILLA ACTIVA
+            let divPlantilla = document.getElementById('res-plantilla-activa');
+            let basePlantilla = PLANTILLAS_GUIAS[inst] || '<p>Plantilla base no encontrada.</p>';
             
+            // Añadir módulos extras si fueron seleccionados
             if(c_cierre) {
-                esquema.push('MÓDULO EXTRA: PLAN DE CIERRE OPERATIVO Y RECOMPOSICIÓN (Ley 3180/07)');
-                esquema.push('--sub--Inventario de Pasivos y Desmantelamiento');
-                esquema.push('--sub--Ingeniería de Revegetación y Nivelación');
+                basePlantilla += `
+                <div class="plantilla-step">
+                    <div class="plantilla-step-header" style="background:#fefce8; color:#b45309;">Módulo Extra: Plan de Cierre Operativo (Ley 3180/07)</div>
+                    <div class="plantilla-step-body">
+                        Describa las tareas de cierre:
+                        <ul><li>Inventario de Pasivos Ambientales y Desmantelamiento.</li><li>Ingeniería de Revegetación y Nivelación morfológica.</li></ul>
+                        <br><i>[Redacte el plan de cierre debajo de esta línea...]</i><br><br><br>
+                    </div>
+                </div>`;
             }
-            if(anexos.length) { esquema.push('ANEXOS OBLIGATORIOS TÉCNICOS'); anexos.forEach(a => esquema.push(`--anexo--${a}`)); }
 
-            esquema.forEach(i => {
-                let li = document.createElement('li');
-                if(i.startsWith('--sub--')) { li.className = 'sub-item'; li.textContent = i.replace('--sub--',''); }
-                else if(i.startsWith('--anexo--')) { li.className = 'anexo-item'; li.textContent = i.replace('--anexo--',''); }
-                else li.textContent = i;
-                listaEst.appendChild(li);
-            });
+            if(anexos.length > 0) {
+                let listaAnexos = anexos.map(a => `<li>📄 ${a}</li>`).join('');
+                basePlantilla += `
+                <div class="plantilla-step plantilla-anexo">
+                    <div class="plantilla-step-header" style="background:#e0f2fe; color:#0369a1;">Sección Final: Anexos Documentales Obligatorios</div>
+                    <div class="plantilla-step-body" style="background:#f0f9ff;">
+                        Asegúrese de adjuntar al final del expediente los siguientes documentos técnicos activados por su configuración:
+                        <ul>${listaAnexos}</ul>
+                    </div>
+                </div>`;
+            }
+
+            divPlantilla.innerHTML = basePlantilla;
         }
 
         document.getElementById('btn-descargar-word').addEventListener('click', function() {
             let reporteHtml = document.getElementById('reporte-exportable').innerHTML;
-            let blob = new Blob(['\ufeff<html xmlns:w="urn:schemas-microsoft-com:office:word"><style>body{font-family:Arial;} h2,h3{color:#1b4332;} .ley-box{border-left:4px solid #0284c7; padding:10px; margin-bottom:10px;} .alerta-ingenieria{background:#f0f9ff; border:1px solid #bae6fd; padding:15px;}</style><body>' + reporteHtml + '</body></html>'], { type: 'application/msword' });
-            let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'SIGAPY_Dictamen.doc'; a.click();
+            let docCSS = `
+                <style>
+                    body { font-family: Arial, sans-serif; font-size: 11pt; color: #000; }
+                    h2 { color: #1b4332; font-size: 16pt; border-bottom: 2px solid #1b4332; padding-bottom: 5px;}
+                    h3 { color: #ea580c; font-size: 13pt; margin-top: 20px;}
+                    .ley-box { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-left: 4px solid #0284c7; }
+                    .plantilla-step { border: 1px solid #cbd5e1; margin-bottom: 15px; page-break-inside: avoid; }
+                    .plantilla-step-header { background-color: #f1f5f9; padding: 10px; font-weight: bold; font-size: 12pt; border-bottom: 1px solid #ccc; }
+                    .plantilla-step-body { padding: 15px; }
+                    .plantilla-tip { background-color: #fff7ed; padding: 10px; font-style: italic; border-left: 4px solid #ea580c; margin-top: 10px;}
+                    .alerta-ingenieria { background-color: #f0f9ff; padding: 10px; border: 1px solid #bae6fd; }
+                </style>
+            `;
+            let doc = `<html xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8">${docCSS}</head><body>${reporteHtml}</body></html>`;
+            let blob = new Blob(['\ufeff', doc], { type: 'application/msword' });
+            let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'SIGAPY_Plantilla_Activa.doc'; a.click();
         });
 
         window.onload = function() {
