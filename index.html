@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master - Interfaz Premium v16.0</title>
+    <title>SIGA-PY Consultor Master - Base Enriquecida v16.1</title>
     <style>
         :root {
             --color-primario: #1b4332;
@@ -22,28 +22,21 @@
 
         body { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; background-color: var(--color-fondo); color: var(--color-texto); margin: 0; padding: 0; line-height: 1.6; }
         
-        /* HEADER PREMIUM */
         header { background: linear-gradient(135deg, #0f2a22 0%, var(--color-primario) 100%); color: white; padding: 25px 20px 15px 20px; text-align: center; box-shadow: var(--shadow-md); position: relative; z-index: 10; }
         header h1 { margin: 0; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; }
         header p { margin: 5px 0; color: #a7f3d0; font-size: 1.1rem; }
         
-        /* BARRA HORIZONTAL MEJORADA */
         .nav-consulta { display: flex; justify-content: center; gap: 15px; margin-top: 20px; padding-bottom: 10px; }
         .tab-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); }
         .tab-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
 
-        /* CONTENEDOR PRINCIPAL Y STICKY SIDEBAR */
         .container { display: flex; max-width: 1600px; margin: 30px auto; gap: 30px; padding: 0 20px; align-items: flex-start; }
         
         .panel-config { flex: 1; background: var(--color-tarjeta); padding: 25px; border-radius: 16px; box-shadow: var(--shadow-lg); border-top: 5px solid var(--color-primario); position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow-y: auto; }
-        
-        /* SCROLLBAR PERSONALIZADO PARA EL PANEL */
         .panel-config::-webkit-scrollbar { width: 6px; }
         .panel-config::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        
         .panel-config h2 { color: var(--color-texto); margin-top: 0; font-size: 1.4rem; border-bottom: 1px solid var(--color-gris-borde); padding-bottom: 15px; margin-bottom: 20px; font-weight: 700; }
         
-        /* FORMULARIO MEJORADO */
         .seccion-form { background: #f8fafc; padding: 18px; border-radius: 12px; margin-bottom: 18px; border: 1px solid var(--color-gris-borde); transition: border-color 0.3s; }
         .seccion-form:hover { border-color: #cbd5e1; }
         .seccion-form h3 { margin-top: 0; font-size: 0.95rem; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
@@ -54,11 +47,9 @@
         .campo select:focus, .campo input:focus { border-color: var(--color-azul); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
         .campo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         
-        /* TOGGLES / SWITCHES MODERNOS */
         .campo-checkbox { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; background: #fff; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--color-gris-borde); font-weight: 500; color: #334155; transition: all 0.2s; cursor: pointer; }
         .campo-checkbox:hover { border-color: #cbd5e1; background: #f8fafc; }
         
-        /* Estructura del Switch CSS */
         .switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 34px; }
@@ -68,11 +59,10 @@
 
         .btn-generar { width: 100%; background: linear-gradient(to right, var(--color-primario), var(--color-secundario)); color: white; border: none; padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: 10px; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px; }
         .btn-generar:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-        .btn-generar:active { transform: translateY(0); }
+        
         .spinner { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid white; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* PANEL DE RESULTADOS MEJORADO */
         .panel-resultado { flex: 1.5; background: var(--color-tarjeta); padding: 0; border-radius: 16px; box-shadow: var(--shadow-lg); min-height: 600px; border-top: 5px solid var(--color-azul); overflow: hidden; }
         .mensaje-vacio { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 500px; color: #94a3b8; font-style: italic; text-align: center; padding: 40px; }
         .mensaje-vacio span { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
@@ -81,15 +71,16 @@
         .reporte-cuerpo { background: #ffffff; }
         .header-guia { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 25px 30px; border-bottom: 1px solid var(--color-gris-borde); }
         .header-guia h2 { color: #0f172a; margin: 0; font-size: 1.5rem; font-weight: 800; }
-        
         .reporte-contenido-interno { padding: 30px; }
         
-        /* CAJAS Y ALERTAS REFINADAS */
         .alerta-requisitos { background-color: #fff7ed; border: 1px solid #ffedd5; border-left: 5px solid var(--color-alerta); padding: 20px 25px; border-radius: 10px; margin-bottom: 25px; box-shadow: var(--shadow-sm); }
         .alerta-item { margin-bottom: 12px; font-weight: 500; padding-left: 28px; position: relative; font-size: 0.95rem; color: #9a3412; }
         .alerta-item::before { content: "🎯"; position: absolute; left: 0; }
         
-        .alerta-ingenieria { background-color: #f0f9ff; border: 1px solid #e0f2fe; border-left: 5px solid var(--color-ingenieria); padding: 18px 25px; border-radius: 10px; margin-bottom: 20px; font-weight: 600; font-size: 0.95rem; color: #075985; box-shadow: var(--shadow-sm); display: flex; gap: 12px; align-items: flex-start; }
+        .alerta-ingenieria { background-color: #f0f9ff; border: 1px solid #e0f2fe; border-left: 5px solid var(--color-ingenieria); padding: 18px 25px; border-radius: 10px; margin-bottom: 20px; font-weight: 500; font-size: 0.95rem; color: #075985; box-shadow: var(--shadow-sm); }
+        .alerta-ingenieria h4 { margin: 0 0 10px 0; font-size: 1.1rem; color: #0369a1; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #bae6fd; padding-bottom: 8px; }
+        .alerta-ingenieria ul { margin: 0; padding-left: 20px; }
+        .alerta-ingenieria li { margin-bottom: 8px; }
         
         .ley-box { background: #ffffff; padding: 18px; border-radius: 10px; border: 1px solid var(--color-gris-borde); margin-bottom: 15px; border-left: 5px solid var(--color-azul); box-shadow: var(--shadow-sm); transition: transform 0.2s; }
         .ley-box:hover { transform: translateX(3px); border-color: #cbd5e1; }
@@ -103,8 +94,13 @@
         .anexo-item { color: #0284c7 !important; font-size: 1rem !important; margin-top: 15px !important; border-top: 1px dashed #cbd5e1; padding-top: 12px; }
 
         .acciones-guia { display: flex; gap: 20px; background: #f8fafc; padding: 25px 30px; border-top: 1px solid var(--color-gris-borde); border-radius: 0 0 16px 16px; }
-        
-        /* MODAL / VENTANA FLOTANTE (ESTILO BLUR) */
+        .btn-secundario, .btn-accion { width: 100%; padding: 14px; font-size: 1rem; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+        .btn-secundario { background-color: #edf2f7; color: #2d3748; border: 1px solid #cbd5e0; }
+        .btn-secundario:hover { background-color: #e2e8f0; }
+        .btn-accion { background-color: var(--color-azul); color: white; border: none; box-shadow: 0 4px 6px rgba(43,108,176,0.2); }
+        .btn-accion:hover { background-color: #2c5282; }
+
+        /* MODAL / VENTANA FLOTANTE */
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 100; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .modal-overlay.activo { opacity: 1; pointer-events: auto; }
         .modal-content { background: white; width: 90%; max-width: 900px; max-height: 85vh; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow-y: auto; transform: scale(0.95); transition: transform 0.3s ease; position: relative; }
@@ -115,7 +111,6 @@
         .btn-cerrar-modal:hover { background: #e2e8f0; color: #0f172a; }
         .modal-body { padding: 30px; }
         
-        /* GRID DE CONSULTA DENTRO DEL MODAL */
         .consulta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .card-consulta { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; border-top: 4px solid var(--color-azul); box-shadow: var(--shadow-sm); transition: transform 0.2s; }
         .card-consulta:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
@@ -130,7 +125,7 @@
     <header>
         <h1>SIGA-PY CONSULTOR MASTER</h1>
         <p>Sistema Experto de Gestión Ambiental e Ingeniería</p>
-        <small>v16.0 • Entorno Gráfico Avanzado</small>
+        <small>v16.1 • Base de Datos Técnica Enriquecida</small>
         
         <nav class="nav-consulta">
             <button class="tab-btn" onclick="abrirModal('glosario', '📖 Glosario Técnico MADES')">📖 Glosario</button>
@@ -139,7 +134,6 @@
         </nav>
     </header>
 
-    <!-- VENTANA MODAL (FLOTANTE) -->
     <div id="modalConsulta" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -147,33 +141,28 @@
                 <button class="btn-cerrar-modal" onclick="cerrarModal()">✕</button>
             </div>
             <div class="modal-body">
-                
                 <div id="cont-glosario" class="consulta-grid oculto">
-                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>DIA</h4><p>Declaración de Impacto Ambiental. Documento legal emitido por el MADES que aprueba o rechaza el proyecto. Debe ser renovada según su validez.</p></div>
-                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>EIA</h4><p>Estudio de Impacto Ambiental. Documento científico-técnico que identifica, predice y evalúa los impactos de un proyecto propuesto en el medio.</p></div>
-                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>RIMA</h4><p>Relatorio de Impacto Ambiental. Resumen del EIA redactado en lenguaje sencillo y comprensible para el público general.</p></div>
-                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>PGA</h4><p>Plan de Gestión Ambiental. Documento operativo que detalla las medidas de mitigación, monitoreo, contingencias y cronogramas.</p></div>
+                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>DIA</h4><p>Declaración de Impacto Ambiental. Documento legal emitido por el MADES.</p></div>
+                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>EIA</h4><p>Estudio de Impacto Ambiental. Análisis técnico exhaustivo de un proyecto.</p></div>
+                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>RIMA</h4><p>Relatorio de Impacto Ambiental. Resumen en lenguaje sencillo.</p></div>
+                    <div class="card-consulta" style="border-top-color: var(--color-primario);"><h4>PGA</h4><p>Plan de Gestión Ambiental. Medidas operativas, monitoreo y mitigación.</p></div>
                 </div>
-                
                 <div id="cont-leyes" class="consulta-grid oculto">
-                    <div class="card-consulta"><h4>Marco Base y Penal</h4><p><b>Ley 294/93:</b> Base de evaluación de impacto. <br><b>Ley 6123/18:</b> Crea el MADES. <br><b>Ley 716/96:</b> Delitos Ecológicos (Penal).</p></div>
-                    <div class="card-consulta"><h4>Términos de Referencia</h4><p><b>Res. 433/19:</b> Guía de TdR y esquemas de informes para la presentación en el SIAM. <br><b>Res. 246/13:</b> Guía técnica conceptual.</p></div>
-                    <div class="card-consulta"><h4>Agua y Residuos</h4><p><b>Ley 3239/07:</b> Recursos Hídricos y fajas de protección.<br><b>Ley 3956/09:</b> Gestión de Residuos Sólidos (Prohibición de fosas).</p></div>
-                    <div class="card-consulta"><h4>Biodiversidad</h4><p><b>Ley 422/73:</b> Ley Forestal (Reserva 25%).<br><b>Ley 2524/04:</b> Deforestación Cero (R. Oriental).<br><b>Ley 352/94:</b> Áreas Protegidas.</p></div>
+                    <div class="card-consulta"><h4>Marco Base</h4><p><b>Ley 294/93:</b> Base de evaluación.<br><b>Ley 6123/18:</b> Creación del MADES.<br><b>Ley 716/96:</b> Delitos Ecológicos.</p></div>
+                    <div class="card-consulta"><h4>Términos de Referencia</h4><p><b>Res. 433/19:</b> Esquemas obligatorios.<br><b>Res. 246/13:</b> Guía conceptual.</p></div>
+                    <div class="card-consulta"><h4>Agua y Residuos</h4><p><b>Ley 3239/07:</b> Recursos Hídricos.<br><b>Ley 3956/09:</b> Residuos Sólidos.</p></div>
+                    <div class="card-consulta"><h4>Biodiversidad</h4><p><b>Ley 422/73:</b> Ley Forestal (25%).<br><b>Ley 2524/04:</b> Deforestación Cero.<br><b>Ley 352/94:</b> Áreas Protegidas.</p></div>
                 </div>
-
                 <div id="cont-convenios" class="consulta-grid oculto">
-                    <div class="card-consulta" style="border-top-color: #059669;"><h4>Convención Ramsar</h4><p>Tratado intergubernamental que sirve de marco para la acción nacional y la cooperación para la conservación de los humedales.</p></div>
-                    <div class="card-consulta" style="border-top-color: #059669;"><h4>Basilea y Estocolmo</h4><p>Control de movimientos transfronterizos de desechos peligrosos (Basilea) y gestión de contaminantes orgánicos persistentes (Estocolmo).</p></div>
-                    <div class="card-consulta" style="border-top-color: #059669;"><h4>Cambio Climático</h4><p>Convenio Marco de la ONU (CMNUCC) y el Acuerdo de París para la reducción de emisiones de gases de efecto invernadero.</p></div>
+                    <div class="card-consulta" style="border-top-color: #059669;"><h4>Ramsar</h4><p>Tratado internacional para la protección de humedales críticos.</p></div>
+                    <div class="card-consulta" style="border-top-color: #059669;"><h4>Basilea y Estocolmo</h4><p>Control de movimientos transfronterizos de desechos peligrosos (Basilea) y contaminantes persistentes (Estocolmo).</p></div>
+                    <div class="card-consulta" style="border-top-color: #059669;"><h4>Cambio Climático</h4><p>Convenio Marco ONU (CMNUCC) y Acuerdo de París.</p></div>
                 </div>
-
             </div>
         </div>
     </div>
 
     <div class="container">
-        <!-- CONFIGURADOR (STICKY SIDEBAR Y SWITCHES) -->
         <aside class="panel-config">
             <h2>Configuración del Proyecto</h2>
             <form id="form-ambiental">
@@ -264,11 +253,10 @@
             </form>
         </aside>
 
-        <!-- PANEL DE RESPUESTAS -->
         <main class="panel-resultado">
             <div id="estado-vacio" class="mensaje-vacio">
                 <span>⚡</span>
-                <p>Configure los parámetros en el panel izquierdo para que el motor inteligente genere la estructura del expediente.</p>
+                <p>Configure los parámetros en el panel izquierdo para que el motor inteligente genere el dictamen con exigencias normativas.</p>
             </div>
 
             <div id="contenido-guia" class="oculto">
@@ -282,18 +270,23 @@
                     </div>
 
                     <div class="reporte-contenido-interno">
-                        <section class="alerta-requisitos" id="seccion-alertas">
-                            <h3 style="color: #b45309; border-bottom: 2px solid #fef3c7; padding-bottom: 8px;">Directrices de Diseño e Ingeniería</h3>
-                            <div id="res-alertas"></div>
+                        <section id="seccion-alertas">
+                            <h3 style="color: #b45309; border-bottom: 2px solid #fef3c7; padding-bottom: 8px;">1. Dictamen de Ingeniería y Diseño (Requisitos MADES)</h3>
+                            <div id="res-alertas-ingenieria"></div>
+                        </section>
+
+                        <section class="alerta-requisitos">
+                            <h3 style="color: #dd6b20; border-bottom: none; padding: 0; margin-bottom:10px;">2. Alertas de Fiscalización</h3>
+                            <div id="res-alertas-generales"></div>
                         </section>
 
                         <section>
-                            <h3>Base Normativa Requerida</h3>
+                            <h3>3. Base Normativa Requerida para el Proyecto</h3>
                             <div id="res-legal" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;"></div>
                         </section>
 
                         <section>
-                            <h3>Índice Analítico Oficial (Res. 433/19)</h3>
+                            <h3>4. Índice Analítico Oficial (Res. 433/19)</h3>
                             <div class="res-cuerpo-informe">
                                 <ol id="res-estructura"></ol>
                             </div>
@@ -310,68 +303,96 @@
     </div>
 
     <script>
-        // --- CONTROL DEL MODAL (VENTANA FLOTANTE) ---
+        // --- CONTROL DEL MODAL ---
         function abrirModal(seccion, titulo) {
             document.getElementById('modal-title').innerText = titulo;
-            // Ocultar todos
             document.querySelectorAll('.modal-body .consulta-grid').forEach(el => el.classList.add('oculto'));
-            // Mostrar seleccionado
             document.getElementById('cont-' + seccion).classList.remove('oculto');
-            // Activar modal
             document.getElementById('modalConsulta').classList.add('activo');
         }
+        function cerrarModal() { document.getElementById('modalConsulta').classList.remove('activo'); }
 
-        function cerrarModal() {
-            document.getElementById('modalConsulta').classList.remove('activo');
-        }
-
-        // --- EFECTO DE CARGA (LOADING STATE) ---
+        // --- EFECTO DE CARGA ---
         function simularCarga() {
             const btnTexto = document.getElementById('btn-texto');
             const spinner = document.getElementById('btn-spinner');
-            
-            // Validar antes de animar
             if(!document.getElementById('instrumento').value || !document.getElementById('actividad').value) {
-                alert("Por favor, seleccione el Requerimiento y la Actividad.");
-                return;
+                alert("Por favor, seleccione el Requerimiento y la Actividad."); return;
             }
-
-            btnTexto.innerText = "Procesando...";
-            spinner.style.display = "block";
-            
-            // Simula 0.6 segundos de procesamiento para dar sensación de análisis
-            setTimeout(() => {
-                generarGuia();
-                btnTexto.innerText = "Actualizar Dictamen";
-                spinner.style.display = "none";
-            }, 600);
+            btnTexto.innerText = "Procesando..."; spinner.style.display = "block";
+            setTimeout(() => { generarGuia(); btnTexto.innerText = "Actualizar Dictamen"; spinner.style.display = "none"; }, 600);
         }
 
-        // --- LÓGICA CORE (MANTENIDA DE LA V15) ---
+        // --- BASE DE DATOS LEGAL (ENRIQUECIDA) ---
         const DB_LEYES = {
-            ley294: { c: 'Institucional', n: 'Ley 294/93 Evaluación Impacto', d: 'Marco rector. Obliga a obtener la DIA.' },
-            ley1561: { c: 'Institucional', n: 'Ley 1561/00 SISNAM', d: 'Establece el Sistema Nacional del Ambiente.' },
-            ley6123: { c: 'Institucional', n: 'Ley 6123/18 MADES', d: 'Ley de creación del Ministerio.' },
-            ley716: { c: 'Penal', n: 'Ley 716/96 Delitos Ecológicos', d: 'Tipifica y sanciona faltas graves.' },
-            res433: { c: 'Normativa Técnica', n: 'Res. MADES 433/19', d: 'Aprueba Términos de Referencia y esquemas.' },
-            iso: { c: 'Estándares', n: 'ISO 14001 e ISO 19011', d: 'Auditoría y Gestión.' },
-            ley3239: { c: 'Agua', n: 'Ley 3239/07 Recursos Hídricos', d: 'Protección de cauces.' },
-            resPozos: { c: 'Agua', n: 'Ley 5431/15 Pozos', d: 'Regula perforaciones profundas.' },
-            ley422: { c: 'Bosques', n: 'Ley 422/73 Forestal', d: 'Mantenimiento del 25% de bosque.' },
-            ley2524: { c: 'Bosques', n: 'Ley 2524/04 Deforestación Cero', d: 'Veda en Región Oriental.' },
-            ley96: { c: 'Biodiversidad', n: 'Ley 96/92 Vida Silvestre', d: 'Protección de fauna/flora.' },
-            ley352: { c: 'Áreas', n: 'Ley 352/94 Áreas Protegidas', d: 'Régimen de protección.' },
-            ley3956: { c: 'Residuos', n: 'Ley 3956/09 Residuos Sólidos', d: 'Gestión integral y disposición.' },
-            ley567: { c: 'Químicos', n: 'Ley 567/95 Sustancias', d: 'Manejo de peligrosos.' },
-            ramsar: { c: 'Convenio', n: 'Convención Ramsar', d: 'Protección de humedales.' },
-            cierreLey: { c: 'Cierre', n: 'Ley 3180/07', d: 'Planes de cierre y minería.' }
+            ley294: { c: 'Institucional', n: 'Ley 294/93 Evaluación Impacto Ambiental', d: 'Marco rector. Obliga a obtener la DIA antes de iniciar cualquier movimiento de suelo u obra civil.' },
+            ley1561: { c: 'Institucional', n: 'Ley 1561/00 SISNAM', d: 'Establece el Sistema Nacional del Ambiente y el Consejo Nacional del Ambiente.' },
+            ley6123: { c: 'Institucional', n: 'Ley 6123/18 MADES', d: 'Creación del MADES como autoridad de aplicación, reemplazando a la antigua SEAM.' },
+            ley716: { c: 'Penal', n: 'Ley 716/96 Delitos Ecológicos', d: 'Tipifica como delito la elusión de mitigaciones, destrucción de bosques, contaminación de aguas y falsedad de datos.' },
+            res433: { c: 'Normativa Técnica', n: 'Res. MADES 433/19', d: 'Aprueba Términos de Referencia, esquemas y contenidos mínimos obligatorios de EIA, RIMA y PGA.' },
+            iso: { c: 'Estándares', n: 'ISO 14001 e ISO 19011', d: 'Exige basar las Auditorías Ambientales (AA) en criterios de gestión y verificación internacional estandarizada.' },
+            ley3239: { c: 'Agua', n: 'Ley 3239/07 Recursos Hídricos', d: 'Obliga a respetar fajas marginales de protección en ríos y arroyos, prohibiendo construcciones en cota de inundación.' },
+            resPozos: { c: 'Agua', n: 'Ley 5431/15 Pozos Tubulares', d: 'Regula perforaciones, exige permiso de prospección/explotación y ensayos de bombeo para garantizar caudal ecológico.' },
+            ley422: { c: 'Bosques', n: 'Ley 422/73 Forestal', d: 'Mandato estricto de mantener el 25% de la superficie del predio rural bajo cobertura de bosque nativo.' },
+            ley2524: { c: 'Bosques', n: 'Ley 2524/04 Deforestación Cero', d: 'Veda absoluta de transformación y conversión de superficies boscosas en la Región Oriental del país.' },
+            ley96: { c: 'Biodiversidad', n: 'Ley 96/92 Vida Silvestre', d: 'Prohíbe la caza, recolección o destrucción de hábitats críticos de especies nativas de flora y fauna.' },
+            ley352: { c: 'Áreas', n: 'Ley 352/94 Áreas Protegidas', d: 'Condiciona duramente proyectos ubicados en zonas de amortiguamiento de parques nacionales y reservas.' },
+            ley3956: { c: 'Residuos', n: 'Ley 3956/09 Residuos Sólidos', d: 'Prohibición explícita de quemar basura o disponerla en fosas no impermeabilizadas. Exige clasificación.' },
+            ley567: { c: 'Químicos', n: 'Ley 567/95 Sustancias Peligrosas', d: 'Norma el almacenamiento con bandejas antiderrame, etiquetado y gestión de envases vacíos contaminados.' },
+            ramsar: { c: 'Convenio', n: 'Convención Ramsar', d: 'Tratado internacional ratificado para la protección ineludible de zonas de humedales y recarga de acuíferos.' },
+            cierreLey: { c: 'Cierre', n: 'Ley 3180/07 Minería', d: 'Exige póliza de seguro y un plan de cierre morfológico (revegetación y nivelación) al terminar la vida útil del proyecto.' }
         };
 
+        // --- DICCIONARIO TÉCNICO DE INGENIERÍA MASIVAMENTE ENRIQUECIDO ---
         const DICTAMEN_TECNICO = {
-            'estaciones': '<span style="font-size:1.3rem;">📐</span><div><b>Ingeniería Hidrosanitaria (Surtidores):</b> Exigir planos visados de Trampa API, detalle de tanques de doble pared y red contra incendios.</div>',
-            'urbanizaciones': '<span style="font-size:1.3rem;">📐</span><div><b>Ingeniería Civil:</b> Anexar cálculo hidrológico de escorrentía para mitigación de raudales e infraestructura cloacal.</div>',
-            'hospitales': '<span style="font-size:1.3rem;">📐</span><div><b>Ingeniería Hospitalaria:</b> Flujograma de Residuos Biocontagiosos (RBS) y diseño de cuarto frío temporal.</div>',
-            'ganaderia': '<span style="font-size:1.3rem;">📐</span><div><b>Infraestructura Rural:</b> Diseño de piletas de decantación y manejo topográfico de correntadas.</div>'
+            'estaciones': `
+                <h4>📐 Exigencias de Ingeniería para Estaciones de Servicio (Surtidores)</h4>
+                <ul>
+                    <li><b>Sistema API:</b> Es obligatorio presentar planos hidrosanitarios que incluyan un Separador de Agua y Aceite (Trampa API) conectado a las rejillas perimetrales de la pista de carga.</li>
+                    <li><b>Tanques Subterráneos:</b> Deben ser de doble pared (chaqueta exterior de fibra de vidrio/HDPE) con sensores electrónicos para monitoreo continuo del espacio intersticial.</li>
+                    <li><b>Monitoreo Subterráneo:</b> Instalación obligatoria de Freatímetros (pozos de monitoreo) en los vértices del predio para control semestral de aguas subterráneas.</li>
+                    <li><b>Pruebas:</b> Anexar certificados de Pruebas de Hermeticidad del sistema de cañerías e inspección de tanques según normas del INTN.</li>
+                </ul>`,
+            'urbanizaciones': `
+                <h4>📐 Exigencias de Ingeniería para Loteamientos y Urbanizaciones</h4>
+                <ul>
+                    <li><b>Estudio Hidrológico:</b> Presentar cálculo de escorrentía pluvial (antes y después del proyecto). Diseñar lagunas de retención temporal si la pavimentación genera riesgo de inundación a linderos.</li>
+                    <li><b>Protección de Cauces:</b> Respetar estrictamente la faja marginal de protección dictada por la Ley 3239/07 (mínimo 100m en áreas rurales) si el predio linda con arroyos.</li>
+                    <li><b>Saneamiento:</b> Si no hay red cloacal pública, es obligatorio diseñar una Planta de Tratamiento de Aguas Residuales (PTAR) o un sistema de humedales artificiales para la comunidad.</li>
+                    <li><b>Reserva Municipal:</b> Asegurar la cesión del porcentaje legal de áreas verdes y calles exigido por la Ley Orgánica Municipal.</li>
+                </ul>`,
+            'hospitales': `
+                <h4>📐 Exigencias de Ingeniería Hospitalaria y Sanatorios</h4>
+                <ul>
+                    <li><b>Gestión de Residuos:</b> Presentar flujograma estricto de segregación de Residuos Biocontagiosos (RBS), Punzocortantes y Especiales.</li>
+                    <li><b>Infraestructura de Acopio:</b> Diseñar un cuarto de almacenamiento temporal refrigerado (menor a 4°C) exclusivo para residuos patológicos, con acceso fácil para camiones recolectores.</li>
+                    <li><b>Tratamiento:</b> Adjuntar convenio vigente con empresa habilitada por MADES para tratamiento final (Autoclave o Incineración pirolítica).</li>
+                    <li><b>Efluentes Especiales:</b> Pre-tratamiento de efluentes de laboratorios, rayos X (líquidos reveladores) y morgue antes de la descarga a la red cloacal.</li>
+                </ul>`,
+            'ganaderia': `
+                <h4>📐 Exigencias de Infraestructura para Ganadería / Producción</h4>
+                <ul>
+                    <li><b>Tratamiento de Efluentes:</b> Diseñar un sistema de lagunas de estabilización en serie (anaerobia, facultativa, maduración) para tratar el lavado de corrales o salas de ordeñe.</li>
+                    <li><b>Disposición de Mortandad:</b> Detallar técnica de disposición de animales muertos (fosas sanitarias encaladas o sistema de compostaje aislado).</li>
+                    <li><b>Protección Hídrica:</b> Aislar tajamares y cauces hídricos con alambrados para evitar el pisoteo directo y la eutrofización por heces del ganado.</li>
+                    <li><b>Barreras:</b> Establecer barreras vivas (cortinas forestales) perimetrales y dejar franja de protección libre de agroquímicos si se cultiva pastura.</li>
+                </ul>`,
+            'industrias': `
+                <h4>📐 Exigencias de Ingeniería para Complejos Industriales</h4>
+                <ul>
+                    <li><b>Balance Hídrico y Masa:</b> Incluir flujograma de procesos detallando entradas de materia prima, consumo de agua y salidas de productos/efluentes.</li>
+                    <li><b>Sistema PTARI:</b> Diseño y dimensionamiento de la Planta de Tratamiento de Aguas Residuales Industriales (físico-químico o biológico) para cumplir los límites de la Res. 222/02.</li>
+                    <li><b>Emisiones Atmosféricas:</b> Declarar uso de calderas/chimeneas, prever puertos de muestreo isocinético y filtros manga/lavadores de gases según Ley 5211/14.</li>
+                    <li><b>Residuos Industriales:</b> Tinglado cerrado, techado y con piso impermeable para acopio de residuos industriales y peligrosos (borras, aceites usados, envases químicos).</li>
+                </ul>`,
+            'canteras': `
+                <h4>📐 Exigencias de Ingeniería para Minería y Canteras</h4>
+                <ul>
+                    <li><b>Plan de Explotación:</b> Presentar cronograma de avance de frente de cantera, diseño de explotación escalonada por terrazas/bancos para evitar derrumbes.</li>
+                    <li><b>Control de Material Particulado:</b> Medidas de humectación continua de caminos internos y trituradoras para minimizar emisión de polvo.</li>
+                    <li><b>Gestión de Aguas:</b> Diseño de canales perimetrales de guardia y piletas de sedimentación de gran volumen para clarificar aguas de escorrentía antes del vertido.</li>
+                    <li><b>Explosivos:</b> Si aplica, detallar construcción de polvorín bajo normativas estrictas y permisos aprobados por DIMABEL.</li>
+                </ul>`
         };
 
         const DICCIONARIO_ACTIVIDADES = { 'urbanizaciones': 'Loteamientos y Urbanizaciones', 'estaciones': 'Estaciones de Servicio', 'hospitales': 'Hospitales o Centros', 'ganaderia': 'Ganadería / Agrícola', 'granjas': 'Granjas Intensivas', 'industrias': 'Complejos Industriales', 'depositos': 'Depósitos Logísticos', 'canteras': 'Canteras / Minería', 'humedales': 'Proyectos en Humedales', 'residuos': 'Plantas de Residuos', 'desmontes': 'Desmontes' };
@@ -387,7 +408,9 @@
         const ESQUEMAS_OFICIALES = {
             'EIA': ['1. DATOS GENERALES', '--sub--Identificación del Proponente', '2. DESCRIPCIÓN TÉCNICA DEL PROYECTO', '--sub--Fases (Construcción, Operación, Abandono)', '3. LÍNEA DE BASE AMBIENTAL', '--sub--Medios Físico, Biológico y Socioeconómico', '4. EVALUACIÓN DE IMPACTOS', '5. PLAN DE GESTIÓN AMBIENTAL (PGA)', '--sub--Monitoreo y Contingencias'],
             'RIMA': ['1. RESUMEN EN LENGUAJE ACCESIBLE', '2. ALTERNATIVAS DE INGENIERÍA', '3. SÍNTESIS DE LÍNEA DE BASE', '4. MEDIDAS DE MITIGACIÓN'],
-            'AA': ['1. ALCANCE DE LA AUDITORÍA', '2. METODOLOGÍA (ISO 19011)', '3. MATRIZ DE CUMPLIMIENTO LEGAL', '--sub--Evidencias Objetivas (Laboratorio)', '4. PLAN DE GESTIÓN REAJUSTADO']
+            'AA': ['1. ALCANCE DE LA AUDITORÍA', '2. METODOLOGÍA (ISO 19011)', '3. MATRIZ DE CUMPLIMIENTO LEGAL', '--sub--Evidencias Objetivas (Laboratorio)', '4. PLAN DE GESTIÓN REAJUSTADO'],
+            'EDE': ['1. CARACTERIZACIÓN DEL VERTIDO', '2. MEMORIA DE CÁLCULO DE TRATAMIENTO', '3. MATRIZ DE DISPERSIÓN', '4. PLAN DE MONITOREO'],
+            'PGA': ['1. DIAGNÓSTICO OPERATIVO', '2. PLAN DE MEDIDAS CORRECTIVAS', '3. CRONOGRAMA Y PRESUPUESTO']
         };
 
         function filtrarActividades() {
@@ -404,35 +427,55 @@
             const region = document.getElementById('region').value;
             const c_bosque = document.getElementById('tiene-bosque').checked;
             const c_pozo = document.getElementById('requiere-pozo').checked;
+            const c_cauce = document.getElementById('tiene-cauce').checked;
+            const c_pcb = document.getElementById('posee-pcb').checked;
+            const c_asp = document.getElementById('afecta-asp').checked;
             const c_cierre = document.getElementById('requiere-cierre').checked;
 
             document.getElementById('estado-vacio').classList.add('oculto');
             document.getElementById('contenido-guia').classList.remove('oculto');
             
             document.getElementById('res-inst-badge').innerText = `Trámite: ${inst}`;
-            document.getElementById('res-categoria').innerText = `Procesamiento Legal SIAM`;
 
             let leyesSet = new Set(['ley294', 'ley1561', 'ley6123', 'res433']);
-            let alertas = ['<div class="alerta-item">Cumplir estrictamente la Resolución 433/19 en el formato de presentación.</div>'];
+            let alertasMades = ['<div class="alerta-item"><b>FORMATO SIAM:</b> Cumplir estrictamente la Resolución 433/19 en la estructuración del documento final.</div>'];
             let anexos = [];
 
-            if (DICTAMEN_TECNICO[act]) alertas.unshift(`<div class="alerta-ingenieria">${DICTAMEN_TECNICO[act]}</div>`);
+            // INYECCIÓN DE DICTAMEN TÉCNICO ENRIQUECIDO
+            let divIng = document.getElementById('res-alertas-ingenieria');
+            if (DICTAMEN_TECNICO[act]) {
+                divIng.innerHTML = `<div class="alerta-ingenieria"><div>${DICTAMEN_TECNICO[act]}</div></div>`;
+            } else {
+                divIng.innerHTML = `<div class="alerta-ingenieria"><div><h4>📐 Directrices Generales de Ingeniería</h4><ul><li>Presentar planos arquitectónicos, cortes y fachadas.</li><li>Adjuntar diagrama de flujo de procesos operativos.</li><li>Detallar gestión básica de residuos asimilables a urbanos.</li></ul></div></div>`;
+            }
 
-            if (c_pozo) { leyesSet.add('resPozos'); anexos.push('► ANEXO: Estudio Hidrogeológico'); }
-            if (c_bosque) { leyesSet.add('ley422'); anexos.push('► ANEXO: Inventario Forestal'); }
+            // INYECCIÓN DE ALERTAS Y LEYES CRUZADAS
+            if (c_pozo) { leyesSet.add('resPozos'); anexos.push('► ANEXO: Estudio Hidrogeológico y Perfil Litológico'); alertasMades.push('<div class="alerta-item"><b>AGUA SUBTERRÁNEA:</b> Gestionar Ensayo de Bombeo y Permiso de Perforación ante MADES.</div>');}
+            if (c_bosque) { leyesSet.add('ley422'); leyesSet.add('ley96'); anexos.push('► ANEXO: Inventario Forestal (Maderables)'); alertasMades.push('<div class="alerta-item"><b>BOSQUES:</b> Presentar censo forestal. Riesgo penal activo si se deforesta en Región Oriental (Ley 2524/04).</div>');}
+            if (region === 'oriental' && c_bosque) { leyesSet.add('ley2524'); }
+            if (c_cauce) { leyesSet.add('ley3239'); alertasMades.push('<div class="alerta-item"><b>RECURSOS HÍDRICOS:</b> Delimitar y respetar fajas marginales de protección ecológica obligatoria.</div>');}
+            if (c_pcb || act === 'estaciones' || act === 'industrias') { leyesSet.add('ley567'); leyesSet.add('ley3956'); alertasMades.push('<div class="alerta-item"><b>RESIDUOS Y SUSTANCIAS:</b> Prohibición de quema. Disponer área impermeabilizada para acopio temporal.</div>');}
+            if (c_asp) { leyesSet.add('ley352'); alertasMades.push('<div class="alerta-item"><b>ÁREAS PROTEGIDAS:</b> Requisito excluyente de presentar EIA presencial por cruce con polígono de ASP.</div>');}
+            if (inst === 'AA') { leyesSet.add('iso'); alertasMades.push('<div class="alerta-item"><b>AUDITORÍA:</b> Levantar Evidencias Objetivas fotográficas y analíticas según estándar ISO 19011.</div>');}
 
-            document.getElementById('res-alertas').innerHTML = alertas.join('');
+            document.getElementById('res-alertas-generales').innerHTML = alertasMades.join('');
 
+            // RENDER LEYES
             let divLegal = document.getElementById('res-legal'); divLegal.innerHTML = '';
             Array.from(leyesSet).forEach(k => {
                 if(DB_LEYES[k]) divLegal.innerHTML += `<div class="ley-box"><span class="categoria-ley">${DB_LEYES[k].c}</span><div class="ley-titulo-texto">${DB_LEYES[k].n}</div><div class="ley-detalle">${DB_LEYES[k].d}</div></div>`;
             });
 
+            // RENDER ÍNDICE
             let listaEst = document.getElementById('res-estructura'); listaEst.innerHTML = '';
             let esquema = ESQUEMAS_OFICIALES[inst] ? [...ESQUEMAS_OFICIALES[inst]] : ['1. CONTENIDO GENÉRICO'];
             
-            if(c_cierre) esquema.push('6. PLAN DE CIERRE OPERATIVO');
-            if(anexos.length) { esquema.push('7. ANEXOS OBLIGATORIOS'); anexos.forEach(a => esquema.push(`--anexo--${a}`)); }
+            if(c_cierre) {
+                esquema.push('6. PLAN DE CIERRE OPERATIVO Y RECOMPOSICIÓN (Ley 3180/07)');
+                esquema.push('--sub--Inventario de Pasivos y Desmantelamiento');
+                esquema.push('--sub--Ingeniería de Revegetación y Nivelación');
+            }
+            if(anexos.length) { esquema.push('7. ANEXOS OBLIGATORIOS TÉCNICOS'); anexos.forEach(a => esquema.push(`--anexo--${a}`)); }
 
             esquema.forEach(i => {
                 let li = document.createElement('li');
@@ -445,9 +488,14 @@
 
         document.getElementById('btn-descargar-word').addEventListener('click', function() {
             let reporteHtml = document.getElementById('reporte-exportable').innerHTML;
-            let blob = new Blob(['\ufeff<html xmlns:w="urn:schemas-microsoft-com:office:word"><style>body{font-family:Arial;} h2,h3{color:#1b4332;} .ley-box{border-left:4px solid #0284c7; padding:10px; margin-bottom:10px;}</style><body>' + reporteHtml + '</body></html>'], { type: 'application/msword' });
-            let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'SIGAPY_Expediente.doc'; a.click();
+            let blob = new Blob(['\ufeff<html xmlns:w="urn:schemas-microsoft-com:office:word"><style>body{font-family:Arial;} h2,h3{color:#1b4332;} .ley-box{border-left:4px solid #0284c7; padding:10px; margin-bottom:10px;} .alerta-ingenieria{background:#f0f9ff; border:1px solid #bae6fd; padding:15px;}</style><body>' + reporteHtml + '</body></html>'], { type: 'application/msword' });
+            let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'SIGAPY_Dictamen.doc'; a.click();
         });
+
+        window.onload = function() {
+            document.getElementById('instrumento').value = ""; 
+            filtrarActividades();
+        };
     </script>
 </body>
 </html>
