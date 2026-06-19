@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master v6.0 - Gestión Ambiental del Paraguay</title>
+    <title>SIGA-PY Consultor Master v6.5 - Gestión Ambiental del Paraguay</title>
     <style>
         :root {
             --color-primario: #1b4332;
@@ -41,7 +41,7 @@
 
         .container {
             display: flex;
-            max-width: 1550px;
+            max-width: 1600px;
             margin: 30px auto;
             gap: 30px;
             padding: 0 20px;
@@ -146,7 +146,7 @@
         .btn-generar:hover { background-color: var(--color-secundario); }
 
         .panel-resultado {
-            flex: 2;
+            flex: 1.3;
             background: var(--color-tarjeta);
             padding: 35px;
             border-radius: 12px;
@@ -265,7 +265,7 @@
             cursor: pointer;
         }
 
-        @media (max-width: 1000px) { .container { flex-direction: column; } }
+        @media (max-width: 1100px) { .container { flex-direction: column; } }
         @media print {
             header, .panel-config, .acciones-guia { display: none !important; }
             .panel-resultado { box-shadow: none; padding: 0; width: 100%; border: none; }
@@ -278,19 +278,21 @@
     <header>
         <h1>SIGA-PY CONSULTOR MASTER</h1>
         <p>Sistema Integral de Gestión Ambiental del Paraguay</p>
-        <small>Base de Conocimiento e Inferencia Legal Experta v6.0 • Alimentada por Archivos y Decretos Oficiales</small>
+        <small>Base de Inferencia Experta v6.5 • Listado de Actividades Integrales de las Leyes 294/93, 453/13 y 954/13</small>
     </header>
 
     <div class="container">
+        <!-- CONFIGURADOR -->
         <aside class="panel-config">
             <h2>Configurador Estratégico</h2>
             <form id="form-ambiental">
                 
+                <!-- 1. TIPO DE ESTUDIO -->
                 <div class="seccion-form destacada-orden">
                     <h3>1. Requerimiento Técnico-Legal</h3>
                     <div class="campo">
                         <select id="instrumento" required>
-                            <option value="EIA">Estudio de Impacto Ambiental Definitivo (EIA)</option>
+                            <option value="EIA">Estudio de Impacto Ambiental Definivo (EIA)</option>
                             <option value="RIMA">Relatorio de Impacto Ambiental (RIMA)</option>
                             <option value="PGA">Plan de Gestión Ambiental de Adecuación (PGA)</option>
                             <option value="AA">Auditoría Ambiental de Cumplimiento (AA)</option>
@@ -299,17 +301,44 @@
                     </div>
                 </div>
 
+                <!-- 2. ACTIVIDAD Y ESCALA (LISTADO COMPLETO INYECTADO) -->
                 <div class="seccion-form destacada-actividad">
                     <h3>2. Actividad y Ubicación</h3>
                     <div class="campo">
-                        <label for="actividad">Actividad Económica:</label>
+                        <label for="actividad">Seleccione la Actividad Regulada (Listado Literal):</label>
                         <select id="actividad" required>
-                            <option value="">-- Seleccione Actividad --</option>
-                            <option value="urbanizaciones">Urbanizaciones, Loteamientos y Barrios Cerrados</option>
-                            <option value="ganaderia">Explotación Ganadera / Establecimientos Rurales</option>
-                            <option value="estaciones">Estaciones de Servicio / Combustibles</option>
-                            <option value="industrias">Industrias Manufactureras / Complejos</option>
-                            <option value="canteras">Canteras / Explotación de Minas (Calcárea/Pétrea)</option>
+                            <option value="">-- Seleccione Actividad Oficial --</option>
+                            <!-- Asentamientos e Infraestructura Urbana -->
+                            <option value="urbanizaciones">Barrios cerrados, Loteamientos y Urbanizaciones</option>
+                            <option value="planes_ordenamiento">Planes de ordenamiento urbano y territorial municipales</option>
+                            <option value="obras_3000">Obras en parcelas > 3.000 m² (sin plan regulador urbano)</option>
+                            <option value="estaciones">Estación de expendio de combustibles líquidos o gaseosos</option>
+                            <option value="centros_compras">Centros de compras (Shopping Centers) > 5.000 m²</option>
+                            <option value="hospitales">Hospital, Sanatorio, Centro Radiológico o Medicina Nuclear</option>
+                            <option value="plantas_aguas_servidas">Planta de tratamiento de aguas servidas / Potabilizadora</option>
+                            <option value="cementerios">Cementerios, Campus Universitarios o Estadios</option>
+                            <!-- Sector Agropecuario y Forestal -->
+                            <option value="ganaderia">Establecimientos Agrícolas o Ganaderos (Escala Rural)</option>
+                            <option value="reforestaciones">Reforestaciones o Forestaciones (Monocultivos > 1.000 Ha)</option>
+                            <option value="granjas">Granjas de producción intensiva de animales > 1.000 m²</option>
+                            <option value="humedales">Aprovechamiento racional / Desecación de Humedales</option>
+                            <!-- Complejos Industriales -->
+                            <option value="industrias">Complejos y unidades industriales de cualquier tipo</option>
+                            <option value="depósitos">Depósitos de sustancias inflamables, tóxicas o peligrosas</option>
+                            <option value="silos">Silos con capacidad de almacenaje > 3.000 toneladas</option>
+                            <!-- Infraestructura y Conductos -->
+                            <option value="conductos">Conductos de agua, petróleo, gas, minerales o efluentes</option>
+                            <option value="obras_hidraulicas">Obras hidráulicas en general / Pozos de agua comerciales</option>
+                            <option value="lineas_transmision">Usinas y líneas de transmisión eléctrica (> 100.000 V)</option>
+                            <!-- Minería y Canteras -->
+                            <option value="canteras">Canteras / Extracción de minerales sólidos y procesamientos</option>
+                            <option value="combustibles_fosiles">Prospección y explotación de Combustibles Fósiles / Refinerías</option>
+                            <!-- Residuos y Saneamiento -->
+                            <option value="residuos_urbanos">Plantas de tratamiento de residuos urbanos / Rellenos Sanitarios</option>
+                            <!-- Transporte y Obras Civiles -->
+                            <option value="obras_viales">Obras viales en general / Puertos y Canales Navegables</option>
+                            <option value="pistas">Pistas de aterrizaje / Helipuertos urbanos</option>
+                            <option value="desmontes">Desmontes o cambios de uso de suelo con bosques > 2 Ha</option>
                         </select>
                     </div>
                     <div class="campo">
@@ -331,6 +360,7 @@
                     </div>
                 </div>
 
+                <!-- 3. VARIABLES DE CAMPO -->
                 <div class="seccion-form">
                     <h3>3. Factores de Campo / Entorno</h3>
                     <div class="campo-checkbox">
@@ -373,11 +403,12 @@
                     </div>
                 </div>
 
+                <!-- 4. CATASTRO -->
                 <div class="seccion-form">
                     <h3>4. Catastro de Control</h3>
                     <div class="campo">
                         <label for="proponente">Nombre del Proyecto / Cliente:</label>
-                        <input type="text" id="proponente" placeholder="Ej: Cantera San Juan" required>
+                        <input type="text" id="proponente" placeholder="Ej: Industrias del Paraguay S.A." required>
                     </div>
                     <div class="campo-grid">
                         <div class="campo">
@@ -395,6 +426,7 @@
             </form>
         </aside>
 
+        <!-- PANEL DE RESPUESTAS -->
         <main class="panel-resultado">
             <div id="estado-vacio" class="mensaje-vacio">
                 <p>Configure el instrumento solicitado y el rubro ambiental para extraer las directivas y criterios de control.</p>
@@ -459,7 +491,7 @@
             resServiciosAmbientales: { n: 'Resolución MADES N.º 344/18 Adhesión al Régimen de Servicios Ambientales', d: 'Actualiza el mecanismo de adquisición de certificados de compensación obligatoria para proyectos con déficit de reserva forestal legal.' },
             resPGAagricola: { n: 'Resolución MADES N.º 244/15 Plan de Gestión Ambiental Genérico Agrícola', d: 'Establece directivas para actividades agrícolas fijando pautas estrictas de prevención de incendios rurales.' },
             resEdeEfluentes: { n: 'Resolución MADES N.º 616/14 Contenido del Estudio de Disposición de Efluentes (EDE)', d: 'Establece el índice oficial, matrices de impacto hídrico y caracterización de suelos para verter efluentes tratados.' },
-            resPcbtransformadores: { n: 'Resolución MADES N.º 1402/11 Protocolos de Tratamiento de Bifenilos Policlorados (PCB)', d: 'Fija protocolos para el manejo, desmantelamiento y almacenamiento seguro de equipos con aceites contaminados con PCB.' }
+            resPgaTransformadores: { n: 'Resolución MADES N.º 1402/11 Protocolos de Tratamiento de Bifenilos Policlorados (PCB)', d: 'Fija protocolos para el manejo, desmantelamiento y almacenamiento seguro de equipos con aceites contaminados con PCB.' }
         };
 
         var INSTRUMENTOS_TEXTO = {
@@ -543,8 +575,11 @@
 
             var macroproyecto = false;
             var categoria = 'Categoría B (Mediano Impacto)';
+            
+            // Lógica de categorización por listado avanzado (Decreto 453/13 y 954/13)
             if (actividad === 'urbanizaciones' && superficie > 10) { categoria = 'Categoría A (Alto Impacto)'; macroproyecto = true; }
-            if (actividad === 'canteras' || (actividad === 'industrias' && superficie > 5)) { categoria = 'Categoría A (Alto Impacto)'; macroproyecto = true; }
+            if (actividad === 'canteras' || actividad === 'combustibles_fosiles' || actividad === 'residuos_urbanos') { categoria = 'Categoría A (Alto Impacto)'; macroproyecto = true; }
+            if (actividad === 'industrias' && superficie > 5) { categoria = 'Categoría A (Alto Impacto)'; macroproyecto = true; }
             if (afectaAsp) categoria = 'Categoría A (Alto Impacto - Por Afectación de ASP)';
             
             document.getElementById('res-categoria').innerText = 'Escala: ' + categoria;
@@ -561,7 +596,7 @@
             }
 
             if (encuentraPcb) {
-                llavesLegales.push('resPcbtransformadores');
+                llavesLegales.push('resPgaTransformadores');
                 guiaConsultor.push('PROTOCOLO DE SEGURIDAD INDUSTRIAL PCB (Res. 1402/11): Se detectó almacenamiento o uso de transformadores. Es obligatorio incluir en el PGA el protocolo de etiquetado, muestreo analítico cualitativo y el plan de contingencia ante derrames químicos peligrosos.');
             }
 
@@ -610,11 +645,6 @@
                 } else {
                     guiaConsultor.push('RESERVA DE INFONA (Chaco): Solicita los antecedentes del Plan de Uso de la Tierra (PUT) y verifica el mantenimiento del 25% de reserva rural.');
                 }
-            }
-
-            if (tieneCaldera) {
-                llavesLegales.push('calidadAire');
-                guiaConsultor.push('CONTROL ATMOSFÉRICO (Ley 5211/14): Indica en el plano de planta la ubicación exacta de las chimeneas y exige puertos de muestreo normalizados.');
             }
 
             // Renderizar Leyes Asociadas
