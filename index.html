@@ -298,4 +298,73 @@
             let leyesSet = new Set(['ley294', 'decretoEIA', 'resCTCA', 'resGeomatica']);
             let alertas = ['<div class="alerta-item"><b>CONTROL DIGITAL:</b> Asegurar llenado completo en SIAM. Adjuntar polígonos .shp obligatoriamente.</div>'];
 
-            //
+            // Lógica Condicional
+            if (c_deficit) {
+                leyesSet.add('resServiciosAmbientales');
+                alertas.push('<div class="alerta-item"><b>COMPENSACIÓN:</b> Incluir propuesta de compra de Certificados de Servicios Ambientales.</div>');
+            }
+            if (c_pcb) {
+                leyesSet.add('resPcb');
+                alertas.push('<div class="alerta-item"><b>PELIGRO PCB:</b> Levantar protocolo de etiquetado y contingencia para transformadores.</div>');
+            }
+            if (c_pozo) {
+                leyesSet.add('resPozos');
+                alertas.push('<div class="alerta-item"><b>AGUA SUBTERRÁNEA:</b> Tramitar Permiso de Perforación y verificar topes mecánicos.</div>');
+            }
+            if (c_asp) {
+                leyesSet.add('leyAreasProtegidas');
+                alertas.push('<div class="alerta-item"><b>RESTRICCIÓN ASP:</b> El proyecto cruza área protegida; EIA riguroso requerido.</div>');
+            }
+            if (c_bosque && region === 'oriental') {
+                leyesSet.add('deforestacionCero');
+                leyesSet.add('forestal');
+                alertas.push('<div class="alerta-item"><b>DEFORESTACIÓN CERO:</b> Absoluta prohibición de cambio de uso de suelo.</div>');
+            }
+            if (act === 'canteras') {
+                leyesSet.add('leyMinas');
+                alertas.push('<div class="alerta-item"><b>MINERÍA:</b> Computar pago de regalía (5%) al Fisco.</div>');
+            }
+            if (c_cauce || efluentes > 0 || inst === 'EDE') {
+                leyesSet.add('resEfluentes');
+                alertas.push('<div class="alerta-item"><b>EFLUENTES:</b> Respetar fajas marginales e incluir matriz de dispersión.</div>');
+            }
+            
+            // Aplicar Módulo de Cierre si fue marcado
+            let indiceDocumento = [...ESTRUCTURAS[inst]]; // Copiamos el array base
+            if (c_cierre) {
+                leyesSet.add('cierreLey');
+                alertas.push('<div class="alerta-item" style="background:#fef08a; border-left: 5px solid #ca8a04;"><b>MÓDULO DE CIERRE ACTIVADO:</b> Relevamiento de pasivos e ingeniería de recomposición obligatoria.</div>');
+                // Añadimos el capítulo de cierre al índice
+                indiceDocumento.push('► MÓDULO ANEXO: Plan de Cierre y Recomposición Morfológica');
+                indiceDocumento.push('  - Inventario de Pasivos y Desmantelamiento');
+                indiceDocumento.push('  - Ingeniería de Estabilización y Revegetación');
+            }
+
+            // Inyectar HTML Alertas
+            document.getElementById('res-alertas').innerHTML = alertas.join('');
+
+            // Inyectar HTML Leyes
+            let divLegal = document.getElementById('res-legal');
+            divLegal.innerHTML = '';
+            Array.from(leyesSet).forEach(function(key) {
+                let box = document.createElement('div');
+                box.className = 'ley-box';
+                box.innerHTML = `<div class="ley-titulo-texto">⚖️ ${DB_LEYES[key].n}</div><div class="ley-detalle">${DB_LEYES[key].d}</div>`;
+                divLegal.appendChild(box);
+            });
+
+            // Inyectar HTML Índice
+            let listaEst = document.getElementById('res-estructura');
+            listaEst.innerHTML = '';
+            document.getElementById('res-nombre-doc').innerText = `Índice Obligatorio: ${inst}`;
+            indiceDocumento.forEach(function(item) {
+                let li = document.createElement('li');
+                // Quitar viñeta para los sub-tems visuales del Plan de Cierre
+                if(item.startsWith('  -')) li.style.listStyleType = 'none'; 
+                li.textContent = item;
+                listaEst.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
