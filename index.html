@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master v6.5 - Gestión Ambiental del Paraguay</title>
+    <title>SIGA-PY Consultor Master v7.0 - Gestión Ambiental del Paraguay</title>
     <style>
         :root {
             --color-primario: #1b4332;
@@ -121,6 +121,7 @@
             padding: 8px 10px;
             border-radius: 6px;
             border: 1px solid #cbd5e1;
+            font-weight: 500;
         }
 
         .campo-checkbox input {
@@ -278,7 +279,7 @@
     <header>
         <h1>SIGA-PY CONSULTOR MASTER</h1>
         <p>Sistema Integral de Gestión Ambiental del Paraguay</p>
-        <small>Base de Inferencia Experta v6.5 • Listado de Actividades Integrales de las Leyes 294/93, 453/13 y 954/13</small>
+        <small>Cerebro Operativo de Inferencia Legal Absoluta v7.0 • Máxima Cobertura del Marco Regulatorio Nacional</small>
     </header>
 
     <div class="container">
@@ -288,11 +289,11 @@
             <form id="form-ambiental">
                 
                 <!-- 1. TIPO DE ESTUDIO -->
-                <div class="seccion-form destacada-orden">
+                <div class="seccion-form destaca-orden">
                     <h3>1. Requerimiento Técnico-Legal</h3>
                     <div class="campo">
                         <select id="instrumento" required>
-                            <option value="EIA">Estudio de Impacto Ambiental Definivo (EIA)</option>
+                            <option value="EIA">Estudio de Impacto Ambiental Definitivo (EIA)</option>
                             <option value="RIMA">Relatorio de Impacto Ambiental (RIMA)</option>
                             <option value="PGA">Plan de Gestión Ambiental de Adecuación (PGA)</option>
                             <option value="AA">Auditoría Ambiental de Cumplimiento (AA)</option>
@@ -301,14 +302,13 @@
                     </div>
                 </div>
 
-                <!-- 2. ACTIVIDAD Y ESCALA (LISTADO COMPLETO INYECTADO) -->
+                <!-- 2. ACTIVIDAD Y ESCALA -->
                 <div class="seccion-form destacada-actividad">
                     <h3>2. Actividad y Ubicación</h3>
                     <div class="campo">
-                        <label for="actividad">Seleccione la Actividad Regulada (Listado Literal):</label>
+                        <label for="actividad">Seleccione la Actividad Regulada Oficial:</label>
                         <select id="actividad" required>
                             <option value="">-- Seleccione Actividad Oficial --</option>
-                            <!-- Asentamientos e Infraestructura Urbana -->
                             <option value="urbanizaciones">Barrios cerrados, Loteamientos y Urbanizaciones</option>
                             <option value="planes_ordenamiento">Planes de ordenamiento urbano y territorial municipales</option>
                             <option value="obras_3000">Obras en parcelas > 3.000 m² (sin plan regulador urbano)</option>
@@ -317,25 +317,18 @@
                             <option value="hospitales">Hospital, Sanatorio, Centro Radiológico o Medicina Nuclear</option>
                             <option value="plantas_aguas_servidas">Planta de tratamiento de aguas servidas / Potabilizadora</option>
                             <option value="cementerios">Cementerios, Campus Universitarios o Estadios</option>
-                            <!-- Sector Agropecuario y Forestal -->
                             <option value="ganaderia">Establecimientos Agrícolas o Ganaderos (Escala Rural)</option>
                             <option value="reforestaciones">Reforestaciones o Forestaciones (Monocultivos > 1.000 Ha)</option>
                             <option value="granjas">Granjas de producción intensiva de animales > 1.000 m²</option>
                             <option value="humedales">Aprovechamiento racional / Desecación de Humedales</option>
-                            <!-- Complejos Industriales -->
                             <option value="industrias">Complejos y unidades industriales de cualquier tipo</option>
-                            <option value="depósitos">Depósitos de sustancias inflamables, tóxicas o peligrosas</option>
-                            <option value="silos">Silos con capacidad de almacenaje > 3.000 toneladas</option>
-                            <!-- Infraestructura y Conductos -->
+                            <option value="depósitos">Depósitos / Silos de gran envergadura química o de acopio</option>
                             <option value="conductos">Conductos de agua, petróleo, gas, minerales o efluentes</option>
-                            <option value="obras_hidraulicas">Obras hidráulicas en general / Pozos de agua comerciales</option>
+                            <option value="obras_hidraulicas">Obras hidráulicas en general / Canales comerciales</option>
                             <option value="lineas_transmision">Usinas y líneas de transmisión eléctrica (> 100.000 V)</option>
-                            <!-- Minería y Canteras -->
-                            <option value="canteras">Canteras / Extracción de minerales sólidos y procesamientos</option>
+                            <option value="canteras">Canteras / Explotación de Minas (Calcárea/Pétrea/Metálica)</option>
                             <option value="combustibles_fosiles">Prospección y explotación de Combustibles Fósiles / Refinerías</option>
-                            <!-- Residuos y Saneamiento -->
                             <option value="residuos_urbanos">Plantas de tratamiento de residuos urbanos / Rellenos Sanitarios</option>
-                            <!-- Transporte y Obras Civiles -->
                             <option value="obras_viales">Obras viales en general / Puertos y Canales Navegables</option>
                             <option value="pistas">Pistas de aterrizaje / Helipuertos urbanos</option>
                             <option value="desmontes">Desmontes o cambios de uso de suelo con bosques > 2 Ha</option>
@@ -472,13 +465,13 @@
             constitucion: { n: 'Constitución Nacional de la República del Paraguay (1992)', d: 'Art. 7 y 8: Estipula el derecho a un entorno equilibrado. Base de todo reporte ambiental.' },
             ley294: { n: 'Ley N.º 294/93 de Evaluación de Impacto Ambiental', d: 'Obliga a obtener la DIA previa. Sanciona con la cancelación inmediata ante cualquier ocultación deliberada o falsedad de datos (Art. 14).' },
             decretoEIA: { n: 'Decreto N.º 453/13 y ampliado por Decreto N.º 954/13', d: 'Define las pautas de categorización. Fija auditorías como Declaración Jurada e inspecciones in situ para renovar licencias.' },
-            recursosHidricos: { n: 'Ley N.º 3239/07 de Recursos Hídricos del Paraguay', d: 'Art. 34: Mandato estricto de delimitación y resguardo de fajas marginales de protección de riberas.' },
+            recursosHidricos: { n: 'Ley N.º 3239/07 de Recursos Hídricos del Paraguay', d: 'Art. 34: Mandato de resguardo de fajas marginales de protección de riberas. Regulada por el Dec. N.º 9399/18 para tasas de agua cruda.' },
             forestal: { n: 'Ley N.º 422/73 Forestal Nacional', d: 'Art. 42: Impone la reserva legal rural forestal del 25% obligatoria.' },
-            deforestacionCero: { n: 'Ley N.º 6256/18 de Deforestación Cero (Región Oriental)', d: 'Veda total de conversión de bosques nativos. Fija penas privativas de libertad de 3 a 8 años en instancia judicial (Art. 5).' },
-            residuos: { n: 'Ley N.º 3956/09 y Decreto Reglamentario N.º 7391/17 de Gestión Integral de Residuos Sólidos', d: 'Establece las responsabilidades de los generadores fijos. Prohíbe taxativamente la quema o disposición descontrolada.' },
-            calidadAire: { n: 'Ley N.º 5211/14 de Calidad del Aire', d: 'Controla emisiones fijas y regula muestreos analíticos isocinéticos en ductos industriales.' },
+            deforestacionCero: { n: 'Ley N.º 6256/18 de Deforestación Cero (Región Oriental)', d: 'Veda total de conversión de bosques nativos. Fija penas de 3 a 8 años de prisión en instancia judicial (Art. 5).' },
+            residuos: { n: 'Ley N.º 3956/09 y Decreto Reglamentario N.º 7391/17 de Gestión Integral de Residuos Sólidos', d: 'Establece las responsabilidades de los generadores fijos. Prohíbe la quema o disposición descontrolada.' },
+            calidadAire: { n: 'Ley N.º 5211/14 y Decreto Reglamentario N.º 1269/19 de Calidad del Aire', d: 'Regula emisiones de fuentes fijas industriales, controlando opacidad, material particulado y gases contaminantes.' },
             intnPetroleo: { n: 'Normativas Técnicas INTN y Resoluciones del MIC', d: 'Regula los sistemas SASC de combustibles. Exige doble pared técnica y sensores freáticos de vacío.' },
-            leyMinas: { n: 'Ley N.º 93/1914 y N.º 698/1924 de Minas', d: 'Regula concesiones de explotación. Exige la entrega al Fisco de una regalía correspondiente al 5% del producto bruto de los minerales extraídos.' },
+            leyMinas: { n: 'Ley N.º 93/1914 y N.º 698/1924 de Minas', d: 'Regula concesiones de explotación. Exige el pago de una regalía correspondiente al 5% del producto bruto de los minerales extraídos.' },
             resEffluentes: { n: 'Resolución MADES N.º 222/02 (Límites Permisibles)', d: 'Techos de vertido industrial y cloacal final: DBO5 < 50 mg/L, DQO < 150 mg/L, Grasas < 20 mg/L.' },
             seguridadLaboral: { n: 'Decreto N.º 14390/92 Reglamento de Seguridad e Higiene Laboral', d: 'Norma de salud ocupacional para control de riesgos y dotación de EPI.' },
             leyAreasProtegidas: { n: 'Ley N.º 352/94 de Áreas Silvestres Protegidas', d: 'Art. 12: Obligatoriedad de un EIA completo aprobado para todo proyecto que afecte un ASP o su zona de amortiguamiento.' },
@@ -487,11 +480,13 @@
             resNotaConsulta: { n: 'Resolución MADES N.º 255/2020 y modificatoria Res. N.º 311/2021 Notas de Consulta Digital (SIAM)', d: 'Establece que las Notas de Consulta se tramitan por la plataforma virtual. Dispone que las respuestas se realizarán en Hojas de Seguridad numeradas.' },
             resGeomatica: { n: 'Resolución MADES N.º 251/2018 Términos de Referencia Oficiales para Mapas Temáticos', d: 'Regula el procedimiento de análisis cartográfico llevado a cabo por la Dirección de Geomática.' },
             resAudiencia: { n: 'Resolución MADES N.º 640/2014 Reglamento de Audiencias Públicas', d: 'Fija un plazo de 3 días hábiles posteriores al evento para radicación de objeciones por escrito.' },
-            resPozos: { n: 'Resolución MADES N.º 2155/2005 Especificaciones para Pozos Tubulares Profundos', d: 'Regula captaciones subterráneas. Fija una tolerancia estricta de hasta el +-10% en la inspección de dimensiones físicas.' },
+            resPozos: { n: 'Resolución MADES N.º 2155/2005 e Integración de la Ley N.º 5431/15 de Pozos Tubulares Profundos', d: 'Regula captaciones subterráneas exigiendo Permiso de Perforación ante el MADES. Fija una tolerancia estricta de hasta el +-10% en la inspección física de encamisados.' },
             resServiciosAmbientales: { n: 'Resolución MADES N.º 344/18 Adhesión al Régimen de Servicios Ambientales', d: 'Actualiza el mecanismo de adquisición de certificados de compensación obligatoria para proyectos con déficit de reserva forestal legal.' },
-            resPGAagricola: { n: 'Resolución MADES N.º 244/15 Plan de Gestión Ambiental Genérico Agrícola', d: 'Establece directivas para actividades agrícolas fijando pautas estrictas de prevención de incendios rurales.' },
+            resPGAagricola: { n: 'Resolución MADES N.º 244/15 y Ley N.º 4001/14 de Manejo del Fuego Rural', d: 'Establece directivas para actividades agrícolas fijando pautas de prevención de incendios y prohibición de quemas sin Licencia Municipal.' },
             resEdeEfluentes: { n: 'Resolución MADES N.º 616/14 Contenido del Estudio de Disposición de Efluentes (EDE)', d: 'Establece el índice oficial, matrices de impacto hídrico y caracterización de suelos para verter efluentes tratados.' },
-            resPgaTransformadores: { n: 'Resolución MADES N.º 1402/11 Protocolos de Tratamiento de Bifenilos Policlorados (PCB)', d: 'Fija protocolos para el manejo, desmantelamiento y almacenamiento seguro de equipos con aceites contaminados con PCB.' }
+            resPcbtransformadores: { n: 'Resolución MADES N.º 1402/11 Protocolos de Tratamiento de Bifenilos Policlorados (PCB)', d: 'Fija protocolos para el manejo, desmantelamiento y almacenamiento seguro de equipos con aceites contaminados con PCB.' },
+            leyFitosanitarios: { n: 'Ley N.º 3742/09 de Control de Productos Fitosanitarios de Uso Agrícola', d: 'Exige franjas de amortiguamiento y barreras vivas obligatorias de un mínimo de 100 metros para aplicaciones con relación a caminos y poblaciones.' },
+            leyPatrimonio: { n: 'Ley N.º 5621/16 de Protección del Patrimonio Cultural', d: 'Exige la incorporación en el PGA de un Protocolo de Hallazgos Arqueológicos Fortuitos coordinado con la SNC para obras viales, mineras o urbanas.' }
         };
 
         var INSTRUMENTOS_TEXTO = {
@@ -576,9 +571,8 @@
             var macroproyecto = false;
             var categoria = 'Categoría B (Mediano Impacto)';
             
-            // Lógica de categorización por listado avanzado (Decreto 453/13 y 954/13)
             if (actividad === 'urbanizaciones' && superficie > 10) { categoria = 'Categoría A (Alto Impacto)'; macroproyecto = true; }
-            if (actividad === 'canteras' || actividad === 'combustibles_fosiles' || actividad === 'residuos_urbanos') { categoria = 'Categoría A (Alto Impacto)'; macroproyecto = true; }
+            if (actividad === 'canteras' || actividad === 'combustibles_fosiles' || actividad === 'residuos_urbanos' || actividad === 'obras_viales') { categoria = 'Categoría A (Alto Impacto)'; macroproyecto = true; }
             if (actividad === 'industrias' && superficie > 5) { categoria = 'Categoría A (Alto Impacto)'; macroproyecto = true; }
             if (afectaAsp) categoria = 'Categoría A (Alto Impacto - Por Afectación de ASP)';
             
@@ -590,13 +584,25 @@
 
             guiaConsultor.push('CONTROL SIAM MASTER (Res. 281/19): Es mandatorio completar el 100% de los campos del formulario digital. La plataforma bloqueará el envío pericial en caso de registrar celdas vacías.');
 
+            // Alerta Fitosanitarios (Ley 3742/09)
+            if (actividad === 'ganaderia' || actividad === 'depósitos') {
+                llavesLegales.push('leyFitosanitarios');
+                guiaConsultor.push('REQUISITO FITOSANITARIO (Ley 3742/09): Al registrar actividades vinculadas al agro o depósitos de insumos, verifica in situ el diseño de barreras vivas y franjas de amortiguamiento obligatorias mínimas de 100 metros con relación a núcleos poblados.');
+            }
+
+            // Alerta Patrimonio Cultural (Ley 5621/16)
+            if (macroproyecto || actividad === 'canteras' || actividad === 'urbanizaciones') {
+                llavesLegales.push('leyPatrimonio');
+                guiaConsultor.push('PROTECCIÓN PATRIMONIAL (Ley 5621/16): Por las dimensiones físicas del proyecto, incluye de manera mandatoria en el PGA el Protocolo de Hallazgos Arqueológicos/Paleontológicos Fortuitos coordinado con la SNC.');
+            }
+
             if (deficitBosque) {
                 llavesLegales.push('resServiciosAmbientales');
                 guiaConsultor.push('COMPENSACIÓN FORESTAL (Res. 344/18): Al registrar un déficit en la reserva legal forestal (&lt;25%), prescribe de forma obligatoria en el PGA la adquisición física de Certificados de Servicios Ambientales.');
             }
 
             if (encuentraPcb) {
-                llavesLegales.push('resPgaTransformadores');
+                llavesLegales.push('resPcbtransformadores');
                 guiaConsultor.push('PROTOCOLO DE SEGURIDAD INDUSTRIAL PCB (Res. 1402/11): Se detectó almacenamiento o uso de transformadores. Es obligatorio incluir en el PGA el protocolo de etiquetado, muestreo analítico cualitativo y el plan de contingencia ante derrames químicos peligrosos.');
             }
 
@@ -612,7 +618,7 @@
 
             if (requierePozo) {
                 llavesLegales.push('resPozos');
-                guiaConsultor.push('INSPECCIÓN DE AGUA SUBTERRÁNEA (Res. 2155/05): Registra en el informe las coordenadas UTM del pozo. Prescribe una tolerancia estricta de hasta el +-10% en la verificación física del encamisado superior.');
+                guiaConsultor.push('INSPECCIÓN DE AGUA SUBTERRÁNEA (Res. 2155/05 y L. 5431/15): Registra en el informe las coordenadas UTM del pozo y tramita el Permiso de Perforación ante el MADES. Se exige una tolerancia de hasta el +-10% en la verificación física.');
             }
 
             if (afectaAsp) {
@@ -645,6 +651,15 @@
                 } else {
                     guiaConsultor.push('RESERVA DE INFONA (Chaco): Solicita los antecedentes del Plan de Uso de la Tierra (PUT) y verifica el mantenimiento del 25% de reserva rural.');
                 }
+                if (actividad === 'ganaderia') {
+                    llavesLegales.push('resPGAagricola');
+                    guiaConsultor.push('PREVENCIÓN DE INCENDIOS (Res. 244/15 / Ley 4001/14): Todo predio rural boscoso bajo aprovechamiento debe incorporar un riguroso Plan de Prevención de Incendios y tramitar Licencia Municipal de Quema Prescrita.');
+                }
+            }
+
+            if (tieneCaldera) {
+                llavesLegales.push('calidadAire');
+                guiaConsultor.push('CONTROL ATMOSFÉRICO (Ley 5211/14 / Dec. 1269/19): El uso de calderas o secaderos obliga a reportar los parámetros límites fijados en el reglamento de calidad del aire y la instalación de puertos de muestreo.');
             }
 
             // Renderizar Leyes Asociadas
