@@ -2,9 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master v8.0 - Lógica Inteligente</title>
-    <!-- Estilos CSS (Sin cambios, para mantener tu UI intacta) -->
+    <title>SIGA-PY Consultor Master v9.0 - Integración Total</title>
     <style>
         :root { --color-primario: #1b4332; --color-secundario: #2d6a4f; --color-azul: #2b6cb0; --color-fondo: #f4f7f6; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--color-fondo); color: #2d3748; margin: 0; padding: 20px; }
@@ -13,19 +11,18 @@
         .seccion-form { background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
         select, input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #cbd5e1; border-radius: 6px; }
         .btn-generar { width: 100%; background-color: var(--color-primario); color: white; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        .panel-resultado { flex: 1.3; background: #fff; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .oculto { display: none; }
+        .panel-resultado { flex: 1.5; background: #fff; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-top: 5px solid var(--color-azul); }
+        .alerta-item { background: #fffaf0; padding: 10px; border-left: 4px solid #dd6b20; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <aside class="panel-config">
-        <h2>Configurador Inteligente</h2>
+        <h2>SIGA-PY v9.0</h2>
         <form id="form-ambiental">
-            <!-- PASO 1: INSTRUMENTO (FILTRO MAESTRO) -->
             <div class="seccion-form">
-                <h3>1. Instrumento Ambiental</h3>
+                <h3>1. Instrumento Técnico</h3>
                 <select id="instrumento" onchange="filtrarActividades()" required>
                     <option value="">-- Seleccione el Trámite --</option>
                     <option value="EIA">Estudio de Impacto Ambiental (EIA)</option>
@@ -33,10 +30,10 @@
                     <option value="EDE">Estudio de Disposición de Efluentes (EDE)</option>
                     <option value="PGA">Plan de Gestión Ambiental (PGA)</option>
                     <option value="AA">Auditoría Ambiental (AA)</option>
+                    <option value="CIERRE">Plan de Cierre / Recomposición</option>
                 </select>
             </div>
 
-            <!-- PASO 2: ACTIVIDADES (DINÁMICO) -->
             <div class="seccion-form">
                 <h3>2. Actividad Regulada</h3>
                 <select id="actividad" required>
@@ -44,66 +41,65 @@
                 </select>
             </div>
 
-            <!-- APARTADO ESPECIAL: PLAN DE CIERRE -->
-            <div class="seccion-form" id="apartado-cierre" style="display:none; background: #fff7ed;">
-                <h3>3. Módulo de Cierre (Condicional)</h3>
-                <div class="campo-checkbox">
-                    <input type="checkbox" id="requiere-cierre">
-                    <label for="requiere-cierre"><b>¿Activar Plan de Cierre y Recomposición?</b></label>
-                </div>
+            <div class="seccion-form">
+                <h3>3. Factores Críticos</h3>
+                <input type="checkbox" id="tiene-bosque"> <label>Posee Bosque Nativo</label><br>
+                <input type="checkbox" id="deficit-bosque"> <label>Déficit Reserva Legal &lt;25%</label><br>
+                <input type="checkbox" id="afecta-asp"> <label>Afecta Área Protegida</label><br>
+                <input type="checkbox" id="tiene-pozo"> <label>Contempla Pozo Profundo</label><br>
+                <input type="checkbox" id="posee-pcb"> <label>Registra uso de PCB</label>
             </div>
 
-            <button type="button" class="btn-generar" onclick="generarGuia()">Generar Guía de Expediente</button>
+            <button type="button" class="btn-generar" onclick="generarChecklist()">Generar Guía de Expediente</button>
         </form>
     </aside>
 
     <main class="panel-resultado" id="resultado">
-        <div class="mensaje-vacio">Seleccione los parámetros para generar su checklist lógico.</div>
+        <div class="mensaje-vacio">Seleccione instrumento y actividad para generar el expediente lógico.</div>
     </main>
 </div>
 
 <script>
     const mapeo = {
-        'EIA': ['urbanizaciones', 'ganaderia', 'industrias', 'canteras', 'residuos_urbanos'],
+        'EIA': ['urbanizaciones', 'ganaderia', 'industrias', 'canteras', 'residuos_urbanos', 'obras_viales'],
         'RIMA': ['urbanizaciones', 'industrias', 'canteras', 'residuos_urbanos'],
         'EDE': ['industrias', 'estaciones', 'hospitales'],
-        'PGA': ['urbanizaciones', 'ganaderia', 'industrias'],
-        'AA': ['urbanizaciones', 'ganaderia', 'industrias', 'canteras', 'estaciones']
+        'PGA': ['urbanizaciones', 'ganaderia', 'industrias', 'granjas'],
+        'AA': ['urbanizaciones', 'ganaderia', 'estaciones', 'industrias', 'canteras'],
+        'CIERRE': ['canteras', 'industrias', 'residuos_urbanos', 'combustibles_fosiles']
     };
 
     function filtrarActividades() {
         const inst = document.getElementById('instrumento').value;
         const selectAct = document.getElementById('actividad');
-        const apartadoCierre = document.getElementById('apartado-cierre');
-        
         selectAct.innerHTML = '<option value="">-- Seleccione Actividad --</option>';
         if (!inst) return;
-
         mapeo[inst].forEach(act => {
             let opt = document.createElement('option');
-            opt.value = act;
-            opt.textContent = act.toUpperCase();
+            opt.value = act; opt.textContent = act.toUpperCase();
             selectAct.appendChild(opt);
         });
-
-        // Mostrar cierre solo para actividades críticas
-        apartadoCierre.style.display = (inst === 'AA' || inst === 'EIA') ? 'block' : 'none';
     }
 
-    function generarGuia() {
-        // Lógica de generación de Checklist basada en las selecciones
+    function generarChecklist() {
         const inst = document.getElementById('instrumento').value;
-        const cierre = document.getElementById('requiere-cierre').checked;
+        const act = document.getElementById('actividad').value;
+        const bosque = document.getElementById('tiene-bosque').checked;
+        const deficit = document.getElementById('deficit-bosque').checked;
+        const asp = document.getElementById('afecta-asp').checked;
+        const pcb = document.getElementById('posee-pcb').checked;
+        const pozo = document.getElementById('tiene-pozo').checked;
+
+        let html = `<h2>Checklist Pericial: ${inst}</h2><div class="alerta-item"><li>Cumplir con carga digital obligatoria (Res. 281/19).</li><li>Adjuntar mapas shapefile (Res. 251/18).</li></div>`;
         
-        let html = `<h2>Checklist para Expediente: ${inst}</h2><ul>`;
-        html += `<li>Validar formulario SIAM según Res. 281/19.</li>`;
-        html += `<li>Adjuntar mapas vectoriales en formato .shp (Res. 251/18).</li>`;
+        if (asp) html += `<div class="alerta-item"><li><b>Área Protegida:</b> EIA obligatorio (Ley 352/94).</li></div>`;
+        if (pcb) html += `<div class="alerta-item"><li><b>Protocolo PCB:</b> Adjuntar protocolo de aceites (Res. 1402/11).</li></div>`;
+        if (deficit) html += `<div class="alerta-item"><li><b>Compensación:</b> Adquirir certificados de Servicios Ambientales (Res. 344/18).</li></div>`;
+        if (bosque && (act == 'ganaderia')) html += `<div class="alerta-item"><li><b>Incendios:</b> Aplicar Res. 244/15 de manejo de fuego.</li></div>`;
+        if (pozo) html += `<div class="alerta-item"><li><b>Agua:</b> Tramitar permiso de perforación (Res. 2155/05).</li></div>`;
+        if (inst === 'CIERRE') html += `<div class="alerta-item"><li><b>Minas/Cierre:</b> Incluir fianza ambiental (Ley 3180/07).</li></div>`;
         
-        if (cierre) {
-            html += `<li><b>Módulo de Cierre Activo:</b> Incorporar Plan de Recomposición (Ley 3180/07).</li>`;
-        }
-        
-        html += `</ul><button onclick="window.print()">Imprimir Checklist</button>`;
+        html += `<button onclick="window.print()">Imprimir Guía de Expediente</button>`;
         document.getElementById('resultado').innerHTML = html;
     }
 </script>
