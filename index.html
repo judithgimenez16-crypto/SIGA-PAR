@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-PY Consultor Master v5.5 - Gestión Ambiental del Paraguay</title>
+    <title>SIGA-PY Consultor Master v6.0 - Gestión Ambiental del Paraguay</title>
     <style>
         :root {
             --color-primario: #1b4332;
@@ -278,7 +278,7 @@
     <header>
         <h1>SIGA-PY CONSULTOR MASTER</h1>
         <p>Sistema Integral de Gestión Ambiental del Paraguay</p>
-        <small>Motor de Diagnóstico v5.5 • Integración Geomática, Audiencia Pública y Control Hidrogeológico de Pozos</small>
+        <small>Base de Conocimiento e Inferencia Legal Experta v6.0 • Alimentada por Archivos y Decretos Oficiales</small>
     </header>
 
     <div class="container">
@@ -308,8 +308,8 @@
                             <option value="urbanizaciones">Urbanizaciones, Loteamientos y Barrios Cerrados</option>
                             <option value="ganaderia">Explotación Ganadera / Establecimientos Rurales</option>
                             <option value="estaciones">Estaciones de Servicio / Combustibles</option>
-                            <option value="industrias">Industrias Manufactureras</option>
-                            <option value="canteras">Canteras / Extracción de Materiales</option>
+                            <option value="industrias">Industrias Manufactureras / Complejos</option>
+                            <option value="canteras">Canteras / Explotación de Minas (Calcárea/Pétrea)</option>
                         </select>
                     </div>
                     <div class="campo">
@@ -321,7 +321,7 @@
                     </div>
                     <div class="campo-grid">
                         <div class="campo">
-                            <label for="superv">Superficie Total (Ha):</label>
+                            <label for="superficie">Superficie Total (Ha):</label>
                             <input type="number" id="superficie" min="0" step="0.1" placeholder="Ej: 15.5" required>
                         </div>
                         <div class="campo">
@@ -337,6 +337,10 @@
                         <input type="checkbox" id="tiene-bosque">
                         <label for="tiene-bosque">¿Posee cobertura de Bosque Nativo?</label>
                     </div>
+                    <div class="campo-checkbox" style="background:#fee2e2; border-color:#fca5a5;">
+                        <input type="checkbox" id="deficit-bosque">
+                        <label for="deficit-bosque"><b>¿Registra déficit de Reserva Legal (&lt;25%)?</b></label>
+                    </div>
                     <div class="campo-checkbox">
                         <input type="checkbox" id="tiene-cauce">
                         <label for="tiene-cauce">¿Posee arroyos, humedales o cauces?</label>
@@ -347,7 +351,11 @@
                     </div>
                     <div class="campo-checkbox" style="background:#e0f2fe; border-color:#bae6fd;">
                         <input type="checkbox" id="requiere-pozo">
-                        <label for="requiere-pozo"><b>¿Contempla perforación de Pozo Profundo?</b></label>
+                        <label for="requiere-pozo"><b>¿Contempla Pozo Profundo?</b></label>
+                    </div>
+                    <div class="campo-checkbox" style="background:#f1f5f9; border-color:#cbd5e1;">
+                        <input type="checkbox" id="posee-pcb">
+                        <label for="posee-pcb"><b>¿Registra transformadores o uso de PCB?</b></label>
                     </div>
                     <div class="campo-grid" style="margin-top:10px;">
                         <div class="campo">
@@ -369,7 +377,7 @@
                     <h3>4. Catastro de Control</h3>
                     <div class="campo">
                         <label for="proponente">Nombre del Proyecto / Cliente:</label>
-                        <input type="text" id="proponente" placeholder="Ej: Loteamiento San José" required>
+                        <input type="text" id="proponente" placeholder="Ej: Cantera San Juan" required>
                     </div>
                     <div class="campo-grid">
                         <div class="campo">
@@ -389,7 +397,7 @@
 
         <main class="panel-resultado">
             <div id="estado-vacio" class="mensaje-vacio">
-                <p>Configure el instrumento solicitado y el rubro ambiental para extraer las directivas cruzadas.</p>
+                <p>Configure el instrumento solicitado y el rubro ambiental para extraer las directivas y criterios de control.</p>
             </div>
 
             <div id="contenido-guia" class="oculto">
@@ -431,23 +439,27 @@
         var DB_LEYES = {
             constitucion: { n: 'Constitución Nacional de la República del Paraguay (1992)', d: 'Art. 7 y 8: Estipula el derecho a un entorno equilibrado. Base de todo reporte ambiental.' },
             ley294: { n: 'Ley N.º 294/93 de Evaluación de Impacto Ambiental', d: 'Obliga a obtener la DIA previa. Sanciona con la cancelación inmediata ante cualquier ocultación deliberada o falsedad de datos (Art. 14).' },
-            decretoEIA: { n: 'Decreto N.º 453/13 de Regulación de la Ley N.º 294/93', d: 'Define las pautas de categorización por riesgo y regula las Auditorías en carácter de Declaración Jurada.' },
+            decretoEIA: { n: 'Decreto N.º 453/13 y ampliado por Decreto N.º 954/13', d: 'Define las pautas de categorización. Fija auditorías como Declaración Jurada e inspecciones in situ para renovar licencias.' },
             recursosHidricos: { n: 'Ley N.º 3239/07 de Recursos Hídricos del Paraguay', d: 'Art. 34: Mandato estricto de delimitación y resguardo de fajas marginales de protección de riberas.' },
             forestal: { n: 'Ley N.º 422/73 Forestal Nacional', d: 'Art. 42: Impone la reserva legal rural forestal del 25% obligatoria.' },
-            deforestacionCero: { n: 'Ley N.º 2524/04 de Deforestación Cero (Región Oriental)', d: 'Prohíbe de manera absoluta la transformación o conversión de superficies boscosas nativas.' },
+            deforestacionCero: { n: 'Ley N.º 6256/18 de Deforestación Cero (Región Oriental)', d: 'Veda total de conversión de bosques nativos. Fija penas privativas de libertad de 3 a 8 años en instancia judicial (Art. 5).' },
             residuos: { n: 'Ley N.º 3956/09 y Decreto Reglamentario N.º 7391/17 de Gestión Integral de Residuos Sólidos', d: 'Establece las responsabilidades de los generadores fijos. Prohíbe taxativamente la quema o disposición descontrolada.' },
             calidadAire: { n: 'Ley N.º 5211/14 de Calidad del Aire', d: 'Controla emisiones fijas y regula muestreos analíticos isocinéticos en ductos industriales.' },
             intnPetroleo: { n: 'Normativas Técnicas INTN y Resoluciones del MIC', d: 'Regula los sistemas SASC de combustibles. Exige doble pared técnica y sensores freáticos de vacío.' },
-            leyMinas: { n: 'Ley N.º 3180/07 de Minería y Recomposición de Suelos', d: 'Art. 67: Mandato de planes de mitigación de cierre y fianzas financieras de recomposición morfológica.' },
+            leyMinas: { n: 'Ley N.º 93/1914 y N.º 698/1924 de Minas', d: 'Regula concesiones de explotación. Exige la entrega al Fisco de una regalía correspondiente al 5% del producto bruto de los minerales extraídos.' },
             resEffluentes: { n: 'Resolución MADES N.º 222/02 (Límites Permisibles)', d: 'Techos de vertido industrial y cloacal final: DBO5 < 50 mg/L, DQO < 150 mg/L, Grasas < 20 mg/L.' },
             seguridadLaboral: { n: 'Decreto N.º 14390/92 Reglamento de Seguridad e Higiene Laboral', d: 'Norma de salud ocupacional para control de riesgos y dotación de EPI.' },
-            leyAreasProtegidas: { n: 'Ley N.º 352/94 de Áreas Silvestres Protegidas', d: 'Art. 12: Obligatoriedad de adjuntar un EIA completo aprobado por la autoridad para todo proyecto que afecte un ASP o su zona de amortiguamiento.' },
+            leyAreasProtegidas: { n: 'Ley N.º 352/94 de Áreas Silvestres Protegidas', d: 'Art. 12: Obligatoriedad de un EIA completo aprobado para todo proyecto que afecte un ASP o su zona de amortiguamiento.' },
             leyOrganicaMunicipal: { n: 'Ley N.º 3966/10 Orgánica Municipal', d: 'Articulación obligatoria con los Planes de Ordenamiento Urbano y Territorial (POUT) de los Municipios.' },
-            resCTCA: { n: 'Resolución N.º 362/13 Catastro Técnico de Consultores Ambientales', d: 'Regula la validez del consultor. Fija una tasa mandatoria de 20 jornales mínimos para solicitudes de inscripción física o jurídica.' },
-            resNotaConsulta: { n: 'Resolución MADES N.º 255/2020 y modificatoria Res. N.º 311/2021 Notas de Consulta Digital (SIAM)', d: 'Establece que las Notas de Consulta se tramitan por la plataforma virtual completando todos los campos obligatorios. Dispone que las respuestas impresas oficiales se realizarán de manera mandatoria en Hojas de Seguridad numeradas.' },
-            resGeomatica: { n: 'Resolución MADES N.º 251/2018 Términos de Referencia Oficiales para Mapas Temáticos', d: 'Regula el procedimiento de análisis cartográfico llevado a cabo por la Dirección de Geomática para la validación de mapas e imágenes satelitales.' },
-            resAudiencia: { n: 'Resolución MADES N.º 640/2014 Reglamento de Audiencias Públicas', d: 'Fija de forma perentoria un plazo improrrogable de 3 (tres) días hábiles posteriores a la Audiencia Pública para la radicación formal de objeciones u observaciones por escrito ante la mesa de entrada.' },
-            resPozos: { n: 'Resolución MADES N.º 2155/2005 Especificaciones Técnicas para Pozos Tubulares Profundos', d: 'Regula las condiciones constructivas mecánicas de captación de agua subterránea. Fija una tolerancia estricta de hasta el +-10% en la inspección de dimensiones físicas del encamisado y la terminación superior.' }
+            resCTCA: { n: 'Resolución N.º 362/13 Catastro Técnico de Consultores Ambientales', d: 'Regula la validez del consultor. Fija una tasa mandatoria de 20 jornales mínimos para solicitudes.' },
+            resNotaConsulta: { n: 'Resolución MADES N.º 255/2020 y modificatoria Res. N.º 311/2021 Notas de Consulta Digital (SIAM)', d: 'Establece que las Notas de Consulta se tramitan por la plataforma virtual. Dispone que las respuestas se realizarán en Hojas de Seguridad numeradas.' },
+            resGeomatica: { n: 'Resolución MADES N.º 251/2018 Términos de Referencia Oficiales para Mapas Temáticos', d: 'Regula el procedimiento de análisis cartográfico llevado a cabo por la Dirección de Geomática.' },
+            resAudiencia: { n: 'Resolución MADES N.º 640/2014 Reglamento de Audiencias Públicas', d: 'Fija un plazo de 3 días hábiles posteriores al evento para radicación de objeciones por escrito.' },
+            resPozos: { n: 'Resolución MADES N.º 2155/2005 Especificaciones para Pozos Tubulares Profundos', d: 'Regula captaciones subterráneas. Fija una tolerancia estricta de hasta el +-10% en la inspección de dimensiones físicas.' },
+            resServiciosAmbientales: { n: 'Resolución MADES N.º 344/18 Adhesión al Régimen de Servicios Ambientales', d: 'Actualiza el mecanismo de adquisición de certificados de compensación obligatoria para proyectos con déficit de reserva forestal legal.' },
+            resPGAagricola: { n: 'Resolución MADES N.º 244/15 Plan de Gestión Ambiental Genérico Agrícola', d: 'Establece directivas para actividades agrícolas fijando pautas estrictas de prevención de incendios rurales.' },
+            resEdeEfluentes: { n: 'Resolución MADES N.º 616/14 Contenido del Estudio de Disposición de Efluentes (EDE)', d: 'Establece el índice oficial, matrices de impacto hídrico y caracterización de suelos para verter efluentes tratados.' },
+            resPcbtransformadores: { n: 'Resolución MADES N.º 1402/11 Protocolos de Tratamiento de Bifenilos Policlorados (PCB)', d: 'Fija protocolos para el manejo, desmantelamiento y almacenamiento seguro de equipos con aceites contaminados con PCB.' }
         };
 
         var INSTRUMENTOS_TEXTO = {
@@ -457,7 +469,7 @@
                     'Datos del Proponente y Consultores Ambientales matriculados autorizados (Art. 3, a).',
                     'Descripción técnica de la naturaleza de la obra, localización, magnitudes, cronograma y fuerza de trabajo (Art. 3, a).',
                     'Estimación de la significación socioeconómica del proyecto y adecuación al desarrollo sustentable (Art. 3, b).',
-                    'Límites del área geográfica afectada y descripción detallada (física, biológica, socioeconómica) con mapas validados por Geomática conforme a la Res. 251/18 (Art. 3, c).',
+                    'Límites del área geográfica afectada y descripción detallada (física, biológica, socioeconómica) con mapas shapefile adjuntos (Art. 3, c).',
                     'Análisis para determinar posibles impactos y riesgos (efectos positivos, negativos, acumulativos y sinérgicos) (Art. 3, d).',
                     'Plan de Gestión Ambiental (PGA) y Plan de Gestión de Residuos Sólidos conforme al Decreto 7391/17 (Art. 3, e).',
                     'Relación de alternativas técnicas de localización y estimación en caso de no realizarse (Art. 3, f).',
@@ -484,20 +496,20 @@
                 ]
             },
             'AA': {
-                nombre: 'Auditoría Ambiental de Cumplimiento (AA) [Art. 8 Decreto 453/13]',
+                nombre: 'Auditoría Ambiental de Cumplimiento (AA) [Art. 8 Decreto 453/13 y Decreto 954/13]',
                 estructura: [
                     'Antecedentes y referencia de la Declaración de Impacto Ambiental (DIA) anterior con carácter de Declaración Jurada.',
                     'Metodología de verificación en campo y objetivos de la auditoría.',
                     'Matriz de Cumplimiento Técnico Legal: Evaluación pormenorizada de cada medida del PGA aprobado.',
                     'Evidencias analíticas de cumplimiento (Informes de laboratorio de efluentes bajo Res. 222/02, planillas de retiro).',
                     'Identificación de No Conformidades (Menores y Mayores) y propuesta inmediata de medidas correctivas.',
-                    'Plan de Gestión Ambiental (PGA) reajustado para el nuevo periodo de vigencia.'
+                    'Plan de Gestión Ambiental (PGA) reajustado para el nuevo periodo de vigencia con cronograma de monitoreo futuro.'
                 ]
             },
             'CIERRE': {
                 nombre: 'Plan de Cierre y Recomposición [Art. 67 Ley 3180/07]',
                 estructura: [
-                    'Inventario final de áreas invervenidas y pasivos ambientales remanentes.',
+                    'Inventario final de áreas intervenidas y pasivos ambientales remanentes.',
                     'Plan de Desmantelamiento y retiro seguro de maquinarias y residuos peligrosos.',
                     'Ingeniería de Recomposición de Suelos: Perfilado de taludes y control de escorrentías pluviales.',
                     'Plan de Revegetación con especies nativas adaptadas.'
@@ -513,10 +525,12 @@
             var efluentes = parseFloat(document.getElementById('efluentes').value) || 0;
             var combustible = parseFloat(document.getElementById('combustible').value) || 0;
             var tieneBosque = document.getElementById('tiene-bosque').checked;
+            var deficitBosque = document.getElementById('deficit-bosque').checked;
             var tieneCauce = document.getElementById('tiene-cauce').checked;
-            var tieneCaldera = document.getElementById('tiene-caldera').checked;
             var afectaAsp = document.getElementById('afecta-asp').checked;
             var requierePozo = document.getElementById('requiere-pozo').checked;
+            var encuentraPcb = document.getElementById('posee-pcb').checked;
+            var tieneCaldera = document.getElementById('tiene-caldera').checked;
             var instrumento = document.getElementById('instrumento').value;
 
             if (!actividad || !region || !superficie) {
@@ -527,7 +541,6 @@
             document.getElementById('estado-vacio').classList.add('oculto');
             document.getElementById('contenido-guia').classList.remove('oculto');
 
-            // Categorización por Escala (Decreto 453/13)
             var macroproyecto = false;
             var categoria = 'Categoría B (Mediano Impacto)';
             if (actividad === 'urbanizaciones' && superficie > 10) { categoria = 'Categoría A (Alto Impacto)'; macroproyecto = true; }
@@ -540,19 +553,31 @@
             var llavesLegales = ['constitucion', 'ley294', 'decretoEIA', 'residuos', 'resCTCA', 'leyOrganicaMunicipal', 'resNotaConsulta', 'resGeomatica'];
             var guiaConsultor = [];
 
-            // Regla SIAM Obligatoria
             guiaConsultor.push('CONTROL SIAM MASTER (Res. 281/19): Es mandatorio completar el 100% de los campos del formulario digital. La plataforma bloqueará el envío pericial en caso de registrar celdas vacías.');
 
-            // Regla Audiencia Pública
-            if (macroproyecto && instrumento === 'EIA') {
-                llavesLegales.push('resAudiencia');
-                guiaConsultor.push('CRITERIO DE AUDIENCIA PÚBLICA (Res. 640/14): Al consolidarse como Macroproyecto, contempla en el cronograma que la ciudadanía dispone de un plazo perentorio e improrrogable de 3 días hábiles posteriores al evento para asentar objeciones por escrito ante el MADES.');
+            if (deficitBosque) {
+                llavesLegales.push('resServiciosAmbientales');
+                guiaConsultor.push('COMPENSACIÓN FORESTAL (Res. 344/18): Al registrar un déficit en la reserva legal forestal (&lt;25%), prescribe de forma obligatoria en el PGA la adquisición física de Certificados de Servicios Ambientales.');
             }
 
-            // Regla Pozos Tubulares Profundos
+            if (encuentraPcb) {
+                llavesLegales.push('resPcbtransformadores');
+                guiaConsultor.push('PROTOCOLO DE SEGURIDAD INDUSTRIAL PCB (Res. 1402/11): Se detectó almacenamiento o uso de transformadores. Es obligatorio incluir en el PGA el protocolo de etiquetado, muestreo analítico cualitativo y el plan de contingencia ante derrames químicos peligrosos.');
+            }
+
+            if (efluentes > 0) {
+                llavesLegales.push('resEdeEfluentes');
+                guiaConsultor.push('ESTUDIO DE DISPOSICIÓN DE EFLUENTES (Res. 616/14): Al registrar generación de efluentes líquidos, adjunta de forma mandatoria la matriz específica de dispersión hídrica.');
+            }
+
+            if (macroproyecto && instrumento === 'EIA') {
+                llavesLegales.push('resAudiencia');
+                guiaConsultor.push('CRITERIO DE AUDIENCIA PÚBLICA (Res. 640/14): El cronograma pericial debe contemplar que la ciudadanía dispone de un plazo perentorio de 3 días hábiles posteriores al evento para radicar objeciones.');
+            }
+
             if (requierePozo) {
                 llavesLegales.push('resPozos');
-                guiaConsultor.push('INSPECCIÓN DE AGUA SUBTERRÁNEA (Res. 2155/05): Registra en el informe las coordenadas UTM del pozo. Prescribe una tolerancia estricta de hasta el +-10% en la verificación física del encamisado mecánico superior durante la fiscalización in situ.');
+                guiaConsultor.push('INSPECCIÓN DE AGUA SUBTERRÁNEA (Res. 2155/05): Registra en el informe las coordenadas UTM del pozo. Prescribe una tolerancia estricta de hasta el +-10% en la verificación física del encamisado superior.');
             }
 
             if (afectaAsp) {
@@ -566,7 +591,12 @@
                 }
             }
 
-            if (tieneCauce || efluentes > 0) {
+            if (actividad === 'canteras') {
+                llavesLegales.push('leyMinas');
+                guiaConsultor.push('REGALÍA MINERA (L. 93/14 y L. 698/24): El informe pericial de explotación debe consignar el diseño técnico de bancos y prescribir la obligación tributaria del pago del 5% del producto bruto de los minerales extraídos.');
+            }
+
+            if (tieneCauce) {
                 llavesLegales.push('recursosHidricos');
                 llavesLegales.push('resEffluentes');
                 guiaConsultor.push('CRITERIO HIDROLÓGICO (Ley 3239/07): Mide con GPS las fajas de retiro de protección hídrica. Parámetros de vertido obligatorios de la Res. 222/02.');
@@ -576,10 +606,15 @@
                 llavesLegales.push('forestal');
                 if (region === 'oriental') {
                     llavesLegales.push('deforestacionCero');
-                    guiaConsultor.push('CRITERIO EXCLUYENTE DE INFRACCIÓN PENAL (Ley 2524/04 Art. 2): Al estar en la Región Oriental, el desmonte o conversión de bosque nativo está TOTALMENTE PROHIBIDO. Las violaciones derivan en sanciones de la Ley N.º 716/96.');
+                    guiaConsultor.push('CRITERIO EXCLUYENTE DE INFRACCIÓN PENAL (Ley 6256/18): Al estar en la Región Oriental, el desmonte o conversión de bosque nativo está TOTALMENTE PROHIBIDO. Las violaciones derivan en sanciones privativas de libertad de 3 a 8 años.');
                 } else {
                     guiaConsultor.push('RESERVA DE INFONA (Chaco): Solicita los antecedentes del Plan de Uso de la Tierra (PUT) y verifica el mantenimiento del 25% de reserva rural.');
                 }
+            }
+
+            if (tieneCaldera) {
+                llavesLegales.push('calidadAire');
+                guiaConsultor.push('CONTROL ATMOSFÉRICO (Ley 5211/14): Indica en el plano de planta la ubicación exacta de las chimeneas y exige puertos de muestreo normalizados.');
             }
 
             // Renderizar Leyes Asociadas
