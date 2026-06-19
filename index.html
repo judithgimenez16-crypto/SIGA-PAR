@@ -77,7 +77,7 @@
     <header>
         <h1>SIGA-PY CONSULTOR MASTER</h1>
         <p>Sistema Integral de Gestión Ambiental del Paraguay</p>
-        <small>Base de Inferencia Experta v10.0 • Motor Legal Completamente Restaurado</small>
+        <small>Cerebro Operativo de Inferencia Legal Absoluta v10.0 • Máxima Cobertura del Marco Regulatorio Nacional</small>
     </header>
 
     <div class="container">
@@ -240,9 +240,11 @@
             'desmontes': 'Desmontes o cambio de uso de suelo > 2 Ha'
         };
 
+        const TODAS_LAS_ACTIVIDADES = ['urbanizaciones', 'planes_ordenamiento', 'obras_3000', 'estaciones', 'centros_compras', 'hospitales', 'plantas_aguas_servidas', 'cementerios', 'ganaderia', 'reforestaciones', 'granjas', 'humedales', 'industrias', 'depositos', 'conductos', 'obras_hidraulicas', 'lineas_transmision', 'canteras', 'combustibles_fosiles', 'residuos_urbanos', 'obras_viales', 'pistas', 'desmontes'];
+
         const actividadesPorInstrumento = {
-            'EIA': Object.keys(actividadesFull), // EIA aplica a todas según umbral
-            'RIMA': Object.keys(actividadesFull),
+            'EIA': TODAS_LAS_ACTIVIDADES,
+            'RIMA': TODAS_LAS_ACTIVIDADES,
             'EDE': ['industrias', 'estaciones', 'hospitales', 'plantas_aguas_servidas', 'depositos', 'granjas', 'residuos_urbanos'],
             'PGA': ['urbanizaciones', 'obras_3000', 'estaciones', 'centros_compras', 'hospitales', 'cementerios', 'ganaderia', 'granjas', 'industrias', 'depositos', 'pistas'],
             'AA': ['urbanizaciones', 'estaciones', 'centros_compras', 'hospitales', 'ganaderia', 'industrias', 'depositos', 'canteras', 'combustibles_fosiles', 'residuos_urbanos', 'obras_viales'],
@@ -259,4 +261,150 @@
         };
 
         function filtrarActividades() {
-            const inst = document.getElementById('instrumento').val
+            const inst = document.getElementById('instrumento').value;
+            const selectAct = document.getElementById('actividad');
+            
+            // Limpiar opciones previas
+            selectAct.innerHTML = '<option value="">-- Seleccione Actividad --</option>';
+            
+            if (!inst) return;
+            
+            const actividadesPermitidas = actividadesPorInstrumento[inst] || [];
+            actividadesPermitidas.forEach(function(clave) {
+                let opt = document.createElement('option');
+                opt.value = clave;
+                opt.textContent = actividadesFull[clave].toUpperCase();
+                selectAct.appendChild(opt);
+            });
+        }
+
+        // Ejecutar al cargar por si el navegador guardó el valor del instrumento
+        window.onload = function() {
+            document.getElementById('instrumento').value = ""; 
+            filtrarActividades();
+        };
+
+        // --- 3. MOTOR DE INFERENCIA LÓGICA ---
+        function generarGuia() {
+            const inst = document.getElementById('instrumento').value;
+            const act = document.getElementById('actividad').value;
+            
+            if (!inst || !act) {
+                alert("Por favor, seleccione el Instrumento y la Actividad.");
+                return;
+            }
+
+            const sup = parseFloat(document.getElementById('superficie').value) || 0;
+            const efluentes = parseFloat(document.getElementById('efluentes').value) || 0;
+            const region = document.getElementById('region').value;
+            
+            const checks = {
+                bosque: document.getElementById('tiene-bosque').checked,
+                deficit: document.getElementById('deficit-bosque').checked,
+                cauce: document.getElementById('tiene-cauce').checked,
+                asp: document.getElementById('afecta-asp').checked,
+                pozo: document.getElementById('requiere-pozo').checked,
+                pcb: document.getElementById('posee-pcb').checked,
+                caldera: document.getElementById('tiene-caldera').checked
+            };
+
+            document.getElementById('estado-vacio').classList.add('oculto');
+            document.getElementById('contenido-guia').classList.remove('oculto');
+
+            let macroproyecto = (act === 'urbanizaciones' && sup > 10) || (act === 'industrias' && sup > 5) || ['canteras','combustibles_fosiles','residuos_urbanos','obras_viales'].includes(act);
+            let categoria = (macroproyecto || checks.asp || (act === 'ganaderia' && sup > 500 && region === 'oriental')) ? 'Categoría A (Alto Impacto)' : 'Categoría B (Mediano Impacto)';
+            
+            document.getElementById('res-inst-badge').innerText = `Trámite: ${inst}`;
+            document.getElementById('res-categoria').innerText = `Escala: ${categoria}`;
+
+            let leyesSet = new Set(['ley294', 'decretoEIA', 'resCTCA', 'resGeomatica', 'residuos']);
+            let alertas = ['<div class="alerta-item"><b>CONTROL SIAM (Res. 281/19):</b> Llenar el 100% de los campos digitales. El sistema bloquea el expediente si hay celdas vacías.</div>'];
+
+            // Lógica Cruzada
+            if (checks.deficit) {
+                leyesSet.add('resServiciosAmbientales');
+                alertas.push('<div class="alerta-item"><b>COMPENSACIÓN:</b> Déficit forestal menor a 25% exige anexar adquisición de Certificados de Servicios Ambientales.</div>');
+            }
+            if (checks.pcb) {
+                leyesSet.add('resPcbtransformadores');
+                alertas.push('<div class="alerta-item"><b>PELIGRO PCB:</b> Adjuntar protocolo estricto de manejo, muestreo y contingencia de aceites de transformador (Res. 1402/11).</div>');
+            }
+            if (checks.pozo) {
+                leyesSet.add('resPozos');
+                alertas.push('<div class="alerta-item"><b>AGUA SUBTERRÁNEA:</b> Indicar coordenadas UTM, tolerancias de encamisado y tramitar Permiso de Perforación ante MADES.</div>');
+            }
+            if (checks.asp) {
+                leyesSet.add('leyAreasProtegidas');
+                alertas.push('<div class="alerta-item"><b>RESTRICCIÓN ASP:</b> Afectación de reserva exige imperativamente presentación de Estudio de Impacto Ambiental formal.</div>');
+            }
+            if (checks.bosque && region === 'oriental') {
+                leyesSet.add('deforestacionCero');
+                leyesSet.add('forestal');
+                alertas.push('<div class="alerta-item"><b>DEFORESTACIÓN CERO:</b> Conversión penada con 3 a 8 años de cárcel. Prohibición absoluta de cambio de uso de suelo.</div>');
+            }
+            if (act === 'ganaderia' && checks.bosque) {
+                leyesSet.add('resPGAagricola');
+                alertas.push('<div class="alerta-item"><b>INCENDIOS RURALES:</b> Obligatorio incorporar Plan de Prevención y gestionar Licencia Municipal de Quema.</div>');
+            }
+            if (act === 'canteras') {
+                leyesSet.add('leyMinas');
+                leyesSet.add('leyPatrimonio');
+                alertas.push('<div class="alerta-item"><b>MINERÍA Y PATRIMONIO:</b> Calcular canon del 5% del producto bruto y adjuntar Protocolo Arqueológico visado por SNC.</div>');
+            }
+            if (act === 'depositos' || act === 'ganaderia') {
+                leyesSet.add('leyFitosanitarios');
+                alertas.push('<div class="alerta-item"><b>FITOSANITARIOS:</b> Verificar in situ barreras vivas y franjas de 100m de separación con caminos/poblaciones.</div>');
+            }
+            if (checks.cauce || efluentes > 0 || inst === 'EDE') {
+                leyesSet.add('recursosHidricos');
+                leyesSet.add('resEffluentes');
+                if (inst !== 'EDE') leyesSet.add('resEdeEfluentes');
+                alertas.push('<div class="alerta-item"><b>RECURSOS HÍDRICOS:</b> Delimitar fajas marginales. Cumplir topes DBO5 < 50 mg/L y adjuntar matriz de dispersión.</div>');
+            }
+            if (checks.caldera) {
+                leyesSet.add('calidadAire');
+                alertas.push('<div class="alerta-item"><b>EMISIONES FIJAS:</b> Ubicar chimeneas en plano y exigir puertos de muestreo analítico de opacidad/gases.</div>');
+            }
+            if (inst === 'EIA' && macroproyecto) {
+                leyesSet.add('resAudiencia');
+                alertas.push('<div class="alerta-item"><b>AUDIENCIA PÚBLICA:</b> Publicar edictos. Contemplar plazo de 3 días post-evento para objeciones ciudadanas.</div>');
+            }
+
+            // Inyectar HTML Alertas
+            document.getElementById('res-alertas').innerHTML = alertas.join('');
+
+            // Inyectar HTML Leyes
+            let divLegal = document.getElementById('res-legal');
+            divLegal.innerHTML = '';
+            Array.from(leyesSet).forEach(function(key) {
+                let box = document.createElement('div');
+                box.className = 'ley-box';
+                box.innerHTML = `<div class="ley-titulo-texto">⚖️ ${DB_LEYES[key].n}</div><div class="ley-detalle">${DB_LEYES[key].d}</div>`;
+                divLegal.appendChild(box);
+            });
+
+            // Inyectar HTML Estructura Documento
+            let listaEst = document.getElementById('res-estructura');
+            listaEst.innerHTML = '';
+            document.getElementById('res-nombre-doc').innerText = `Índice Obligatorio: ${inst}`;
+            ESTRUCTURAS[inst].forEach(function(item) {
+                let li = document.createElement('li');
+                li.textContent = item;
+                listaEst.appendChild(li);
+            });
+        }
+
+        // Funcionalidad de Exportación a Word
+        document.getElementById('btn-descargar-word').addEventListener('click', function() {
+            let contenido = document.getElementById('contenido-guia').innerText;
+            let blob = new Blob(['\ufeff', contenido], { type: 'application/msword' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = 'SIGAPY_Expediente.doc';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
